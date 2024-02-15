@@ -1,169 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nihar Ranjan's Video Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="theme-color" content="DodgerBlue">
+  <link rel="icon" sizes="192x192" href="icon_player.png">
+  <title>Nihar's Video Player</title>
   <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-
-    h1 {
-      color: DodgerBlue;
-      font-size: 26px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    input[type="text"] {
-      width: 55%;
-      max-width: 400px;
+    input[type=text],
+    select {
+      width: 50%;
+      max-width: 300px;
       padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
     }
 
-    #clearBtn {
-      background-color: #cccccc; /* Neutral color */
-      color: black;
-      padding: 14px 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-right: 10px;
-    }
-
     button {
+      width: 20%;
       background-color: DodgerBlue;
       color: white;
+      max-width: 100px;
       padding: 14px 20px;
+      margin: 8px 0;
       border: none;
       border-radius: 4px;
       cursor: pointer;
     }
 
-    #player {
-      max-width: 720px;
-      max-height: 480px;
-      border: 1px solid #ccc;
+    #clearBtn {
+      background-color: red;
+      width: 25%
+      color: white; /* Adjust color as needed */
+      max-width: 125px;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none; 
       border-radius: 4px;
-      margin-top: 20px;
+      cursor: pointer;
     }
 
-    .clipboard-notice {
-      margin-top: 10px;
-      font-size: 12px;
+    h1 {
+      color: DodgerBlue;
+      font-family: 'Raleway', sans-serif;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 50px;
+      margin: 0 0 24px;
       text-align: center;
-      color: #999;
+    }
+
+    #player {
+      max-width: 720px;
+      min-height: 200px;
     }
   </style>
 </head>
-<body>
-  <h1>Nihar Ranjan's Video Player</h1>
-  <p>Supports TeraBox shared links. Wait a few seconds before the video plays.</p>
-  <div class="container">
-    <input type="text" id="vid" placeholder="Enter Download Link..." autocomplete="off" maxlength="10000">
-    <button id="clearBtn" onclick="askForClipboardAccess()">CL/PA</button>
-    <button onclick="play()">PLAY</button>
-  </div>
-  <video id="player" controls preload="none" poster="my_name_logo_2.png"></video>
-  <p class="clipboard-notice"></p>
 
-  <script>
-    // Function to request clipboard access and handle response
-    function askForClipboardAccess() {
-      navigator.clipboard.readText()
-        .then(text => {
-          // Access granted, paste content and update notice
-          document.getElementById("vid").value = text;
-          document.querySelector(".clipboard-notice").textContent = "Clipboard content pasted.";
-        })
-        .catch(error => {
-          if (error.name === "PermissionDenied") {
-            // Access denied, ask for permission with explanation
-            if (confirm("This action requires clipboard access to paste content. Please allow.")) {
-              navigator.permissions.query({ name: "clipboard-read" })
-                .then(permission => {
-                  if (permission.state === "granted") {
-                    askForClipboardAccess(); // Retry access
-                  } else {
-                    // Permission still denied, update notice
-                    document.querySelector(".clipboard-notice").textContent = "Clipboard access denied.";
-                  }
-                })
-                .catch(error => {
-                  console.error("Failed to query permission:", error);
-                });
-            } else {
-              // User declined, update notice
-              document.querySelector(".clipboard-notice").textContent =
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  </head>
 <body>
-  <video controls="controls" id="player" tabindex="0" poster="my_name_logo_2.png" autoplay="autoplay" loop="loop" src="" width="100%">
-  </video>
-
+  <center>
+    <br>
+    <h1>⭐ NIHAR RANJAN'S PLAYER ⭐</h1>
+    <h5>Supports TeraBox shared links. Wait for few seconds before the video plays, in the case of TeraBox links.</h5>
+    <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
+    <button onclick="return play()">PLAY</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''">CLEAR</button>
+    <br><br>
+    <video controls="controls" id="player" tabindex="0" poster="my_name_logo_2.png" autoplay="autoplay" loop="loop" src="" width="100%">
+    </video>
+  </center>
   <script>
     function play() {
       var qry = document.getElementById("vid").value;
-
-      if (qry === null) {
-        alert("Please enter a URL first!");
+      if (qry == null) {
+        alert("Please Enter URL First!");
       } else {
-        // Check if the URL contains 'teraboxapp'
+        // Check if the URL contains 'Terabox'
         if (qry.toLowerCase().includes('teraboxapp')) {
-          // Handle TeraBox link
-          handleTeraBoxLink(qry);
+            // Extract the video ID from the URL
+            var videoId = qry.split('/').slice(-1)[0];
+
+            // Remove the first character (assuming it's always '1')
+            videoId = videoId.substring(1);
+
+            // Construct the request URL for preparation
+            var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
+
+            // Make a request to the preparation URL
+            fetch(requestUrl)
+            .then(response => {
+                // Wait 1 seconds before playing the video
+                setTimeout(() => {
+                    // Construct the new URL in the desired format
+                    var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
+                    document.getElementById("player").src=playUrl;
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('Error fetching preparation URL:', error);
+                alert('Failed to prepare playback. Please try again later.');
+            });
         } else {
-          // Not a TeraBox link, play as usual
+          // Not a terabox URL, play as usual
           document.getElementById("player").src = qry;
         }
       }
     }
-
-    function handleTeraBoxLink(url) {
-      // Extract the video ID from the URL
-      var videoId = url.split('/').slice(-1)[0];
-
-      // Remove the first character (assuming it's always '1')
-      videoId = videoId.substring(1);
-
-      // Construct the request URL for preparation
-      var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
-
-      // Make a request to the preparation URL
-      fetch(requestUrl)
-        .then(response => {
-          // Wait 2 seconds before playing the video
-          setTimeout(() => {
-            // Construct the new URL in the desired format
-            var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
-            document.getElementById("player").src = playUrl;
-          }, 1000);
-        })
-        .catch(error => {
-          console.error('Error fetching preparation URL:', error);
-          alert('Failed to prepare playback. Please try again later.');
-        });
-    }
   </script>
 </body>
+
 </html>
