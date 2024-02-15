@@ -1,64 +1,82 @@
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <meta name="theme-color" content="DodgerBlue">
-    <link rel="icon" sizes="192x192" href="icon_player.png">
-	<title>Nihar's Video Player </title>
-	<style>
-	input[type=text], select {
-    width: 75%;
-    max-width:400px;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="theme-color" content="DodgerBlue">
+  <link rel="icon" sizes="192x192" href="icon_player.png">
+  <title>Nihar's Video Player</title>
+  <style>
+    input[type=text],
+    select {
+      width: 55%;
+      max-width: 300px;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
 
-button {
-    width: 20%;
-    background-color: DodgerBlue;
-    color: white;
-    max-width:100px;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-h1 { color: DodgerBlue; font-family: 'Raleway',sans-serif; font-size: 26px; font-weight: 600; line-height: 72px; margin: 0 0 24px; text-align: center; }
-#player
-{
-    max-width:720px
-    min-height:200px;
-}
-	</style>
+    button {
+      width: 20%;
+      background-color: DodgerBlue;
+      color: white;
+      max-width: 100px;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #clearBtn {
+      background-color: red;
+      width: 20%;
+      color: white; /* Adjust color as needed */
+      max-width: 100px;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none; 
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    h1 {
+      color: DodgerBlue;
+      font-family: 'Raleway', sans-serif;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 72px;
+      margin: 0 0 24px;
+      text-align: center;
+    }
+
+    #player {
+      max-width: 720px;
+      min-height: 200px;
+    }
+  </style>
 </head>
+
 <body>
-<center>
-<br>
-	<h1>⭐ Nihar Ranjan's Player ⭐</h1>
-	<h5>Supports TeraBox shared links. Wait for few seconds before the video plays, in the case of TeraBox links.</h5>
-	<input type="text" placeholder="Enter Download Link..." id="vid" name="vid"  autocomplete="off" maxlength="10000" >
+  <center>
+    <br>
+    <h1>⭐ Nihar Ranjan's Player ⭐</h1>
+    <h5>Supports TeraBox shared links. Wait for few seconds before the video plays, in the case of TeraBox links.</h5>
+    <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button onclick="return play()">PLAY</button>
-	<br><br>
-	<video controls= "controls" id="player" tabindex="0" poster="my_name_logo_2.png" autoplay="autoplay" loop="loop" src="" width="100%" >
-		</video>
-	
-</center>
-<script>
-function play()
-{
-	var qry=document.getElementById("vid").value;
-	if(qry==null)
-	{
-		alert("Enter URL First!")
-	}
-	else
-	{
+    <button id="clearBtn" onclick="handleClear()">CL/PA</button>
+    <br><br>
+    <video controls="controls" id="player" tabindex="0" poster="my_name_logo_2.png" autoplay="autoplay" loop="loop" src="" width="100%">
+    </video>
+  </center>
+  <script>
+    function play() {
+      var qry = document.getElementById("vid").value;
+      if (qry == null) {
+        alert("Please Enter URL First!");
+      } else {
         // Check if the URL contains 'terabox'
         if (qry.toLowerCase().includes('teraboxapp')) {
             // Extract the video ID from the URL
@@ -85,12 +103,24 @@ function play()
                 alert('Failed to prepare playback. Please try again later.');
             });
         } else {
-            // Not a terabox URL, play as usual
-            document.getElementById("player").src=qry;
-        }
-	}
-}
-</script>
+          // Not a terabox URL, play as usual
+          document.getElementById("player").src = qry;
+    function handleClear() {
+      var input = document.getElementById("vid");
+      if (input.value.length === 0) {
+        // Placeholder is empty, paste clipboard content
+        navigator.clipboard.readText().then(text => {
+          input.value = text;
+        }).catch(error => {
+          console.error("Failed to read clipboard:", error);
+          alert("Failed to access clipboard.");
+        });
+      } else {
+        // Placeholder is not empty, clear it
+        input.value = "";
+      }
+    }
+  </script>
 </body>
-</html>
 
+</html>
