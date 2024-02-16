@@ -23,20 +23,20 @@
     select {
       width: 70%;
       max-width: 300px;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: #666;
+      padding: 10px 10px;
+      margin: 4px 0;
+      display: inline-block;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
     }
 
     button {
-      width: 10%;
+      width: 12%;
       background-color: DodgerBlue;
       color: white;
       max-width: 100px;
-      padding: 14px 10px;
+      padding: 5px 5px;
       margin: 1px 0;
       border: none;
       border-radius: 4px;
@@ -48,7 +48,7 @@
       width: 15%;
       color: white; /* Adjust color as needed */
       max-width: 125px;
-      padding: 14px 10px;
+      padding: 5px 5px;
       margin: 1px 0;
       border: none; 
       border-radius: 4px;
@@ -72,22 +72,21 @@
 
     /* Add styles for the mode switch button */
     #modeSwitchBtn {
-      position: absolute;
       top: 2px;
       right: 5px;
-      background-color: green;
-      color: #666;
+      background-color: #666;
+      color: red;
       border: none;
       border-radius: 50px;
-      width: 20px;
+      width: 50px;
       height: 20px;
       cursor: pointer;
     }
   </style>
 </head>
 <body class="dark-mode">
-  <button id="modeSwitchBtn" onclick="toggleMode()">🔆/🌙</button>
-  <center>
+  <button id="modeSwitchBtn" onclick="toggleMode()">🔆|🌙</button>
+  <left>
     <br>
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
     <h5>Supports TeraBox shared links. Wait for few seconds before the video plays, in the case of TeraBox links.</h5>
