@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +16,7 @@
 
     input[type=text],
     select {
-      width: 60%;
+      width: 65%;
       max-width: 300px;
       padding: 6px 20px;
       margin: 0px 0;
@@ -28,12 +29,13 @@
     select {
       width: 100px;
       padding: 4px 4px;
+      background-color: #000;
       border-radius: 40px;
     }
 
-    #playbutton {
+    button {
       width: 15%;
-      background-color: DodgerBlue;
+      background-color: #333;
       color: white;
       max-width: 100px;
       padding: 8px 1px;
@@ -44,11 +46,11 @@
     }
 
     #clearBtn {
-      background-color: red;
-      width: 20%;
+      background-color: #333;
+      width: 15%;
       color: white; 
-      max-width: 125px;
-      padding: 8px 10px;
+      max-width: 100px;
+      padding: px 1px;
       margin: 1px 0;
       border: none;
       border-radius: 4px;
@@ -90,8 +92,9 @@
     }
 
     #go-btn {
-      background-color: DodgerBlue;
+      background-color: #333;
       padding: 6px;
+      width: 30px;
       border: none;
       border-radius: 50%;
       cursor: pointer;
@@ -100,7 +103,7 @@
     }
 
     #btn-next {
-      background-color: red;
+      background-color: #333;
       padding: 4px;
       width: 50px;
       border: none;
@@ -136,10 +139,48 @@
     <h5>Supports TeraBox shared links. Wait for few seconds before the video plays, in the case of TeraBox links.</h5>
 -->
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="playbutton" onclick="return play()">PLAY</button>
+    <button onclick="return play()">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''">CLEAR</button>
     <br><br>
   </center>
+  <script>
+    function play() {
+      var qry = document.getElementById("vid").value;
+      if (qry == null) {
+        alert("Please Enter URL First!");
+      } else {
+        // Check if the URL contains 'Terabox'
+        if (qry.toLowerCase().includes('teraboxapp')) {
+            // Extract the video ID from the URL
+            var videoId = qry.split('/').slice(-1)[0];
+
+            // Remove the first character (assuming it's always '1')
+            videoId = videoId.substring(1);
+
+            // Construct the request URL for preparation
+            var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
+
+            // Make a request to the preparation URL
+            fetch(requestUrl)
+            .then(response => {
+                // Wait 1 second before playing the video
+                setTimeout(() => {
+                    // Construct the new URL in the desired format
+                    var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
+                    document.getElementById("player").src=playUrl;
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('Error fetching preparation URL:', error);
+                alert('Failed to prepare playback. Please try again later.');
+            });
+        } else {
+          // Not a terabox URL, play as usual
+          document.getElementById("player").src = qry;
+        }
+      }
+    }
+  </script>
 
 <div class="box-container" id="boxContainer">
   <!-- Initial post -->
