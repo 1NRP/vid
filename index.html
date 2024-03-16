@@ -26,7 +26,7 @@
     }
 
     select {
-      width: 120px;
+      width: 80px;
       padding: 4px 4px;
       border-radius: 40px;
     }
@@ -82,7 +82,7 @@
     }
 
     .input-container input[type="text"] {
-      width: 120px;
+      width: 80px;
       padding: 4px 10px;
       border-radius: 40px;
       margin-right: 5px;
@@ -122,12 +122,11 @@
     #player {
       max-width: 1080px;
       min-height: 200px;
-      margin: auto; /* Center the video player horizontally */
-      display: block; /* Ensure the video player appears as a block element */
+      margin: auto; 
+      display: block; 
     }
   </style>
 </head>
-<body>
 <center>
     <video controls="controls" id="player" tabindex="0" poster="my_name_logo_2.png" loop="loop" src="" width="100%">
     </video>
@@ -150,9 +149,9 @@
 <div class="input-container">
   <label for="channelName"></label>
   <select id="channelName">
-    <option value="desi_bhabhi_nisha_mdisk">1st 14500</option>
-    <option value="desi_bhabhi_shila_terabox">2nd 8400</option>
-    <option value="desi_bhabhi_preeti_mdisk">3rd 82000</option>
+    <option value="desi_bhabhi_nisha_mdisk">1st</option>
+    <option value="desi_bhabhi_shila_terabox">2nd</option>
+    <option value="desi_bhabhi_preeti_mdisk">3rd</option>
      <!-- Add more channel options here if needed -->
   </select>
   <label for="messageID"></label>
@@ -162,16 +161,16 @@
 </div>
 
 <script>
-  let currentMessageID = 14450;
+  let currentMessageID = 14451;
   let currentChannelName = "desi_bhabhi_nisha_mdisk";
-  let initialMessageID = 14450; // to keep track of the message ID after GO button click
+  let initialMessageID = 14451; // to keep track of the message ID after GO button click
 
   function loadNextPosts() {
     const container = document.getElementById('boxContainer');
     const channelName = document.getElementById('channelName').value;
     const inputVal = document.getElementById('messageID').value;
     const [interval, startID] = inputVal.includes('/') ? inputVal.split('/').map(Number) : [1, parseInt(inputVal)];
-    for (let i = 0; i < 11; i++) {
+    for (let i = 0; i < 10; i++) {
       currentMessageID = startID + (i * interval); // Increment messageID with the interval
       const script = document.createElement('script');
       script.async = true;
@@ -211,7 +210,7 @@
     // Update initial message ID for subsequent Next button clicks
     initialMessageID = parseInt(currentMessageID) + 1;
   }
-</script>
+
   document.getElementById('channelName').addEventListener('change', function() {
     // Get the selected option value
     var selectedValue = this.value;
@@ -220,12 +219,14 @@
     // Example:
     // If selectedValue is 'desi_bhabhi_nisha_mdisk', set the message ID box value to '1232'
     if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
-        document.getElementById('messageID').value = '1232';
+        document.getElementById('messageID').value = '14450';
     } else if (selectedValue === 'desi_bhabhi_shila_terabox') {
-        // Set message ID box value for another option
+        document.getElementById('messageID').value = '8350';
     } else if (selectedValue === 'desi_bhabhi_preeti_mdisk') {
+        document.getElementById('messageID').value = '82025';
         // Set message ID box value for another option
     }
-});
+  });
+</script>
 </body>
 </html>
