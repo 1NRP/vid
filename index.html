@@ -62,7 +62,7 @@
       border: 2px solid #999;
       padding: 4px;
       border-radius: 10px;
-      margin: 10px 0;
+      margin: 2px 0;
       margin-left: 1px;
       cursor: pointer;
     }
@@ -211,13 +211,13 @@
     initialMessageID = parseInt(currentMessageID) + 1;
   }
 
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('messageID').value = '14450';
   document.getElementById('channelName').addEventListener('change', function() {
     // Get the selected option value
     var selectedValue = this.value;
 
-    // Based on the selected value, set the message ID box value accordingly
-    // Example:
-    // If selectedValue is 'desi_bhabhi_nisha_mdisk', set the message ID box value to '1232'
+    // If selectedValue is 'desi_bhabhi_nisha_mdisk', set the message ID box value to '14450'
     if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
         document.getElementById('messageID').value = '14450';
     } else if (selectedValue === 'desi_bhabhi_shila_terabox') {
