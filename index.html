@@ -82,6 +82,117 @@
     <button id="clearBtn" onclick="document.getElementById('vid').value=''">CLEAR</button>
     <br><br>
   </center>
+  <div class="box-container" id="boxContainer">
+    <!-- Initial post -->
+    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="desi_bhabhi_nisha_mdisk/14451" data-width="100%" data-userpic="false" data-color="999" data-dark="1"></script>
+  </div>
+  <style>
+  .box-container {
+    width: 100%;
+    height: 400px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .input-container label {
+    margin-right: 10px;
+  }
+
+  .input-container input[type="text"] {
+    width: 120px; /* Increased width to accommodate the slash */
+    margin-right: 10px;
+  }
+
+  .input-container button {
+    width: 60px;
+  }
+
+  .btn-next {
+    background-color: blue;
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<div class="box-container" id="boxContainer">
+  <!-- Initial post -->
+  <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="desi_bhabhi_nisha_mdisk/14451" data-width="100%" data-userpic="false" data-color="999" data-dark="1"></script>
+</div>
+
+<div class="input-container">
+  <label for="channelName">Channel Name:</label>
+  <select id="channelName">
+    <option value="desi_bhabhi_nisha_mdisk">1st-14500</option>
+    <option value="desi_bhabhi_shila_terabox">2nd-8400</option>
+    <option value="desi_bhabhi_preeti_mdisk">3rd-82000</option>
+     <!-- Add more channel options here if needed -->
+  </select>
+  <label for="messageID">Message ID:</label>
+  <input type="text" id="messageID">
+  <button onclick="fetchSinglePost()">GO</button>
+  <button onclick="loadNextPosts()" class="btn-next">Next</button>
+</div>
+
+<script>
+  let currentMessageID = 14451;
+  let currentChannelName = "desi_bhabhi_nisha_mdisk";
+  let initialMessageID = 14451; // to keep track of the message ID after GO button click
+
+  function loadNextPosts() {
+    const container = document.getElementById('boxContainer');
+    const channelName = document.getElementById('channelName').value;
+    const inputVal = document.getElementById('messageID').value;
+    const [interval, startID] = inputVal.split('/').map(Number);
+    for (let i = 0; i < 10; i++) {
+      currentMessageID = startID + (i * interval); // Increment messageID with the interval
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://telegram.org/js/telegram-widget.js?22`;
+      script.dataset.telegramPost = `${channelName}/${currentMessageID}`;
+      script.dataset.width = `100%`;
+      script.dataset.userpic = `false`;
+      script.dataset.color = `999`;
+      script.dataset.dark = `1`;
+      container.appendChild(script);
+      // Manually trigger rendering of Telegram widget
+      window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(container.lastChild);
+    }
+    // Update current channel name
+    currentChannelName = channelName;
+    // Update message ID input field
+    document.getElementById('messageID').value = inputVal; // Retain the original format
+  }
+
+  function fetchSinglePost() {
+    const container = document.getElementById('boxContainer');
+    const channelName = document.getElementById('channelName').value;
+    const messageID = document.getElementById('messageID').value;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://telegram.org/js/telegram-widget.js?22`;
+    script.dataset.telegramPost = `${channelName}/${messageID}`;
+    script.dataset.width = `100%`;
+    script.dataset.userpic = `false`;
+    script.dataset.color = `999`;
+    script.dataset.dark = `1`;
+    container.appendChild(script);
+    // Manually trigger rendering of Telegram widget
+    window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(container.lastChild);
+    // Update current message ID
+    currentMessageID = messageID;
+    // Update initial message ID for subsequent Next button clicks
+    initialMessageID = parseInt(messageID) + 1;
+  }
+</script>
   <script>
     function play() {
       var qry = document.getElementById("vid").value;
@@ -120,117 +231,5 @@
       }
     }
   </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  .box-container {
-    width: 100%;
-    height: 300px;
-    overflow-y: scroll;
-    border: 2px solid #999;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-
-  .input-container {
-    display: flex;
-    align-items: center;
-    border-radius: 2px;
-    margin-bottom: 10px;
-  }
-
-  .input-container label {
-    margin-right: 10px;
-  }
-
-  .input-container input[type="text"] {
-    width: 60px;
-    border-radius: 2px;
-    margin-right: 10px;
-  }
-
-  .input-container button {
-    width: 60px;
-    margin-right: 10px;
-    border-radius: 2px;
-
-  }
-
-  .btn-next {
-    background-color: red;
-    color: white;
-  }
-</style>
-</head>
-<body>
-
-<div class="box-container" id="boxContainer">
-  <!-- Initial post -->
-  <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="desi_bhabhi_nisha_mdisk/14450" data-width="100%" data-userpic="false" data-color="999" data-dark="1"></script>
-</div>
-
-<div class="input-container">
-  <label for="channelName"></label>
-  <select id="channelName" onchange="updatePlaceholder()">
-    <option value="desi_bhabhi_nisha_mdisk">1st 14500</option>
-    <option value="desi_bhabhi_shila_terabox">2nd 8400</option>
-    <option value="desi_bhabhi_preeti_mdisk">3rd 82000</option>
-     <!-- Add more channel options here if needed -->
-  </select>
-  <label for="messageID"></label>
-  <input type="text" id="messageID">
-  <button onclick="fetchSinglePost()">GO</button>
-  <button onclick="loadNextPosts()" class="btn-next">NEXT</button>
-</div>
-
-<script>
-  let currentPostNumber = 14450;
-  const postsPerPage = 10;
-  let currentMessageID = 14450;
-
-  function loadNextPosts() {
-    const container = document.getElementById('boxContainer');
-    const channelName = document.getElementById('channelName').value;
-    for (let i = 0; i < postsPerPage; i++) {
-      currentPostNumber++;
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = `https://telegram.org/js/telegram-widget.js?22`;
-      script.dataset.telegramPost = `${channelName}/${currentPostNumber}`;
-      script.dataset.width = `100%`;
-      script.dataset.userpic = `false`;
-      script.dataset.color = `999`;
-      script.dataset.dark = `1`;
-      container.appendChild(script);
-      // Manually trigger rendering of Telegram widget
-      window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(container.lastChild);
-    }
-  }
-  }
-
-  function fetchSinglePost() {
-    const container = document.getElementById('boxContainer');
-    const channelName = document.getElementById('channelName').value;
-    currentMessageID = document.getElementById('messageID').value;
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = `https://telegram.org/js/telegram-widget.js?22`;
-    script.dataset.telegramPost = `${channelName}/${currentMessageID}`;
-    script.dataset.width = `100%`;
-    script.dataset.userpic = `false`;
-    script.dataset.color = `999`;
-    script.dataset.dark = `1`;
-    container.appendChild(script);
-    // Manually trigger rendering of Telegram widget
-    window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(container.lastChild);
-  }
-</script>
 </body>
 </html>
