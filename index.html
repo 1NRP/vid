@@ -54,35 +54,44 @@
     }
 
     .box-container {
-      width: 100%;
+      width:  90%;
       height: 300px;
       overflow-y: scroll;
-      border: 1px solid #ccc;
+      border: 2px solid #999;
       padding: 10px;
+      border-radius: 8px;
       margin-bottom: 10px;
+      cursor: pointer;
     }
 
     .input-container {
       display: flex;
       align-items: center;
       margin-bottom: 10px;
+      cursor: pointer;
     }
 
     .input-container label {
       margin-right: 10px;
+      cursor: pointer;
     }
 
     .input-container input[type="text"] {
-      width: 120px; /* Increased width to accommodate the slash */
+      width: 100px; 
+      border-radius: 4px;
       margin-right: 10px;
+      cursor: pointer;
     }
 
     .input-container button {
+      margin-right: 10px
       width: 60px;
+
     }
 
     .btn-next {
-      background-color: blue;
+      background-color: red;
+      border-radius: 4px;
       color: white;
     }
 
@@ -125,17 +134,17 @@
 </div>
 
 <div class="input-container">
-  <label for="channelName">Channel Name:</label>
+  <label for="channelName"></label>
   <select id="channelName">
-    <option value="desi_bhabhi_nisha_mdisk">1st-14500</option>
-    <option value="desi_bhabhi_shila_terabox">2nd-8400</option>
-    <option value="desi_bhabhi_preeti_mdisk">3rd-82000</option>
+    <option value="desi_bhabhi_nisha_mdisk">1st 14500</option>
+    <option value="desi_bhabhi_shila_terabox">2nd 8400</option>
+    <option value="desi_bhabhi_preeti_mdisk">3rd 82000</option>
      <!-- Add more channel options here if needed -->
   </select>
-  <label for="messageID">Message ID:</label>
+  <label for="messageID"></label>
   <input type="text" id="messageID">
   <button onclick="fetchSinglePost()">GO</button>
-  <button onclick="loadNextPosts()" class="btn-next">Next</button>
+  <button onclick="loadNextPosts()" class="btn-next">NEXT</button>
 </div>
 
 <script>
