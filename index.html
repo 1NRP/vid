@@ -77,22 +77,31 @@
     }
 
     .input-container input[type="text"] {
-      width: 100px; 
+      width: 20%;
+      max-width: 140px;
+      height: 20px;
       border-radius: 4px;
       margin-right: 10px;
       cursor: pointer;
     }
 
-    .input-container button {
+    #go-btn {
+      background-color: DodgerBlue;
+      width: 10%;
+      max-width: 100px
+      border-radius: 50%;
+      cursor: pointer;
       margin-right: 10px
-      width: 60px;
 
     }
 
-    .btn-next {
+    #btn-next {
       background-color: red;
+      width: 15%;
+      max-width: 140px;
       border-radius: 4px;
       color: white;
+      cursor: pointer;
     }
 
     h1 {
@@ -143,7 +152,7 @@
   </select>
   <label for="messageID"></label>
   <input type="text" id="messageID">
-  <button onclick="fetchSinglePost()">GO</button>
+  <button onclick="fetchSinglePost()" class="go-btn">GO</button>
   <button onclick="loadNextPosts()" class="btn-next">NEXT</button>
 </div>
 
