@@ -99,6 +99,7 @@
       background-color: #444;
       padding: 6px;
       width: 30px;
+      color: white;
       border: none;
       border-radius: 50%;
       cursor: pointer;
@@ -147,7 +148,7 @@
     font-family: 'Raleway', sans-serif;
     font-size: 15px;
     font-weight: 500;
-    margin-right: 80px;
+    margin-right: 60px;
   }
   .duration {
     color: #999;
@@ -260,9 +261,9 @@ function fetchPosts() {
           <div>
             <img src="${poster}" alt="Poster" class="poster-image">
             <div class="post-details">
-              <p class="duration">${durationInMinutes}<span style="color: #666;">Min</span></p>          
+              <p class="duration">${durationInMinutes}<span style="color: #666;"> Min</span></p>          
               <p
-class="size">${sizeInMB}<span style="color: #666;">MB</span></p>
+class="size">${sizeInMB}<span style="color: #666;"> MB</span></p>
               <p><button id="copy" onclick="copyToClipboard('${link}')">🌐</button></p>    
               <p><a href="${link}" target="_blank">${link}</a></p>
             </div>
