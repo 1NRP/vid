@@ -18,7 +18,7 @@
     select {
       width: 65%;
       max-width: 300px;
-      padding: 6px 2px;
+      padding: 6px 4px;
       margin: 0px 0;
       display: inline-block;
       background-color: #000;
@@ -246,7 +246,7 @@ function fetchPosts() {
   const postsContainer = document.getElementById('posts-container');
   postsContainer.innerHTML = ''; // Clear previous posts
 
-  fetch('https://diskapp-1-k4347368.deta.app/posts?random=true&limit=${n}')
+  fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=${n}')
     .then(response => response.json())
     .then(data => {
       data.items.forEach(item => {
@@ -289,7 +289,7 @@ function copyToClipboard(text) {
     });
 }
 
-fetchPosts(); // Remove "//" at beginning to load photos at page loading.
+//fetchPosts(); // Remove "//" at beginning to load photos at page loading.
 </script>
 
 <div class="box-container" id="boxContainer">
