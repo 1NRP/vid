@@ -32,12 +32,12 @@
       padding: 4px 20px;
       margin-left: 0px;
       color: white;
-      background-color: #333;
+      background-color: #444;
       border-radius: 40px;
     }
 
     #button-play {
-      background-color: #666;
+      background-color: #444;
       width: 15%;
       color: white; 
       max-width: 100px;
@@ -49,7 +49,7 @@
     }
 
     #clearBtn {
-      background-color: #666;
+      background-color: #444;
       width: 15%;
       color: white; 
       max-width: 100px;
@@ -89,14 +89,14 @@
       width: 100px;
       padding: 4px 10px;
       color: white;
-      background-color: #333;
+      background-color: #444;
       border-radius: 40px;
       margin-right: 5px;
       cursor: pointer;
     }
 
     #go-btn {
-      background-color: #666;
+      background-color: #444;
       padding: 6px;
       width: 30px;
       border: none;
@@ -118,7 +118,7 @@
   .poster-image {
     max-width: 100%;
     height: auto;
-    border-radius: 6px;
+    border-radius: 4px;
   }
   .post-details {
     display: flex;
@@ -126,7 +126,7 @@
     align-items: center;
   }
   #reload {
-    background-color: #666;
+    background-color: #444;
     padding: 8px;
     border: none;
     border-radius: 50%;
@@ -135,8 +135,8 @@
     margin-left: 80%;
   }
   #copy {
-    background-color: #333;
-    padding: 6px;
+    background-color: #444;
+    padding: 8px;
     margin-right: 20px;
     border: none;
     border-radius: 4px;
@@ -157,7 +157,7 @@
     margin-right: 20px;
   }
     #btn-next {
-      background-color: #666;
+      background-color: #444;
       padding: 4px;
       width: 50px;
       border: none;
@@ -260,7 +260,7 @@ function fetchPosts() {
           <div>
             <img src="${poster}" alt="Poster" class="poster-image">
             <div class="post-details">
-              <p class="duration">${durationInMinutes} <span style="color: #666;">Min</span></p>          
+              <p class="duration">${durationInMinutes}<span style="color: #666;">Min</span></p>          
               <p
 class="size">${sizeInMB}<span style="color: #666;">MB</span></p>
               <p><button id="copy" onclick="copyToClipboard('${link}')">🌐</button></p>    
