@@ -16,6 +16,7 @@
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
     <h5>Supports TeraBox shared links. Wait for few seconds before the video plays, in the case of TeraBox links.</h5>
 -->
+    <button id="pasteCopyButton" onclick="handleButtonClick()">📋</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="return play()">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''">CLEAR</button>
@@ -23,10 +24,7 @@
   </center>
   
 <div class="post-container" id="posts-container"></div>
-<button id="pasteCopyButton" onclick="handleButtonClick()">PASTE</button>
-<button id="reload" onclick="fetchPosts()">🔄</button>
-
-
+<button id="reload" onclick="fetchPosts()">🔁</button>
 <div class="box-container" id="boxContainer">
   <!-- Initial post -->
   <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="stickersChannel/1064" data-width="100%" data-userpic="false" data-color="999" data-dark="1"></script>
