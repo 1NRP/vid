@@ -56,9 +56,9 @@ function fetchPosts() {
           <div>
             <img src="${poster}" alt="Poster" class="poster-image">
             <div class="post-details">
-              <p class="duration">${durationInMinutes}<span style="color: #666;"> Min</span></p>          
+              <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
               <p
-class="size">${sizeInMB}<span style="color: #666;"> MB</span></p>
+class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
               <p><button id="copy" onclick="copyToClipboard('${link}')">🌐</button></p>    
               <p><a href="${link}" target="_blank">${link}</a></p>
             </div>
