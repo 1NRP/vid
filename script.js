@@ -162,7 +162,7 @@ let clickTimer;
 let isCopying = false;
 
 // Set initial mode to "paste"
-document.getElementById('pasteCopyButton').innerText = '📄';
+document.getElementById('pasteCopyButton').innerText = '🗒';
 
 // Function to paste text from placeholder to textbox
 function pasteText() {
@@ -184,7 +184,7 @@ function handleButtonClick() {
             toggleMode();
         } else {
             if (isCopying) {
-                copyTextBoxToClipboard(); // Changed function name here
+                copyTextBoxToClipboard(); 
             } else {
                 pasteText();
             }
@@ -196,6 +196,6 @@ function handleButtonClick() {
 // Function to toggle between paste and copy modes
 function toggleMode() {
     isCopying = !isCopying;
-    document.getElementById('pasteCopyButton').innerText = isCopying ? '✂️' : '📄';
+    document.getElementById('pasteCopyButton').innerText = isCopying ? '✂️' : '🗒';
 }
 
