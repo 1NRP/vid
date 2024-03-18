@@ -1,0 +1,157 @@
+<script>
+    function play() {
+      var qry = document.getElementById("vid").value;
+      if (qry == null) {
+        alert("Please Enter URL First!");
+      } else {
+        // Check if the URL contains 'Terabox'
+        if (qry.toLowerCase().includes('teraboxapp')) {
+            // Extract the video ID from the URL
+            var videoId = qry.split('/').slice(-1)[0];
+
+            // Remove the first character (assuming it's always '1')
+            videoId = videoId.substring(1);
+
+            // Construct the request URL for preparation
+            var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
+
+            // Make a request to the preparation URL
+            fetch(requestUrl)
+            .then(response => {
+                // Wait 1 second before playing the video
+                setTimeout(() => {
+                    // Construct the new URL in the desired format
+                    var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
+                    document.getElementById("player").src=playUrl;
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('Error fetching preparation URL:', error);
+                alert('Failed to prepare playback. Please try again later.');
+            });
+        } else {
+          // Not a terabox URL, play as usual
+          document.getElementById("player").src = qry;
+        }
+      }
+    }
+  </script>
+
+<script>
+function fetchPosts() {
+  const postsContainer = document.getElementById('posts-container');
+  postsContainer.innerHTML = ''; // Clear previous posts
+
+  fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=${n}')
+    .then(response => response.json())
+    .then(data => {
+      data.items.forEach(item => {
+        const poster = item.poster;
+        const link = item.link;
+        const durationInMinutes = Math.round(item.duration / 60);
+        const sizeInMB = (item.size / 1024 / 1024).toFixed(0);
+        
+        const postElement = document.createElement('div');
+        postElement.classList.add('post');
+        postElement.innerHTML = `
+          <div>
+            <img src="${poster}" alt="Poster" class="poster-image">
+            <div class="post-details">
+              <p class="duration">${durationInMinutes}<span style="color: #666;"> Min</span></p>          
+              <p
+class="size">${sizeInMB}<span style="color: #666;"> MB</span></p>
+              <p><button id="copy" onclick="copyToClipboard('${link}')">🌐</button></p>    
+              <p><a href="${link}" target="_blank">${link}</a></p>
+            </div>
+          </div>
+        `;
+        postsContainer.appendChild(postElement);
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      // Removed console log
+      // alert('Link copied to clipboard!');
+    })
+    .catch(err => {
+      console.error('Failed to copy link to clipboard:', err);
+      alert('Failed to copy link to clipboard!');
+    });
+}
+
+//fetchPosts(); // Remove "//" at beginning to load photos at page loading.
+</script>
+
+<script>
+  let currentMessageID = 14450;
+  let currentChannelName = "desi_bhabhi_nisha_mdisk";
+  let initialMessageID = 14450; // to keep track of the message ID after GO button click
+
+  function loadNextPosts() {
+    const container = document.getElementById('boxContainer');
+    const channelName = document.getElementById('channelName').value;
+    const inputVal = document.getElementById('messageID').value;
+    const [interval, startID] = inputVal.includes('/') ? inputVal.split('/').map(Number) : [1, parseInt(inputVal)];
+    for (let i = 0; i < 21; i++) { // 21 is the no. of Posts to be loaded when 'NEXT' button is clicked.
+      currentMessageID = startID + (i * interval); // Increment messageID with the interval
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://telegram.org/js/telegram-widget.js?22`;
+      script.dataset.telegramPost = `${channelName}/${currentMessageID}`;
+      script.dataset.width = `100%`;
+      script.dataset.userpic = `false`;
+      script.dataset.color = `999`;
+      script.dataset.dark = `1`;
+      container.appendChild(script);
+      // Manually trigger rendering of Telegram widget
+      window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(container.lastChild);
+    }
+    // Update current channel name
+    currentChannelName = channelName;
+    // Update message ID input field
+    document.getElementById('messageID').value = `${interval}/${currentMessageID}`; // Retain the original format
+  }
+
+  function fetchSinglePost() {
+    const container = document.getElementById('boxContainer');
+    const channelName = document.getElementById('channelName').value;
+    const messageID = document.getElementById('messageID').value;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://telegram.org/js/telegram-widget.js?22`;
+    script.dataset.telegramPost = `${channelName}/${messageID}`;
+    script.dataset.width = `100%`;
+    script.dataset.userpic = `false`;
+    script.dataset.color = `999`;
+    script.dataset.dark = `1`;
+    container.appendChild(script);
+    // Manually trigger rendering of Telegram widget
+    window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(container.lastChild);
+    // Update current message ID
+    currentMessageID = messageID.split('/')[1];
+    // Update initial message ID for subsequent Next button clicks
+    initialMessageID = parseInt(currentMessageID) + 1;
+  }
+  
+  document.getElementById('channelName').addEventListener('change', function() {
+    // Get the selected option value
+    var selectedValue = this.value;
+
+    // If selectedValue is 'desi_bhabhi_nisha_mdisk', set the message ID box value to '14450'
+    if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
+        document.getElementById('messageID').value = '14450';
+    } else if (selectedValue === 'desi_bhabhi_shila_terabox') {
+        document.getElementById('messageID').value = '8350';
+    } else if (selectedValue === 'desi_bhabhi_preeti_mdisk') {
+        document.getElementById('messageID').value = '82025';
+        // Set message ID box value for another option
+    }
+  });
+</script>
+
