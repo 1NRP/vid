@@ -23,6 +23,7 @@
   </center>
   
 <div class="post-container" id="posts-container"></div>
+<button id="pasteCopyButton" onclick="handleButtonClick()">PASTE</button>
 <button id="reload" onclick="fetchPosts()">🔄</button>
 
 
@@ -43,6 +44,7 @@
   <input type="text" id="messageID">
   <button id="go-btn" onclick="fetchSinglePost()">GO</button>
   <button id="btn-next" onclick="loadNextPosts()">NEXT</button>
+  <textarea id="textBox"></textarea>
 </div>
 <script src="script.js"></script>
 </body>
