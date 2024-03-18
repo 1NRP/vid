@@ -142,13 +142,15 @@ function copyToClipboard(text) {
     // Get the selected option value
     var selectedValue = this.value;
 
-    // If selectedValue is 'desi_bhabhi_nisha_mdisk', set the message ID box value to '14450'
-    if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
-        document.getElementById('messageID').value = '14450';
+    // Latest message ID for different channels.
+    if (selectedValue === 'tburls') {
+        document.getElementById('messageID').value = '2';
     } else if (selectedValue === 'desi_bhabhi_shila_terabox') {
-        document.getElementById('messageID').value = '8350';
+        document.getElementById('messageID').value = '8400';
     } else if (selectedValue === 'desi_bhabhi_preeti_mdisk') {
-        document.getElementById('messageID').value = '82025';
+        document.getElementById('messageID').value = '82000';
+    } else if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
+        document.getElementById('messageID').value = '14500';
         // Set message ID box value for another option
     }
   });
