@@ -153,48 +153,49 @@ function copyToClipboard(text) {
     }
   });
 
-// "Paste-Link" Textbox
+// Paste-Link Textbox
 
-    const textBox = document.getElementById('textBox');
-    const placeholder = document.getElementById('vid');
-    let clickCount = 0;
-    let clickTimer;
-    let isCopying = false;
+const textBox = document.getElementById('textBox');
+const placeholder = document.getElementById('vid');
+let clickCount = 0;
+let clickTimer;
+let isCopying = false;
 
-    // Set initial mode to "paste"
-    document.getElementById('pasteCopyButton').innerText = '📄';
+// Set initial mode to "paste"
+document.getElementById('pasteCopyButton').innerText = '📄';
 
-    // Function to paste text from placeholder to textbox
-    function pasteText() {
-        textBox.value += (textBox.value.length > 0 ? '\n\n' : '') + placeholder.value;
-    }
+// Function to paste text from placeholder to textbox
+function pasteText() {
+    textBox.value += (textBox.value.length > 0 ? '\n\n' : '') + placeholder.value;
+}
 
-    // Function to copy text from textbox to clipboard
-    function copyToClipboard() {
-        textBox.select();
-        document.execCommand('copy');
-    }
+// Function to copy text from textbox to clipboard
+function copyTextBoxToClipboard() {
+    textBox.select();
+    document.execCommand('copy');
+}
 
-    // Handle button click
-    function handleButtonClick() {
-        clickCount++;
-        clearTimeout(clickTimer);
-        clickTimer = setTimeout(() => {
-            if (clickCount >= 3) {
-                toggleMode();
+// Handle button click
+function handleButtonClick() {
+    clickCount++;
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => {
+        if (clickCount >= 3) {
+            toggleMode();
+        } else {
+            if (isCopying) {
+                copyTextBoxToClipboard(); // Changed function name here
             } else {
-                if (isCopying) {
-                    copyToClipboard();
-                } else {
-                    pasteText();
-                }
+                pasteText();
             }
-            clickCount = 0;
-        }, 800);  // 3 clicks in 0.8 seconds.
-    }
+        }
+        clickCount = 0;
+    }, 800);  // 3 clicks in 0.8 seconds or 800 milliseconds.
+}
 
-    // Function to toggle between paste and copy modes
-    function toggleMode() {
-        isCopying = !isCopying;
-        document.getElementById('pasteCopyButton').innerText = isCopying ? '✂️' : '📄';
-    }
+// Function to toggle between paste and copy modes
+function toggleMode() {
+    isCopying = !isCopying;
+    document.getElementById('pasteCopyButton').innerText = isCopying ? '✂️' : '📄';
+}
+
