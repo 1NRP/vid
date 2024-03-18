@@ -35,7 +35,7 @@
       }
     }
 
-//Link Pasting Textbox
+// Link Pasting Textbox
 
     const textBox = document.getElementById('textBox');
     const placeholder = document.getElementById('vid');
@@ -44,7 +44,7 @@
     let isCopying = false;
 
     // Set initial mode to "paste"
-    document.getElementById('pasteCopyButton').innerText = 'Paste';
+    document.getElementById('pasteCopyButton').innerText = '📄';
 
     // Function to paste text from placeholder to textbox
     function pasteText() {
@@ -78,7 +78,7 @@
     // Function to toggle between paste and copy modes
     function toggleMode() {
         isCopying = !isCopying;
-        document.getElementById('pasteCopyButton').innerText = isCopying ? 'Copy' : 'Paste';
+        document.getElementById('pasteCopyButton').innerText = isCopying ? '✂️' : '📄';
     }
 
 // Post Viewer
