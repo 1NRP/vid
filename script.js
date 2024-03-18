@@ -1,4 +1,3 @@
-<script>
     function play() {
       var qry = document.getElementById("vid").value;
       if (qry == null) {
@@ -35,9 +34,9 @@
         }
       }
     }
-  </script>
 
-<script>
+// Post Viewer
+
 function fetchPosts() {
   const postsContainer = document.getElementById('posts-container');
   postsContainer.innerHTML = ''; // Clear previous posts
@@ -86,9 +85,9 @@ function copyToClipboard(text) {
 }
 
 //fetchPosts(); // Remove "//" at beginning to load photos at page loading.
-</script>
 
-<script>
+//Telegram
+
   let currentMessageID = 14450;
   let currentChannelName = "desi_bhabhi_nisha_mdisk";
   let initialMessageID = 14450; // to keep track of the message ID after GO button click
@@ -153,5 +152,4 @@ function copyToClipboard(text) {
         // Set message ID box value for another option
     }
   });
-</script>
 
