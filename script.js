@@ -1,3 +1,58 @@
+    // "Paste PLAY" function
+
+      async function play() {
+            try {
+                      // Check if the clipboard API is supported
+                              if (!navigator.clipboard) {
+                                            console.error('Clipboard API not supported');
+                                                        return;
+                              }
+                                      
+                                      // Try to read text from clipboard
+                                              const text = await navigator.clipboard.readText();
+                                                      
+                                                      // Update the input field with the text from the clipboard
+                                                              document.getElementById('vid').value = text;
+                                                                      
+                                                                      // Trigger video playback with the URL from the input field
+                                                                              var vid = document.getElementById("player");
+                                                                                      vid.src = document.getElementById("vid").value;
+                                                                                              vid.play();
+                            } catch (err) {
+                                      console.error('Failed to read clipboard contents:', err);
+                                              if (err.name === 'NotAllowedError') {
+                                                            console.error('Permission to read clipboard denied');
+                                              }
+                                            }
+                                          }// "Paste PLAY" function
+
+  async function play() {
+    try {
+        // Check if the clipboard API is supported
+        if (!navigator.clipboard) {
+            console.error('Clipboard API not supported');
+            return;
+        }
+        
+        // Try to read text from clipboard
+        const text = await navigator.clipboard.readText();
+        
+        // Update the input field with the text from the clipboard
+        document.getElementById('vid').value = text;
+        
+        // Trigger video playback with the URL from the input field
+        var vid = document.getElementById("player");
+        vid.src = document.getElementById("vid").value;
+        vid.play();
+    } catch (err) {
+        console.error('Failed to read clipboard contents:', err);
+        if (err.name === 'NotAllowedError') {
+            console.error('Permission to read clipboard denied');
+        }
+    }
+    }
+    
+    
     function play() {
       var qry = document.getElementById("vid").value;
       if (qry == null) {
