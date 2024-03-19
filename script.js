@@ -1,5 +1,4 @@
-// "Paste and PLAY" function
-
+// Paste link and PLAY button function
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
     if (qry === "") {
@@ -57,6 +56,7 @@ async function play() {
         document.getElementById("player").src = qry;
     }
 }
+
 
 // Post Viewer function
 
@@ -126,7 +126,7 @@ function copyToClipboard(text) {
       script.async = true;
       script.src = `https://telegram.org/js/telegram-widget.js?22`;
       script.dataset.telegramPost = `${channelName}/${currentMessageID}`;
-      script.dataset.width = `100%`;
+      script.dataset.width = `90%`;
       script.dataset.userpic = `false`;
       script.dataset.color = `999`;
       script.dataset.dark = `1`;
@@ -148,7 +148,7 @@ function copyToClipboard(text) {
     script.async = true;
     script.src = `https://telegram.org/js/telegram-widget.js?22`;
     script.dataset.telegramPost = `${channelName}/${messageID}`;
-    script.dataset.width = `100%`;
+    script.dataset.width = `90%`;
     script.dataset.userpic = `false`;
     script.dataset.color = `999`;
     script.dataset.dark = `1`;
@@ -178,7 +178,7 @@ function copyToClipboard(text) {
     }
   });
 
-// Paste-Link Textbox
+// Textbox for all link pastes.
 
 const textBox = document.getElementById('textBox');
 const placeholder = document.getElementById('vid');
@@ -224,30 +224,4 @@ function toggleMode() {
     document.getElementById('pasteCopyButton').innerText = isCopying ? '✂️' : '🗒';
 }
 
-// "Paste PLAY" function
 
-  async function play() {
-    try {
-        // Check if the clipboard API is supported
-        if (!navigator.clipboard) {
-            console.error('Clipboard API not supported');
-            return;
-        }
-        
-        // Try to read text from clipboard
-        const text = await navigator.clipboard.readText();
-        
-        // Update the input field with the text from the clipboard
-        document.getElementById('vid').value = text;
-        
-        // Trigger video playback with the URL from the input field
-        var vid = document.getElementById("player");
-        vid.src = document.getElementById("vid").value;
-        vid.play();
-    } catch (err) {
-        console.error('Failed to read clipboard contents:', err);
-        if (err.name === 'NotAllowedError') {
-            console.error('Permission to read clipboard denied');
-        }
-    }
-    }
