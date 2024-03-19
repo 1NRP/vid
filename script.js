@@ -1,94 +1,43 @@
-    // "Paste PLAY" function
+    // "Paste and PLAY" function
 
-      async function play() {
-            try {
-                      // Check if the clipboard API is supported
-                              if (!navigator.clipboard) {
-                                            console.error('Clipboard API not supported');
-                                                        return;
-                              }
-                                      
-                                      // Try to read text from clipboard
-                                              const text = await navigator.clipboard.readText();
-                                                      
-                                                      // Update the input field with the text from the clipboard
-                                                              document.getElementById('vid').value = text;
-                                                                      
-                                                                      // Trigger video playback with the URL from the input field
-                                                                              var vid = document.getElementById("player");
-                                                                                      vid.src = document.getElementById("vid").value;
-                                                                                              vid.play();
-                            } catch (err) {
-                                      console.error('Failed to read clipboard contents:', err);
-                                              if (err.name === 'NotAllowedError') {
-                                                            console.error('Permission to read clipboard denied');
-                                              }
-                                            }
-                                          }// "Paste PLAY" function
-
-  async function play() {
-    try {
-        // Check if the clipboard API is supported
-        if (!navigator.clipboard) {
-            console.error('Clipboard API not supported');
-            return;
-        }
-        
-        // Try to read text from clipboard
-        const text = await navigator.clipboard.readText();
-        
-        // Update the input field with the text from the clipboard
-        document.getElementById('vid').value = text;
-        
-        // Trigger video playback with the URL from the input field
-        var vid = document.getElementById("player");
-        vid.src = document.getElementById("vid").value;
-        vid.play();
-    } catch (err) {
-        console.error('Failed to read clipboard contents:', err);
-        if (err.name === 'NotAllowedError') {
-            console.error('Permission to read clipboard denied');
-        }
+async function play() {
+    var qry = document.getElementById("vid").value.trim(); // Trim whitespace
+    if (qry === "") {
+        // If input field is empty, paste from clipboard
+        await handleButtonClick();
+        qry = document.getElementById("vid").value.trim(); // Update qry after pasting
     }
+
+    // Check if the URL contains 'Terabox'
+    if (qry.toLowerCase().includes('teraboxapp')) {
+        // Extract the video ID from the URL
+        var videoId = qry.split('/').slice(-1)[0];
+
+        // Remove the first character (assuming it's always '1')
+        videoId = videoId.substring(1);
+
+        // Construct the request URL for preparation
+        var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
+
+        // Make a request to the preparation URL
+        fetch(requestUrl)
+        .then(response => {
+            // Wait 1 second before playing the video
+            setTimeout(() => {
+                // Construct the new URL in the desired format
+                var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
+                document.getElementById("player").src=playUrl;
+            }, 100); // Video plays after buffer of 100 milliseconds from fetching link.
+        })
+        .catch(error => {
+            console.error('Error fetching preparation URL:', error);
+            alert('Failed to prepare playback. Please try again later.');
+        });
+    } else {
+        // Not a terabox URL, play as usual
+        document.getElementById("player").src = qry;
     }
-    
-    
-    function play() {
-      var qry = document.getElementById("vid").value;
-      if (qry == null) {
-        alert("Please Enter URL First!");
-      } else {
-        // Check if the URL contains 'Terabox'
-        if (qry.toLowerCase().includes('teraboxapp')) {
-            // Extract the video ID from the URL
-            var videoId = qry.split('/').slice(-1)[0];
-
-            // Remove the first character (assuming it's always '1')
-            videoId = videoId.substring(1);
-
-            // Construct the request URL for preparation
-            var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
-
-            // Make a request to the preparation URL
-            fetch(requestUrl)
-            .then(response => {
-                // Wait 1 second before playing the video
-                setTimeout(() => {
-                    // Construct the new URL in the desired format
-                    var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
-                    document.getElementById("player").src=playUrl;
-                }, 1000);
-            })
-            .catch(error => {
-                console.error('Error fetching preparation URL:', error);
-                alert('Failed to prepare playback. Please try again later.');
-            });
-        } else {
-          // Not a terabox URL, play as usual
-          document.getElementById("player").src = qry;
-        }
-      }
-    }
+}
 
 // Post Viewer function
 
