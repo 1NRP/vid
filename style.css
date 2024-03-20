@@ -66,8 +66,12 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+  }
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-
     .box-container {
       width:  85%;
       height: 300px;
