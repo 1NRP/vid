@@ -36,10 +36,12 @@
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="return play()">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''">CLEAR</button>
-    <div class="post-container" id="posts-container"></div>
-    <button id="reload" onclick="fetchPosts()">🔄</button>
     <br><br>
 </center>
+<div class="container">
+    <div class="post-container" id="posts-container"></div>
+    <button id="reload" onclick="fetchPosts()">🔄</button>
+</div>
 <script src="script.js"></script>
 </body>
 </html>
