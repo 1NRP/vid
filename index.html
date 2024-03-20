@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,199 +7,6 @@
   <link rel="icon" sizes="192x192" href="images/blue_favicon.png">
   <link rel="stylesheet" href="style.css">
   <title>Nihar's Video Player</title>
-<style>    body {
-      background-color: #000;  
-      color: #fff;
-    }
-
-    input[type=text],
-    select {
-      width: 55%;
-      max-width: 300px;
-      padding: 6px 2px;
-      margin: 0px 0;
-      display: inline-block;
-      background-color: #000;
-      color: white;
-      border: 2px solid #666;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    select {
-      width: 100px;
-      padding: 4px 20px;
-      margin-left: 0px;
-      color: white;
-      background-color: #222;
-      border-radius: 40px;
-    }
-
-    #button-play {
-      background-color: #444;
-      width: 15%;
-      color: white; 
-      max-width: 100px;
-      padding: 8px 1px;
-      margin: 1px 0;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  #pasteCopyButton {
-    background-color: #444;
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 1px;
-    margin-left: 0px;
-  }
-    #textBox {
-      width: 85%;
-      padding: 10px 5px;
-      color: white;
-      border: 2px solid #666;
-      background-color: #222;
-      border-radius: 8px;
-      margin: 4px;
-      margin-left: 0px;
-  }
-    #clearBtn {
-      background-color: #444;
-      width: 15%;
-      color: white; 
-      max-width: 100px;
-      padding: 8px 1px;
-      margin: 1px 0;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .box-container {
-      width:  85%;
-      height: 300px;
-      overflow-y: scroll;
-      border: 2px solid #666;
-      padding: 6px;
-      border-radius: 8px;
-      margin: 2px 0;
-      cursor: pointer;
-    }
-
-    #input-container {
-      display: flex;
-      width: 120px;
-      max-width: 200px;
-      align-items: center;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-
-    .input-container label {
-      margin-right: 1px;
-      cursor: pointer;
-    }
-
-    .input-container input[type="text"] {
-      width: 100px;
-      padding: 4px 10px;
-      color: white;
-      background-color: #222;
-      border-radius: 40px;
-      margin-right: 5px;
-      cursor: pointer;
-    }
-
-    #go-btn {
-      background-color: #444;
-      padding: 6px;
-      width: 30px;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      margin-right: 5px;
-    }
-  .post-container {
-    width: 85%;
-    height: 300px;
-    border-radius: 8px;
-    border: 2px solid #666;
-    padding: 6px;
-    margin-bottom: 4px;
-    
-    margin-left: 2px;
-    overflow-y: scroll;
-  }
-  .poster-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-  }
-  .post-details {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  #reload {
-    background-color: #444;
-    padding: 8px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    margin-bottom: 4px;
-    margin-left: 80%;
-  }
-  #copy {
-    background-color: #444;
-    padding: 6px;
-    margin-right: 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .size {
-    color: #999;
-    font-family: 'Raleway', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    margin-right: 60px;
-  }
-  .duration {
-    color: #999;
-    font-family: 'Raleway', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    margin-right: 20px;
-  }
-    #btn-next {
-      background-color: #444;
-      padding: 4px;
-      width: 50px;
-      border: none;
-      border-radius: 4px;
-      color: white;
-      cursor: pointer;
-    }
-
-    h1 {
-      color: DodgerBlue;
-      font-family: 'Raleway', sans-serif;
-      font-size: 26px;
-      font-weight: 600;
-      line-height: 50px;
-      margin: 0 0 4px;
-      text-align: center;
-    }
-
-    #player {
-      max-width: 720px;
-      min-height: 200px;
-      margin: auto; 
-      display: block; 
-    }</style>
 </head>
 <center>
 <div class="box-container" id="boxContainer"></div>
@@ -230,11 +36,10 @@
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="return play()">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''">CLEAR</button>
+    <div class="post-container" id="posts-container"></div>
+    <button id="reload" onclick="fetchPosts()">🔄</button>
     <br><br>
-  </center>
-  
-<div class="post-container" id="posts-container"></div>
-<button id="reload" onclick="fetchPosts()">🔄</button>
+</center>
 <script src="script.js"></script>
 </body>
 </html>
