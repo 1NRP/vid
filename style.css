@@ -144,6 +144,7 @@
     border-radius: 50%;
     cursor: pointer;
     margin: 4px;
+    margin-left: 4px;
   }
   #copy {
     background-color: #444;
