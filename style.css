@@ -118,7 +118,7 @@
     }
   .post-container {
     width: 85%;
-    height: 300px;
+    height: 400px;
     border-radius: 8px;
     border: 2px solid #666;
     padding: 6px;
@@ -189,8 +189,8 @@
     }
 
     #player {
-      max-width: 720px;
-      min-height: 200px;
+      max-width: 1080px;
+      min-height: 100px;
       margin: auto; 
       display: block; 
     }
