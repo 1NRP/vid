@@ -54,6 +54,7 @@
       background-color: #222;
       border-radius: 8px;
       margin: 4px;
+      margin-left: 0px;
   }
     #clearBtn {
       background-color: #444;
@@ -117,7 +118,7 @@
       margin-right: 5px;
     }
   .post-container {
-    width: 85%;
+    width: 90%;
     height: 400px;
     border-radius: 8px;
     border: 2px solid #666;
