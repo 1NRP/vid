@@ -190,7 +190,7 @@
 
     #player {
       max-width: 1080px;
-      min-height: 100px;
+      min-height: 50px;
       margin: auto; 
       display: block; 
     }
