@@ -111,10 +111,6 @@ function copyToClipboard(text) {
 
 // Telegram Post fetching function
 
-  let currentMessageID = 14450;
-  let currentChannelName = "desi_bhabhi_nisha_mdisk";
-  let initialMessageID = 14450; // to keep track of the message ID after GO button click
-
   function loadNextPosts() {
     const container = document.getElementById('boxContainer');
     const channelName = document.getElementById('channelName').value;
@@ -126,7 +122,7 @@ function copyToClipboard(text) {
       script.async = true;
       script.src = `https://telegram.org/js/telegram-widget.js?22`;
       script.dataset.telegramPost = `${channelName}/${currentMessageID}`;
-      script.dataset.width = `90%`;
+      script.dataset.width = `100%`;
       script.dataset.userpic = `false`;
       script.dataset.color = `999`;
       script.dataset.dark = `1`;
@@ -148,7 +144,7 @@ function copyToClipboard(text) {
     script.async = true;
     script.src = `https://telegram.org/js/telegram-widget.js?22`;
     script.dataset.telegramPost = `${channelName}/${messageID}`;
-    script.dataset.width = `90%`;
+    script.dataset.width = `100%`;
     script.dataset.userpic = `false`;
     script.dataset.color = `999`;
     script.dataset.dark = `1`;
@@ -169,11 +165,9 @@ function copyToClipboard(text) {
     if (selectedValue === 'tburls') {
         document.getElementById('messageID').value = '2';
     } else if (selectedValue === 'desi_bhabhi_shila_terabox') {
-        document.getElementById('messageID').value = '8400';
-    } else if (selectedValue === 'desi_bhabhi_preeti_mdisk') {
-        document.getElementById('messageID').value = '82000';
+        document.getElementById('messageID').value = '8600';
     } else if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
-        document.getElementById('messageID').value = '14500';
+        document.getElementById('messageID').value = '14700';
         // Set message ID box value for another option
     }
   });
@@ -191,7 +185,7 @@ document.getElementById('pasteCopyButton').innerText = '🗒';
 
 // Function to paste text from placeholder to textbox
 function pasteText() {
-    textBox.value += (textBox.value.length > 0 ? '\n\n' : '') + placeholder.value;
+    textBox.value += (textBox.value.length > 0 ? '\n\n\n' : '') + placeholder.value;
 }
 
 // Function to copy text from textbox to clipboard
