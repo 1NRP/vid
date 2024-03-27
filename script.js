@@ -185,7 +185,7 @@ document.getElementById('pasteCopyButton').innerText = '🗒';
 
 // Function to paste text from placeholder to textbox
 function pasteText() {
-    textBox.value += (textBox.value.length > 0 ? '\n\n\n' : '') + placeholder.value;
+    textBox.value += (textBox.value.length > 0 ? '\n\n' : '') + placeholder.value;
 }
 
 // Function to copy text from textbox to clipboard
