@@ -242,13 +242,7 @@ function loadFromCache() {
     }
 }
 
-// Load cached content on page load
+// Load cached Links on page load
 loadFromCache();
 
-// Update cache on every change (debounced)
-let timeoutId;
-document.getElementById('textBox').addEventListener('input', () => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(updateCachedContent, 500); // Update after 500ms delay
-});
 
