@@ -216,7 +216,7 @@ function toggleMode() {
     document.getElementById('pasteCopyButton').innerText = isCopying ? '✂️' : '🗒';
 }
 
-// Function to store & update cached Terabox links in the Textbox (id="textBox")
+// Function to update cached content
 function updateCachedContent() {
     const textBoxContent = document.getElementById('textBox').value;
     const currentTime = new Date().getTime();
@@ -235,13 +235,21 @@ function updateCachedContent() {
     }, expirationTime);
 }
 
-// Event listener for changes in the textbox
+// Event listener for text box changes
 document.getElementById('textBox').addEventListener('input', updateCachedContent);
 
-// Load cached Terabox links on page load
+// Load cached content on page load
 window.onload = function() {
     const cachedItem = JSON.parse(localStorage.getItem('cachedTextBoxContent'));
     if (cachedItem) {
         document.getElementById('textBox').value = cachedItem.content;
     }
 };
+
+// Load cached content if available when DOMContentLoaded event fires
+document.addEventListener('DOMContentLoaded', function() {
+    const cachedItem = JSON.parse(localStorage.getItem('cachedTextBoxContent'));
+    if (cachedItem) {
+        document.getElementById('textBox').value = cachedItem.content;
+    }
+});
