@@ -71,8 +71,7 @@ function fetchPosts() {
         const poster = item.poster;
         const link = item.link;
         const durationInMinutes = Math.round(item.duration / 60);
-        const sizeInMB = (item.size / 1024 / 1024).toFixed(0);
-        
+        const sizeInMB = (item.size / 1024 / 1024).toFixed(0);   
         const postElement = document.createElement('div');
         postElement.classList.add('post');
         postElement.innerHTML = `
@@ -80,10 +79,9 @@ function fetchPosts() {
             <img src="${poster}" alt="Poster" class="poster-image">
             <div class="post-details">
               <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
-              <p
-class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-              <p><button id="copy" onclick="copyToClipboard('${link}')">🌐</button></p>    
-              <p><a href="${link}" target="_blank">${link}</a></p>
+              <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
+              <p><button id="copy" onclick="copyToClipboard('${link}')">🌐</button></p>
+              <!-- <p><a href="${link}" target="_blank">${link}</a></p> -->
             </div>
           </div>
         `;
