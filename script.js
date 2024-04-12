@@ -216,7 +216,7 @@ function toggleMode() {
     document.getElementById('pasteCopyButton').innerText = isCopying ? '✂️' : '🗒';
 }
 
-// Function to update cached content
+// Function to store and retrieve Terabox links using Cache method
 function updateCachedContent() {
     const textBoxContent = document.getElementById('textBox').value;
     const currentTime = new Date().getTime();
@@ -235,21 +235,20 @@ function updateCachedContent() {
     }, expirationTime);
 }
 
-// Event listener for text box changes
-document.getElementById('textBox').addEventListener('input', updateCachedContent);
+function loadFromCache() {
+    const cachedItem = JSON.parse(localStorage.getItem('cachedTextBoxContent'));
+    if (cachedItem) {
+        document.getElementById('textBox').value = cachedItem.content;
+    }
+}
 
 // Load cached content on page load
-window.onload = function() {
-    const cachedItem = JSON.parse(localStorage.getItem('cachedTextBoxContent'));
-    if (cachedItem) {
-        document.getElementById('textBox').value = cachedItem.content;
-    }
-};
+loadFromCache();
 
-// Load cached content if available when DOMContentLoaded event fires
-document.addEventListener('DOMContentLoaded', function() {
-    const cachedItem = JSON.parse(localStorage.getItem('cachedTextBoxContent'));
-    if (cachedItem) {
-        document.getElementById('textBox').value = cachedItem.content;
-    }
+// Update cache on every change (debounced)
+let timeoutId;
+document.getElementById('textBox').addEventListener('input', () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(updateCachedContent, 500); // Update after 500ms delay
 });
+
