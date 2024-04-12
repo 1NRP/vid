@@ -220,7 +220,7 @@ function toggleMode() {
 function updateCachedContent() {
     const textBoxContent = document.getElementById('textBox').value;
     const currentTime = new Date().getTime();
-    const expirationTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+    const expirationTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
     const cachedItem = {
         content: textBoxContent,
@@ -229,7 +229,7 @@ function updateCachedContent() {
 
     localStorage.setItem('cachedTextBoxContent', JSON.stringify(cachedItem));
 
-    // Check if the cached content is expired (after 2 hours)
+    // Check if the cached content is expired
     const cachedTime = JSON.parse(localStorage.getItem('cachedTextBoxContent')).timestamp;
     const timeDifference = currentTime - cachedTime;
     if (timeDifference > expirationTime) {
@@ -247,5 +247,19 @@ function loadFromCache() {
 // Load cached content on page load
 loadFromCache();
 
-// Update cache on every change
-document.getElementById('textBox').addEventListener('input', updateCachedContent);
+// Update cache on every change (debounced)
+let timeoutId;
+document.getElementById('textBox').addEventListener('input', () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(updateCachedContent, 500); // Update after 500ms delay to reduce frequent caching.
+});
+
+// Function to paste content into the text box and update the cache after a delay
+//function pasteTextIntoTextBox() {
+    // Assume this function is already triggered when the button is clicked to paste content
+    //const pastedText = document.getElementById('vid').value.trim();
+    //document.getElementById('textBox').value = pastedText;
+
+    // Update the cache after a delay of 1 second
+    //setTimeout(updateCachedContent, 1000);
+}
