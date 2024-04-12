@@ -105,7 +105,7 @@ function copyToClipboard(text) {
     });
 }
 
-//fetchPosts(); // Remove "//" at beginning to load photos at page loading.
+// fetchPosts();  // Remove "//" at beginning to load photos at page loading.
 
 // Telegram Post fetching function
 
