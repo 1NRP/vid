@@ -216,11 +216,11 @@ function toggleMode() {
     document.getElementById('pasteCopyButton').innerText = isCopying ? '✂️' : '🗒';
 }
 
-// Function to store and retrieve Terabox links using Cache method
+// Function to store and retrieve Terabox links using browser Cache method.
 function updateCachedContent() {
     const textBoxContent = document.getElementById('textBox').value;
     const currentTime = new Date().getTime();
-    const expirationTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    const expirationTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
 
     const cachedItem = {
         content: textBoxContent,
@@ -229,10 +229,12 @@ function updateCachedContent() {
 
     localStorage.setItem('cachedTextBoxContent', JSON.stringify(cachedItem));
 
-    // Set up auto-deletion after 24 hours
-    setTimeout(() => {
+    // Check if the cached content is expired (after 2 hours)
+    const cachedTime = JSON.parse(localStorage.getItem('cachedTextBoxContent')).timestamp;
+    const timeDifference = currentTime - cachedTime;
+    if (timeDifference > expirationTime) {
         localStorage.removeItem('cachedTextBoxContent');
-    }, expirationTime);
+    }
 }
 
 function loadFromCache() {
@@ -242,7 +244,8 @@ function loadFromCache() {
     }
 }
 
-// Load cached Links on page load
+// Load cached content on page load
 loadFromCache();
 
-
+// Update cache on every change
+document.getElementById('textBox').addEventListener('input', updateCachedContent);
