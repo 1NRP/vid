@@ -216,4 +216,32 @@ function toggleMode() {
     document.getElementById('pasteCopyButton').innerText = isCopying ? '✂️' : '🗒';
 }
 
+// Function to store & update cached Terabox links in the Textbox (id="textBox")
+function updateCachedContent() {
+    const textBoxContent = document.getElementById('textBox').value;
+    const currentTime = new Date().getTime();
+    const expirationTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
+    const cachedItem = {
+        content: textBoxContent,
+        timestamp: currentTime
+    };
+
+    localStorage.setItem('cachedTextBoxContent', JSON.stringify(cachedItem));
+
+    // Set up auto-deletion after 24 hours
+    setTimeout(() => {
+        localStorage.removeItem('cachedTextBoxContent');
+    }, expirationTime);
+}
+
+// Event listener for changes in the textbox
+document.getElementById('textBox').addEventListener('input', updateCachedContent);
+
+// Load cached Terabox links on page load
+window.onload = function() {
+    const cachedItem = JSON.parse(localStorage.getItem('cachedTextBoxContent'));
+    if (cachedItem) {
+        document.getElementById('textBox').value = cachedItem.content;
+    }
+};
