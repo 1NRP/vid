@@ -220,7 +220,6 @@ function toggleMode() {
 function updateCachedContent() {
     const textBoxContent = document.getElementById('textBox').value;
     const currentTime = new Date().getTime();
-    const expirationTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
 
     const cachedItem = {
         content: textBoxContent,
@@ -228,13 +227,6 @@ function updateCachedContent() {
     };
 
     localStorage.setItem('cachedTextBoxContent', JSON.stringify(cachedItem));
-
-    // Check if the cached content is expired (after 2 hours)
-    const cachedTime = JSON.parse(localStorage.getItem('cachedTextBoxContent')).timestamp;
-    const timeDifference = currentTime - cachedTime;
-    if (timeDifference > expirationTime) {
-        localStorage.removeItem('cachedTextBoxContent');
-    }
 }
 
 function loadFromCache() {
@@ -247,7 +239,8 @@ function loadFromCache() {
 // Load cached content on page load
 loadFromCache();
 
-// Update cache when the button is clicked, with a delay of 1 second
+// Cache is updated everytime the Copy/Paste button is clicked, with a delay of 1 second
+// Cache can be manually cleared through the browser
 document.getElementById('pasteCopyButton').addEventListener('click', () => {
     setTimeout(updateCachedContent, 1000);  // 1 second delay because link is pasted after 0.8 seconds of clicking the button.
 });
