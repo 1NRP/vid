@@ -177,6 +177,7 @@ const placeholder = document.getElementById('vid');
 let clickCount = 0;
 let clickTimer;
 let isCopying = false;
+let editingEnabled = false;
 
 // Set initial mode to "paste"
 document.getElementById('pasteCopyButton').innerText = '🗒';
@@ -192,6 +193,14 @@ function copyTextBoxToClipboard() {
     document.execCommand('copy');
 }
 
+// Function to enable editing
+function enableEditing() {
+    if (!editingEnabled) {
+        textBox.removeAttribute('readonly');
+        editingEnabled = true;
+    }
+}
+
 // Handle button click
 function handleButtonClick() {
     clickCount++;
@@ -199,6 +208,7 @@ function handleButtonClick() {
     clickTimer = setTimeout(() => {
         if (clickCount >= 3) {
             toggleMode();
+            enableEditing(); // Call enableEditing function if clicked 3 times
         } else {
             if (isCopying) {
                 copyTextBoxToClipboard(); 
