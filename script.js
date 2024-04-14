@@ -64,7 +64,7 @@ function fetchPosts() {
   const postsContainer = document.getElementById('posts-container');
   postsContainer.innerHTML = ''; // Clear previous posts
 
-  fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=4')
+  fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=2')
     .then(response => response.json())
     .then(data => {
       data.items.forEach(item => {
