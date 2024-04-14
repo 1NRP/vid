@@ -247,7 +247,37 @@ function loadFromCache() {
 loadFromCache();
 
 // Cache is updated everytime the Copy/Paste button is clicked, with a delay of 1 second
-// Cache can be manually cleared using Tamper-monkey or through the browser
+// Cache can be manually cleared using Tamper-monkey or through the browser ("Lock" icon in chrome)
 document.getElementById('pasteCopyButton').addEventListener('click', () => {
     setTimeout(updateCachedContent, 1000);  // 1 second delay because link is pasted after 0.8 seconds of clicking the button.
 });
+
+// Function to copy specific Terabox link from textBox to clipboard
+function copyLineToClipboard(event) {
+    var textBox = document.getElementById('textBox');
+    var text = textBox.value;
+    var cursorPosition = textBox.selectionStart; // Get cursor position
+    var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
+    var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
+
+    // If no line break is found before the cursor position, start of the text
+    if (startOfLine === -1) {
+        startOfLine = 0;
+    } else {
+        startOfLine += 2; // Move past the line break
+    }
+
+    // If no line break is found after the cursor position, end of the text
+    if (endOfLine === -1) {
+        endOfLine = text.length;
+    }
+
+    var lineText = text.substring(startOfLine, endOfLine);
+
+    // Copy the selected line text to the clipboard
+    navigator.clipboard.writeText(lineText);
+}
+
+// Update the onclick attribute of the textarea element to call the copyLineToClipboard() function
+document.getElementById('textBox').onclick = copyLineToClipboard;
+
