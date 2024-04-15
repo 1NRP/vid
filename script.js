@@ -218,7 +218,7 @@ document.getElementById('pasteCopyButton').addEventListener('click', () => {
 });
 
 // Function to copy specific Terabox link from textBox to clipboard
-function handleLineClick(lineText) {
+function copyLineToClipboard(event) {
     var textBox = document.getElementById('textBox');
     var text = textBox.value;
     var cursorPosition = textBox.selectionStart; // Get cursor position
@@ -239,14 +239,12 @@ function handleLineClick(lineText) {
 
     var lineText = text.substring(startOfLine, endOfLine);
 
-// Function to handle clicking on a line in the textBox
-function handleLineClick(lineText) {
-    document.getElementById('vid').value = lineText;
-    play(); // Trigger the play function after clicking on the cached link
+    // Copy the selected line text to the clipboard
+    navigator.clipboard.writeText(lineText);
 }
 
-// Update the onclick attribute of the textarea element to call the pasting into input field function
-document.getElementById('textBox').onclick = handleLineClick;
+// Update the onclick attribute of the textarea element to call the copyLineToClipboard() function
+document.getElementById('textBox').onclick = copyLineToClipboard;
 
 
 // Function to handle clicking on the link button
@@ -287,3 +285,4 @@ function fetchPosts() {
         console.error('Error:', error);
     });
 }
+
