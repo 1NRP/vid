@@ -37,7 +37,7 @@ async function play() {
     }
 }
 
-// Function to paste specific Terabox link from textBox to input field
+// Function to copy specific Terabox link from textBox to clipboard
 function copyLineToClipboard(event) {
     var textBox = document.getElementById('textBox');
     var text = textBox.value;
@@ -59,6 +59,8 @@ function copyLineToClipboard(event) {
 
     var lineText = text.substring(startOfLine, endOfLine);
 
+    // Copy the selected line text to the clipboard
+    navigator.clipboard.writeText(lineText);
 }
 
 // Function to handle clicking on a line in the textBox
@@ -91,6 +93,18 @@ document.getElementById('textBox').onclick = function(event) {
     handleLineClick(lineText);
 };
 
+// Function to handle clicking on the link button
+function handleLinkButtonClick(link) {
+    document.getElementById('vid').value = link;
+    play(); // Trigger the play function after pasting the link
+}
+
+// Update the onclick attribute of the link button to call the handleLinkButtonClick function
+document.getElementById('copyLink').onclick = function(event) {
+    var link = event.target.getAttribute('data-link');
+    handleLinkButtonClick(link);
+};
+
 // Function to load posts from the server
 function fetchPosts() {
     const postsContainer = document.getElementById('posts-container');
@@ -112,7 +126,7 @@ function fetchPosts() {
                     <div class="post-details">
                         <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
                         <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-                        <p><button id="copyLink" onclick="copyToClipboard('${link}')">🌐</button></p>
+                        <p><button id="copyLink" onclick="handleLinkButtonClick('${link}')">🌐</button></p>
                     </div>
                 </div>
             `;
@@ -124,10 +138,19 @@ function fetchPosts() {
     });
 }
 
-// Function to paste link to input field and trigger play when the copy link (🌐) button is clicked
+// Function to copy link to clipboard when the copy button is clicked
 function copyToClipboard(text) {
-    document.getElementById('vid').value = lineText;
-    play();
+    navigator.clipboard.writeText(text)
+    .then(() => {
+        // Removed console log
+        // alert('Link copied to clipboard!');
+    })
+    .catch(err => {
+        console.error('Failed to copy link to clipboard:', err);
+        alert('Failed to copy link to clipboard!');
+    });
+}
+
 // Function to update the cached content
 function updateCachedContent() {
     const textBoxContent = document.getElementById('textBox').value;
