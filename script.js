@@ -58,41 +58,6 @@ async function play() {
 }
 
 
-// Post Viewer function
-
-function fetchPosts() {
-  const postsContainer = document.getElementById('posts-container');
-  postsContainer.innerHTML = ''; // Clear previous posts
-
-  fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=3')
-    .then(response => response.json())
-    .then(data => {
-      data.items.forEach(item => {
-        const poster = item.poster;
-        const link = item.link;
-        const durationInMinutes = Math.round(item.duration / 60);
-        const sizeInMB = (item.size / 1024 / 1024).toFixed(0);   
-        const postElement = document.createElement('div');
-        postElement.classList.add('post');
-        postElement.innerHTML = `
-          <div>
-            <img src="${poster}" alt="Poster" class="poster-image">
-            <div class="post-details">
-              <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
-              <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-              <p><button id="copyLink" onclick="copyToClipboard('${link}')">🌐</button></p>
-              <!-- <p><a href="${link}" target="_blank">${link}</a></p> -->
-            </div>
-          </div>
-        `;
-        postsContainer.appendChild(postElement);
-      });
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}
-
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text)
     .then(() => {
@@ -107,7 +72,7 @@ function copyToClipboard(text) {
 
 // fetchPosts();  // Remove "//" at beginning to load photos at page loading.
 
-// Telegram Post fetching function
+// Telegram Post fetching function 
 
   function loadNextPosts() {
     const container = document.getElementById('boxContainer');
@@ -253,7 +218,7 @@ document.getElementById('pasteCopyButton').addEventListener('click', () => {
 });
 
 // Function to copy specific Terabox link from textBox to clipboard
-function copyLineToClipboard(event) {
+function handleLineClick(lineText) {
     var textBox = document.getElementById('textBox');
     var text = textBox.value;
     var cursorPosition = textBox.selectionStart; // Get cursor position
@@ -274,9 +239,51 @@ function copyLineToClipboard(event) {
 
     var lineText = text.substring(startOfLine, endOfLine);
 
-    // Copy the selected line text to the clipboard
-    navigator.clipboard.writeText(lineText);
+// Function to handle clicking on a line in the textBox
+function handleLineClick(lineText) {
+    document.getElementById('vid').value = lineText;
+    play(); // Trigger the play function after clicking on the cached link
 }
 
-// Update the onclick attribute of the textarea element to call the copyLineToClipboard() function
-document.getElementById('textBox').onclick = copyLineToClipboard;
+// Update the onclick attribute of the textarea element to call the pasting into input field function
+document.getElementById('textBox').onclick = handleLineClick;
+
+
+// Function to handle clicking on the link button
+function handleLinkButtonClick(link) {
+    document.getElementById('vid').value = link;
+    play(); // Trigger the play function after pasting the link
+}
+
+// Function to load posts from the server
+function fetchPosts() {
+    const postsContainer = document.getElementById('posts-container');
+    postsContainer.innerHTML = ''; // Clear previous posts
+
+    fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=3')
+    .then(response => response.json())
+    .then(data => {
+        data.items.forEach(item => {
+            const poster = item.poster;
+            const link = item.link;
+            const durationInMinutes = Math.round(item.duration / 60);
+            const sizeInMB = (item.size / 1024 / 1024).toFixed(0);   
+            const postElement = document.createElement('div');
+            postElement.classList.add('post');
+            postElement.innerHTML = `
+                <div>
+                    <img src="${poster}" alt="Poster" class="poster-image">
+                    <div class="post-details">
+                        <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
+                        <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
+                        <p><button id="copyLink" onclick="handleLinkButtonClick('${link}')">🌐</button></p>
+                    </div>
+                </div>
+            `;
+            postsContainer.appendChild(postElement);
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
