@@ -37,7 +37,7 @@ async function play() {
     }
 }
 
-// Function to copy specific Terabox link from textBox to clipboard
+// Function to paste specific Terabox link from textBox to input field
 function copyLineToClipboard(event) {
     var textBox = document.getElementById('textBox');
     var text = textBox.value;
@@ -59,8 +59,6 @@ function copyLineToClipboard(event) {
 
     var lineText = text.substring(startOfLine, endOfLine);
 
-    // Copy the selected line text to the clipboard
-    navigator.clipboard.writeText(lineText);
 }
 
 // Function to handle clicking on a line in the textBox
@@ -126,19 +124,10 @@ function fetchPosts() {
     });
 }
 
-// Function to copy link to clipboard when the copy button is clicked
+// Function to paste link to input field and trigger play when the copy link (🌐) button is clicked
 function copyToClipboard(text) {
-    navigator.clipboard.writeText(text)
-    .then(() => {
-        // Removed console log
-        // alert('Link copied to clipboard!');
-    })
-    .catch(err => {
-        console.error('Failed to copy link to clipboard:', err);
-        alert('Failed to copy link to clipboard!');
-    });
-}
-
+    document.getElementById('vid').value = lineText;
+    play();
 // Function to update the cached content
 function updateCachedContent() {
     const textBoxContent = document.getElementById('textBox').value;
