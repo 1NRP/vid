@@ -218,7 +218,7 @@ document.getElementById('pasteCopyButton').addEventListener('click', () => {
 });
 
 // Function to copy specific Terabox link from textBox to clipboard
-function copyLineToClipboard(event) {
+function pasteLineText(event) {
     var textBox = document.getElementById('textBox');
     var text = textBox.value;
     var cursorPosition = textBox.selectionStart; // Get cursor position
@@ -239,12 +239,13 @@ function copyLineToClipboard(event) {
 
     var lineText = text.substring(startOfLine, endOfLine);
 
-    // Copy the selected line text to the clipboard
-    navigator.clipboard.writeText(lineText);
+    // Paste the selected line text to the input field
+       document.getElementById('vid').value = link;
+    play(); // Trigger the play function after pasting the link
 }
 
-// Update the onclick attribute of the textarea element to call the copyLineToClipboard() function
-document.getElementById('textBox').onclick = copyLineToClipboard;
+// Update the onclick attribute of the textarea element to call the pasteLineText() function
+document.getElementById('textBox').onclick = pasteLineText;
 
 
 // Function to handle clicking on the link button
