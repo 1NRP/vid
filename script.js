@@ -56,24 +56,9 @@ async function play() {
         document.getElementById("player").src = qry;
     }
 }
-
-
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text)
-    .then(() => {
-      // Removed console log
-      // alert('Link copied to clipboard!');
-    })
-    .catch(err => {
-      console.error('Failed to copy link to clipboard:', err);
-      alert('Failed to copy link to clipboard!');
-    });
-}
-
-// fetchPosts();  // Remove "//" at beginning to load photos at page loading.
+// fetchPosts();    // Remove "//" at beginning to load photos at page loading.
 
 // Telegram Post fetching function 
-
   function loadNextPosts() {
     const container = document.getElementById('boxContainer');
     const channelName = document.getElementById('channelName').value;
@@ -136,7 +121,6 @@ function copyToClipboard(text) {
   });
 
 // Textbox for all link pastes.
-
 const textBox = document.getElementById('textBox');
 const placeholder = document.getElementById('vid');
 let clickCount = 0;
@@ -240,13 +224,10 @@ function pasteLineText(event) {
     var lineText = text.substring(startOfLine, endOfLine);
 
     // Paste the selected line text to the input field
-       document.getElementById('vid').value = link;
+       document.getElementById('vid').value = lineText;
     play(); // Trigger the play function after pasting the link
 }
-
-// Update the onclick attribute of the textarea element to call the pasteLineText() function
 document.getElementById('textBox').onclick = pasteLineText;
-
 
 // Function to handle clicking on the link button
 function handleLinkButtonClick(link) {
