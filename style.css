@@ -27,7 +27,7 @@
     #button-play {
       background-color: #444;
       width: 17.5%;
-      color: white; 
+      color: #b4b4b4; 
       max-width: 100px;
       padding: 8px;
       border: none;
@@ -38,6 +38,7 @@
     background-color: #444;
     padding: 8px;
     border: none;
+    color: #b4b4b4b4;
     border-radius: 4px;
     cursor: pointer;
   }
@@ -57,7 +58,7 @@
   }
     #clearBtn {
       background-color: #444;
-      color: white; 
+      color: #999; 
       max-width: 100px;
       padding: 8px;
       border: none;
