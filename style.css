@@ -1,6 +1,6 @@
     body {
       background-color: #000;  
-      color: #999;
+      color: #b4b4b4;
     }
     input[type=text],
     select {
@@ -9,8 +9,8 @@
       padding: 6px 2px;
       display: inline-block;
       background-color: #000;
-      color: white;
-      border: 2px solid #666;
+      color: #b4b4b4;
+      border: 2px solid #444;
       border-radius: 4px;
       box-sizing: border-box;
     }
@@ -49,17 +49,17 @@
       width: 96%;
       height: 150px;
       padding: 10px 5px;
-      color: white;
-      border: 2px solid #666;
-      background-color: #222;
+      color: #b4b4b4;
+      border: 2px solid #444;
+      background-color: #000;
       border-radius: 8px;
       margin: 2px;
       margin-left: 0px;
   }
     #clearBtn {
       background-color: #444;
-      color: #999; 
-      max-width: 100px;
+      color: #9999; 
+      max-width: 50px;
       padding: 8px;
       border: none;
       border-radius: 4px;
@@ -69,7 +69,7 @@
       width: 95%;
       height: 300px;
       overflow-y: scroll;
-      border: 2px solid #666;
+      border: 2px solid #444;
       padding: 6px;
       border-radius: 8px;
       margin: 2px 0;
@@ -93,7 +93,7 @@
     .input-container input[type="text"] {
       width: 100px;
       padding: 4px 10px;
-      color: white;
+      color: #b4b4b4;
       background-color: #222;
       border-radius: 40px;
       margin-right: 0px;
@@ -104,7 +104,7 @@
       background-color: #444;
       padding: 6px;
       width: 30px;
-      color: white;
+      color: #b4b4b4;
       border: none;
       border-radius: 50%;
       cursor: pointer;
@@ -113,7 +113,7 @@
     width: 98%;
     height: 400px;
     border-radius: 8px;
-    border: 2px solid #666;
+    border: 2px solid #444;
     padding: 2px;
     margin-bottom: 4px;
     overflow-y: scroll;
@@ -132,6 +132,7 @@
     background-color: #444;
     padding: 6px;
     border: none;
+    color: #9999;
     border-radius: 50%;
     cursor: pointer;
     margin-left: 8px;
@@ -164,7 +165,7 @@
       width: 50px;
       border: none;
       border-radius: 4px;
-      color: white;
+      color: #b4b4b4;
       cursor: pointer;
     }
 
