@@ -172,6 +172,16 @@
       color: #b4b4b4;
       cursor: pointer;
     }
+    #brightModeBtn {
+      cursor: pointer;
+      border: none;
+      background-color: #444;
+      color: #9999;
+      Border-radius: 50%;
+      text-align: center;
+      padding: 6px;
+      margin-left: 0px; 
+    }
 
     h1 {
       color: DodgerBlue;
@@ -202,7 +212,7 @@ body {
       border: 2px solid #666;
 }
  #pasteCopyButton {
-      color: #999;
+      color: #fff;
 }
  #button-play {
       color: #fff;
@@ -215,7 +225,10 @@ body {
       border: 2px solid #666;
   }
   #clearBtn {
-      color: #999; 
+      color: #fff; 
+  }
+  #brightModeBtn {
+      color: #fff;
   }
   .box-container {
       border: 2px solid #666;
@@ -230,7 +243,7 @@ body {
     border: 2px solid #666;
   }
   #reload {
-    color: #b4b4b4;
+    color: #fff;
   }
   .size {
     color: #b4b4b4;
@@ -242,14 +255,6 @@ body {
     color: #fff;
   }
 }
-#brightModeBtn {
-    cursor: pointer;
-    border: none;
-    background-color: #444;
-    Border-radius: 50%;
-    text-align: center;
-    padding: 6px;
-    margin-left: 0px; 
-  }
+
   
 
