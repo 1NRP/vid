@@ -17,7 +17,7 @@
     }
 
     select {
-      width: 100px;
+      width: 80px;
       padding: 4px 20px;
       margin-left: 0px;
       color: #b4b4b4;
@@ -88,12 +88,11 @@
     }
 
     .input-container label {
-      margin-right: 1px;
       cursor: pointer;
     }
 
     .input-container input[type="text"] {
-      width: 100px;
+      width: 80px;
       padding: 4px 10px;
       color: #b4b4b4;
       font-weight: 600;
@@ -139,7 +138,7 @@
     color: #9999;
     border-radius: 50%;
     cursor: pointer;
-    margin-left: 8px;
+    margin-left: 10px;
   }
   #copyLink {
     background-color: #444;
@@ -190,3 +189,67 @@
       margin: auto; 
       display: block; 
     }
+
+/* Code for Bright-Mode toggle. */
+.brightMode {
+body {
+      background-color: #000;  
+      color: #fff;
+}
+ input[type=text],
+ select {
+      color: #b4b4b4;
+      border: 2px solid #666;
+}
+ #pasteCopyButton {
+      color: #999;
+}
+ #button-play {
+      color: #fff;
+}
+ select {
+      color: #fff;
+  }
+  #textBox {
+      color: #b4b4b4;
+      border: 2px solid #666;
+  }
+  #clearBtn {
+      color: #999; 
+  }
+  .box-container {
+      border: 2px solid #666;
+  }
+  .input-container input[type="text"] {
+      color: #fff;
+  }
+  #go-btn {
+    color: #fff;
+  }
+  .post-container {
+    border: 2px solid #666;
+  }
+  #reload {
+    color: #b4b4b4;
+  }
+  .size {
+    color: #b4b4b4;
+  }
+  .duration {
+    color: #b4b4b4;
+  }
+    #btn-next {
+    color: #fff;
+  }
+}
+#brightModeBtn {
+    cursor: pointer;
+    border: none;
+    background-color: #444;
+    Border-radius: 50%;
+    text-align: center;
+    padding: 6px;
+    margin-left: 0px; 
+  }
+  
+
