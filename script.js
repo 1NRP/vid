@@ -1,3 +1,9 @@
+// Bright-Mode toggle function.
+function brightModeFunction() {
+    let element = document.body;
+    element.classList.toggle("brightMode");
+}
+
 // Paste link and PLAY button function
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
