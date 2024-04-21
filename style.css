@@ -11,7 +11,7 @@
       background-color: #000;
       color: #999;
       font-weight: 600;
-      border: 2px solid #444;
+      border: 2px solid #333;
       border-radius: 4px;
       box-sizing: border-box;
     }
@@ -22,12 +22,11 @@
       margin-left: 0px;
       color: #b4b4b4;
       font-weight: 600;
-      background-color: #222;
       border-radius: 40px;
     }
 
     #button-play {
-      background-color: #444;
+      background-color: #333;
       width: 17%;
       color: #b4b4b4;
       font-weight: 600;
@@ -38,7 +37,7 @@
       cursor: pointer;
     }
   #pasteCopyButton {
-    background-color: #444;
+    background-color: #333;
     padding: 8px;
     border: none;
     color: #b4b4b4b4;
@@ -52,14 +51,13 @@
       color: #999;
       font-weight: 800;
       font-size: 11px;
-      border: 2px solid #444;
-      background-color: #000;
+      border: 2px solid #333;
       border-radius: 8px;
       margin: 2px;
       margin-left: 0px;
   }
     #clearBtn {
-      background-color: #444;
+      background-color: #333;
       color: #9999; 
       max-width: 50px;
       padding: 8px;
@@ -71,7 +69,7 @@
       width: 95%;
       height: 300px;
       overflow-y: scroll;
-      border: 2px solid #444;
+      border: 2px solid #333;
       padding: 6px;
       border-radius: 8px;
       margin: 2px 0;
@@ -96,14 +94,13 @@
       padding: 4px 10px;
       color: #b4b4b4;
       font-weight: 600;
-      background-color: #222;
       border-radius: 40px;
       margin-right: 0px;
       cursor: pointer;
     }
 
     #go-btn {
-      background-color: #444;
+      background-color: #333;
       padding: 6px;
       width: 30px;
       color: #b4b4b4;
@@ -116,7 +113,7 @@
     width: 98%;
     height: 400px;
     border-radius: 8px;
-    border: 2px solid #444;
+    border: 2px solid #333;
     padding: 2px;
     margin-bottom: 4px;
     overflow-y: scroll;
@@ -132,7 +129,7 @@
     align-items: center;
   }
   #reload {
-    background-color: #444;
+    background-color: #333;
     padding: 6px;
     border: none;
     color: #9999;
@@ -141,7 +138,7 @@
     margin-left: 10px;
   }
   #copyLink {
-    background-color: #444;
+    background-color: #333;
     padding: 6px;
     margin-right: 20px;
     border: none;
@@ -149,21 +146,21 @@
     cursor: pointer;
   }
   .size {
-    color: #999;
+    color: #888;
     font-family: 'Raleway', sans-serif;
     font-size: 15px;
     font-weight: 500;
     margin-right: 180px;
   }
   .duration {
-    color: #999;
+    color: #888;
     font-family: 'Raleway', sans-serif;
     font-size: 15px;
     font-weight: 500;
     margin-right: 20px;
   }
     #btn-next {
-      background-color: #444;
+      background-color: #333;
       padding: 4px;
       width: 50px;
       border: none;
@@ -175,7 +172,7 @@
     #brightModeBtn {
       cursor: pointer;
       border: none;
-      background-color: #444;
+      background-color: #333;
       color: #9999;
       Border-radius: 50%;
       text-align: center;
@@ -210,6 +207,10 @@
     select {
         color: #b4b4b4;
         border: 2px solid #666;
+    }
+    .poster-image,
+    #player {
+        filter: brightness(70%);
     }
     select,
     .input-container input[type="text"],
