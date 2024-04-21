@@ -202,59 +202,34 @@
 
 /* Code for Bright-Mode toggle. */
 .brightMode {
-body {
-      background-color: #000;  
-      color: #fff;
-}
- input[type=text],
- select {
-      color: #b4b4b4;
-      border: 2px solid #666;
-}
- #pasteCopyButton {
-      color: #fff;
-}
- #button-play {
-      color: #fff;
-}
- select {
-      color: #fff;
-  }
-  #textBox {
-      color: #b4b4b4;
-      border: 2px solid #666;
-  }
-  #clearBtn {
-      color: #fff; 
-  }
-  #brightModeBtn {
-      color: #fff;
-  }
-  .box-container {
-      border: 2px solid #666;
-  }
-  .input-container input[type="text"] {
-      color: #fff;
-  }
-  #go-btn {
-    color: #fff;
-  }
-  .post-container {
-    border: 2px solid #666;
-  }
-  #reload {
-    color: #fff;
-  }
-  .size {
-    color: #b4b4b4;
-  }
-  .duration {
-    color: #b4b4b4;
-  }
+    body {
+        background-color: #000;  
+        color: #fff;
+    }
+    input[type=text],
+    select {
+        color: #b4b4b4;
+        border: 2px solid #666;
+    }
+    #pasteCopyButton,
+    #button-play,
+    #go-btn,
+    #reload,
+    #clearBtn,
+    #brightModeBtn,
     #btn-next {
-    color: #fff;
-  }
+        color: #fff;
+    }
+    #textBox {
+        color: #b4b4b4;
+        border: 2px solid #666;
+    }
+    .box-container,
+    .post-container {
+        border: 2px solid #666;
+    }
+    .size,
+    .duration {
+        color: #b4b4b4;
+    }
 }
-
-  
-
