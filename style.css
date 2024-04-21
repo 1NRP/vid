@@ -21,12 +21,13 @@
       padding: 4px 2px;
       margin-left: 0px;
       color: #b4b4b4;
+      background-color: #333;
       font-weight: 600;
       border-radius: 40px;
     }
 
     #button-play {
-      background-color: #333;
+      background-color: #444;
       width: 17%;
       color: #b4b4b4;
       font-weight: 600;
@@ -37,7 +38,7 @@
       cursor: pointer;
     }
   #pasteCopyButton {
-    background-color: #333;
+    background-color: #444;
     padding: 8px;
     border: none;
     color: #b4b4b4b4;
@@ -51,13 +52,14 @@
       color: #999;
       font-weight: 800;
       font-size: 11px;
+      background-color: #000;
       border: 2px solid #333;
       border-radius: 8px;
       margin: 2px;
       margin-left: 0px;
   }
     #clearBtn {
-      background-color: #333;
+      background-color: #444;
       color: #9999; 
       max-width: 50px;
       padding: 8px;
@@ -93,6 +95,7 @@
       width: 80px;
       padding: 4px 10px;
       color: #b4b4b4;
+      background-color: #333;
       font-weight: 600;
       border-radius: 40px;
       margin-right: 0px;
@@ -100,7 +103,7 @@
     }
 
     #go-btn {
-      background-color: #333;
+      background-color: #444;
       padding: 6px;
       width: 30px;
       color: #b4b4b4;
@@ -129,7 +132,7 @@
     align-items: center;
   }
   #reload {
-    background-color: #333;
+    background-color: #444;
     padding: 6px;
     border: none;
     color: #9999;
@@ -138,7 +141,7 @@
     margin-left: 10px;
   }
   #copyLink {
-    background-color: #333;
+    background-color: #444;
     padding: 6px;
     margin-right: 20px;
     border: none;
@@ -160,7 +163,7 @@
     margin-right: 20px;
   }
     #btn-next {
-      background-color: #333;
+      background-color: #444;
       padding: 4px;
       width: 50px;
       border: none;
@@ -172,7 +175,7 @@
     #brightModeBtn {
       cursor: pointer;
       border: none;
-      background-color: #333;
+      background-color: #444;
       color: #9999;
       Border-radius: 50%;
       text-align: center;
