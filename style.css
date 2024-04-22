@@ -186,8 +186,8 @@
     }
     .alert {
     position: fixed;
-    top: 5dvh;
-    left: 70dvw;
+    top: 4dvh;
+    left: 60dvw;
     background-color: #2a4a6a;
     color: #fff;
     padding: 5px 5px;
