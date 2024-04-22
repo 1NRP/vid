@@ -187,8 +187,7 @@
     .alert {
     position: fixed;
     top: 5dvh;
-    left: 80dvw;
-    transform: translate(60%, 20%);
+    left: 70dvw;
     background-color: #2a4a6a;
     color: #fff;
     padding: 5px 5px;
