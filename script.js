@@ -4,6 +4,17 @@ function brightModeFunction() {
     element.classList.toggle("brightMode");
 }
 
+// Show "Link Saved" alert when"PasteCopy" button is clicked
+function showAlert() {
+   const alertBox = document.createElement('div');
+   alertBox.className = 'alert';
+   alertBox.textContent = '☑️ Link Saved';
+   document.body.appendChild(alertBox);
+   setTimeout(() => {
+   alertBox.remove();
+   }, 1000);
+}
+
 // Paste link and PLAY button function
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
