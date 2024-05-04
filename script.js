@@ -6,7 +6,7 @@ function nightModeFunction() {
 
 // Execute "Post Fetching" function when Enter key or Right Arrow key is pressed
 document.addEventListener("keyup", function(event) {
-  if (event.key === "Enter" || event.key === "ArrowNext") {
+  if (event.key === "Enter" || event.key === "ArrowRight" || event.key === "Alt") {
     fetchPosts();
   }
 });
