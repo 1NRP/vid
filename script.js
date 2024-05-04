@@ -1,7 +1,7 @@
-// Bright-Mode toggle function.
-function brightModeFunction() {
+// Night-Mode toggle function.
+function nightModeFunction() {
     let element = document.body;
-    element.classList.toggle("brightMode");
+    element.classList.toggle("nightMode");
 }
 
 // Show "Link Saved" alert when"PasteCopy" button is clicked
