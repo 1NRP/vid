@@ -6,16 +6,16 @@ function nightModeFunction() {
 
 // Keyboard Shortcuts for different Button clicks & Functions
 document.addEventListener("keyup", function(event) {
+    event.preventDefault();
     if (event.key === "ArrowRight") {
-        if (event.key === "ArrowUp") {
-            fetchPosts();
-        } else if (event.key === "ArrowDown") {
-            play();
-        } else if (event.key === "ArrowLeft") {
-            document.getElementById("clearBtn").click();
-        } else if (event.key === "End") {
-            document.getElementById("pasteCopyButton").click();
-        }
+    } else if (event.key === "ArrowUp") {
+        fetchPosts();
+    } else if (event.key === "ArrowDown") {
+        play();
+    } else if (event.key === "ArrowLeft") {
+        document.getElementById("clearBtn").click();
+    } else if (event.key === "End") {
+        document.getElementById("pasteCopyButton").click();
     }
 });
 
