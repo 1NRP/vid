@@ -4,49 +4,20 @@ function nightModeFunction() {
     element.classList.toggle("nightMode");
 }
 
-// Execute "Post Fetching" function when Enter key or Right Arrow key is pressed
+// Keyboard Shortcuts for different Button clicks & Functions
 document.addEventListener("keyup", function(event) {
-  if (event.key === "Enter" || event.key === "ArrowRight" || event.key === "Alt") {
-    fetchPosts();
-  }
-});
-
-// Execute "Play" function when Space key is pressed
-document.addEventListener("keyup", function(event) {
-  if (event.key === " ") {
-    play();
-  }
-});
-
-document.addEventListener("keyup", function(event) {
-  if (event.ctrlKey) {
-    if (event.key === "ArrowUp") {
-      functionOne();
-    } else if (event.key === "ArrowDown") {
-      functionTwo();
-    } else if (event.key === "ArrowLeft") {
-      functionThree();
-    } else if (event.key === "ArrowRight") {
-      functionFour();
+    if (event.key === "ArrowRight") {
+        if (event.key === "ArrowUp") {
+            fetchPosts();
+        } else if (event.key === "ArrowDown") {
+            play();
+        } else if (event.key === "ArrowLeft") {
+            document.getElementById("clearBtn").click();
+        } else if (event.key === "End") {
+            document.getElementById("pasteCopyButton").click();
+        }
     }
-  }
 });
-
-function functionOne() {
-  // Function One logic
-}
-
-function functionTwo() {
-  // Function Two logic
-}
-
-function functionThree() {
-  // Function Three logic
-}
-
-function functionFour() {
-  // Function Four logic
-}
 
 // Show "Link Saved" alert when"PasteCopy" button is clicked
 function showAlert() {
