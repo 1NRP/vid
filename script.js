@@ -4,6 +4,20 @@ function nightModeFunction() {
     element.classList.toggle("nightMode");
 }
 
+// Execute "Post Fetching" function when Enter key or Right Arrow key is pressed
+document.addEventListener("keyup", function(event) {
+  if (event.key === "Enter" || event.key === "ArrowNext") {
+    fetchPosts();
+  }
+});
+
+// Execute "Play" function when Space key is pressed
+document.addEventListener("keyup", function(event) {
+  if (event.key === " ") {
+    play();
+  }
+});
+
 // Show "Link Saved" alert when"PasteCopy" button is clicked
 function showAlert() {
    const alertBox = document.createElement('div');
