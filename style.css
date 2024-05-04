@@ -193,8 +193,8 @@
       text-align: center;
       border: none;
       background-color: #444;
-      width: 16px;
-      height: 16px; 
+      width: 24px;
+      height: 24px; 
     }
     .alert {
     position: fixed;
@@ -236,6 +236,7 @@
         border: 2px solid #333;
     }
     .poster-image,
+    #nightModeIcon,
     #player {
         filter: brightness(70%);
     }
@@ -248,7 +249,6 @@
     }
     #pasteCopyButton,
     #reload,
-    #nightModeIcon,
     #clearBtn,
     #nightModeBtn {
         color: #8888;
