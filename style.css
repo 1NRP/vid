@@ -186,12 +186,15 @@
     }
     #nightModeIcon {
       cursor: pointer;
+      padding: 6px;
+      margin-left: 0px;
+      color: #fff;
+      border-radius: 50%;
+      text-align: center;
       border: none;
       background-color: #444;
-      color: #fff;
-      Border-radius: 50%;
-      text-align: center;
-      margin-left: 0px; 
+      width: 16px;
+      height: 16px; 
     }
     .alert {
     position: fixed;
@@ -245,6 +248,7 @@
     }
     #pasteCopyButton,
     #reload,
+    #nightModeIcon,
     #clearBtn,
     #nightModeBtn {
         color: #8888;
