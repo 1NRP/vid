@@ -212,7 +212,7 @@
       display: block; 
     }
 
-/* Code for Bright-Mode toggle. */
+/* Code for Night-Mode toggle. */
 .nightMode {
     body {
         background-color: #000;  
