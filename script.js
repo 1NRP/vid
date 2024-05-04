@@ -18,6 +18,36 @@ document.addEventListener("keyup", function(event) {
   }
 });
 
+document.addEventListener("keyup", function(event) {
+  if (event.ctrlKey) {
+    if (event.key === "ArrowUp") {
+      functionOne();
+    } else if (event.key === "ArrowDown") {
+      functionTwo();
+    } else if (event.key === "ArrowLeft") {
+      functionThree();
+    } else if (event.key === "ArrowRight") {
+      functionFour();
+    }
+  }
+});
+
+function functionOne() {
+  // Function One logic
+}
+
+function functionTwo() {
+  // Function Two logic
+}
+
+function functionThree() {
+  // Function Three logic
+}
+
+function functionFour() {
+  // Function Four logic
+}
+
 // Show "Link Saved" alert when"PasteCopy" button is clicked
 function showAlert() {
    const alertBox = document.createElement('div');
