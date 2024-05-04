@@ -58,23 +58,6 @@ async function play() {
             return;
         }
     }
-    // Check if the URL is an m3u8 link. (For browsers not supporting native m3u8 playback.)
-    if (qry.toLowerCase().endsWith('.m3u8')) {
-        if (Hls.isSupported()) {
-            var video = document.getElementById('player');
-            var hls = new Hls();
-            hls.loadSource(qry);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                video.play();
-            });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = qry;
-            video.addEventListener('loadedmetadata', function() {
-                video.play();
-            });
-        }
-    } else {
     // Check if the URL contains 'Terabox'
     if (qry.toLowerCase().includes('teraboxapp')) {
         // Extract the video ID from the URL
@@ -85,21 +68,17 @@ async function play() {
 
         // Construct the request URL for preparation
         var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
-
         // Make a request to the preparation URL
         fetch(requestUrl)
         .then(response => {
-            // Wait 0.1 second before playing the video
-            setTimeout(() => {
-                // Construct the new URL in the desired format
-                var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
-                document.getElementById("player").src=playUrl;
-            }, 100);
-        })
+        var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
+        document.getElementById("player").src = playUrl;
+    })
         .catch(error => {
-            console.error('Error fetching preparation URL:', error);
-            alert('Failed to prepare playback. Please try again later.');
-        });
+        console.error('Error fetching preparation URL:', error);
+        alert('Failed to prepare playback. Please try again later.');
+    });
+
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = qry;
