@@ -5,19 +5,28 @@ function nightModeFunction() {
 }
 
 // Keyboard Shortcuts for different Button clicks & Functions
+let arrowRightPressed = false;
 document.addEventListener("keydown", function(event) {
     if (event.key === "ArrowRight") {
-        document.addEventListener("keyup", function(e) {
-            if (e.key === "ArrowUp") {
-                fetchPosts();
-            } else if (e.key === "ArrowDown") {
-                play();
-            } else if (e.key === "ArrowLeft") {
-                document.getElementById("clearBtn").click();
-            } else if (e.key === "End") {
-                document.getElementById("pasteCopyButton").click();
-            }
-        });
+        arrowRightPressed = true;
+    }
+    
+    if (arrowRightPressed) {
+        if (event.key === "ArrowUp") {
+            fetchPosts();
+        } else if (event.key === "ArrowDown") {
+            play();
+        } else if (event.key === "ArrowLeft") {
+            document.getElementById("clearBtn").click();
+        } else if (event.key === "End") {
+            document.getElementById("pasteCopyButton").click();
+        }
+    }
+});
+
+document.addEventListener("keyup", function(event) {
+    if (event.key === "ArrowRight") {
+        arrowRightPressed = false;
     }
 });
 
