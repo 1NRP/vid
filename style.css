@@ -184,6 +184,15 @@
       padding: 6px;
       margin-left: 0px; 
     }
+    #nightModeIcon {
+      cursor: pointer;
+      border: none;
+      background-color: #444;
+      color: #fff;
+      Border-radius: 50%;
+      text-align: center;
+      margin-left: 0px; 
+    }
     .alert {
     position: fixed;
     top: 4dvh;
