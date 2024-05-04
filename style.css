@@ -1,6 +1,6 @@
     body {
       background-color: #000;  
-      color: #b4b4b4;
+      color: #fff;
     }
     input[type=text],
     select {
@@ -9,9 +9,9 @@
       padding: 6px 2px;
       display: inline-block;
       background-color: #000;
-      color: #999;
+      color: #b4b4b4;
       font-weight: 600;
-      border: 2px solid #333;
+      border: 2px solid #666;
       border-radius: 4px;
       box-sizing: border-box;
     }
@@ -20,7 +20,7 @@
       width: 80px;
       padding: 4px 2px;
       margin-left: 0px;
-      color: #b4b4b4;
+      color: #fff;
       border: 2px solid #555;
       background-color: #333;
       font-weight: 600;
@@ -30,7 +30,7 @@
     #button-play {
       background-color: #444;
       width: 17%;
-      color: #b4b4b4;
+      color: #fff;
       font-weight: 600;
       max-width: 100px;
       padding: 8px;
@@ -42,7 +42,7 @@
     background-color: #444;
     padding: 8px;
     border: none;
-    color: #b4b4b4b4;
+    color: #fff;
     border-radius: 4px;
     cursor: pointer;
   }
@@ -50,18 +50,18 @@
       width: 96%;
       height: 150px;
       padding: 10px 5px;
-      color: #999;
+      color: #b4b4b4;
       font-weight: 800;
       font-size: 11px;
       background-color: #000;
-      border: 2px solid #333;
+      border: 2px solid #666;
       border-radius: 8px;
       margin: 2px;
       margin-left: 0px;
   }
     #clearBtn {
       background-color: #444;
-      color: #9999; 
+      color: #fff; 
       max-width: 50px;
       padding: 8px;
       border: none;
@@ -95,7 +95,7 @@
     .input-container input[type="text"] {
       width: 80px;
       padding: 4px 10px;
-      color: #b4b4b4;
+      color: #fff;
       background-color: #333;
       font-weight: 600;
       border: 2px solid #555;
@@ -108,7 +108,7 @@
       background-color: #444;
       padding: 6px;
       width: 30px;
-      color: #b4b4b4;
+      color: #fff;
       font-weight: 600;
       border: none;
       border-radius: 50%;
@@ -137,7 +137,7 @@
     background-color: #444;
     padding: 6px;
     border: none;
-    color: #9999;
+    color: #fff;
     border-radius: 50%;
     cursor: pointer;
     margin-left: 10px;
@@ -151,14 +151,14 @@
     cursor: pointer;
   }
   .size {
-    color: #999;
+    color: #b4b4b4;
     font-family: 'Raleway', sans-serif;
     font-size: 15px;
     font-weight: 500;
     margin-right: 180px;
   }
   .duration {
-    color: #999;
+    color: #b4b4b4;
     font-family: 'Raleway', sans-serif;
     font-size: 15px;
     font-weight: 500;
@@ -171,14 +171,14 @@
       border: none;
       font-weight: 600;
       border-radius: 4px;
-      color: #b4b4b4;
+      color: #fff;
       cursor: pointer;
     }
     #brightModeBtn {
       cursor: pointer;
       border: none;
       background-color: #444;
-      color: #9999;
+      color: #fff;
       Border-radius: 50%;
       text-align: center;
       padding: 6px;
@@ -213,15 +213,15 @@
     }
 
 /* Code for Bright-Mode toggle. */
-.brightMode {
+.nightMode {
     body {
         background-color: #000;  
-        color: #fff;
+        color: #b4b4b4;
     }
     input[type=text],
     select {
-        color: #b4b4b4;
-        border: 2px solid #666;
+        color: #999;
+        border: 2px solid #333;
     }
     .poster-image,
     #player {
@@ -229,25 +229,27 @@
     }
     select,
     .input-container input[type="text"],
-    #pasteCopyButton,
     #button-play,
     #go-btn,
+    #btn-next {
+        color: #b4b4b4;
+    }
+    #pasteCopyButton,
     #reload,
     #clearBtn,
-    #brightModeBtn,
-    #btn-next {
-        color: #fff;
+    #nightModeBtn {
+        color: #8888;
     }
     #textBox {
-        color: #b4b4b4;
-        border: 2px solid #666;
+        color: #999;
+        border: 2px solid #333;
     }
     .box-container,
     .post-container {
-        border: 2px solid #666;
+        border: 2px solid #333;
     }
     .size,
     .duration {
-        color: #b4b4b4;
+        color: #999;
     }
 }
