@@ -41,7 +41,6 @@ async function play() {
             console.error('Clipboard API not supported');
             return;
         }
-        
         // Try to read text from clipboard
         try {
             const text = await navigator.clipboard.readText();
@@ -59,7 +58,23 @@ async function play() {
             return;
         }
     }
-
+    // Check if the URL is an m3u8 link. (For browsers not supporting native m3u8 playback.)
+    if (qry.toLowerCase().endsWith('.m3u8')) {
+        if (Hls.isSupported()) {
+            var video = document.getElementById('player');
+            var hls = new Hls();
+            hls.loadSource(qry);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play();
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = qry;
+            video.addEventListener('loadedmetadata', function() {
+                video.play();
+            });
+        }
+    } else {
     // Check if the URL contains 'Terabox'
     if (qry.toLowerCase().includes('teraboxapp')) {
         // Extract the video ID from the URL
@@ -90,8 +105,7 @@ async function play() {
         document.getElementById("player").src = qry;
     }
 }
-// fetchPosts();    // Remove "//" at beginning to load photos at page loading.
-
+    
 // Telegram Post fetching function 
   function loadNextPosts() {
     const container = document.getElementById('boxContainer');
@@ -301,4 +315,5 @@ function fetchPosts() {
         console.error('Error:', error);
     });
 }
+// fetchPosts();    // Remove "//" at beginning to load photos at page loading.
 
