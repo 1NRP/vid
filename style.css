@@ -52,7 +52,7 @@
     }
     #pasteCopyButton {
       background-color: #444;
-      padding: 6px 8px 8px 8px;  /* Top, Right, Bottom, Left */
+      padding: 5px 8px 8px 8px;  /* Top, Right, Bottom, Left */
       border: none;
       color: #fff;
       border-radius: 4px;
@@ -96,7 +96,7 @@
       background-color: #444;
       color: #fff; 
       max-width: 50px;
-      padding: 8px;
+      padding: 5px 6px 8px 6px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
