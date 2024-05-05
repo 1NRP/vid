@@ -45,11 +45,11 @@
     #player {
       max-width: 100dvw; /* dvw = dynamic viewport width */
       max-height: 100dvh; /* dvh = dynamic viewport height */
-      margin: 0px;
+      margin: 2px 0px 0px 0px;  /* Top, Right, Bottom, Left */
     }
     #pasteCopyButton {
       background-color: #444;
-      padding: 8px 8px 8px 8px;  /* Top, Right, Bottom, Left */
+      padding: 8px 8px 8px 8px;  
       border: none;
       color: #fff;
       border-radius: 4px;
