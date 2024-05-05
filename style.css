@@ -220,10 +220,11 @@
     #player {
       max-width: 100dvw; /* dvw = dynamic viewport width */
       max-height: 100dvh; /* dvh = dynamic viewport height */
-      margin: auto; 
-      display: block; 
+      margin-top: 2px;
+      margin-bottom: 2px;
+      display: block;
     }
-
+    
 /* Code for Night-Mode toggle. */
 .nightMode {
     body {
