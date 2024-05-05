@@ -149,9 +149,9 @@ async function play() {
     if (selectedValue === 'tburls') {
         document.getElementById('messageID').value = '2';
     } else if (selectedValue === 'desi_bhabhi_shila_terabox') {
-        document.getElementById('messageID').value = '8600';
+        document.getElementById('messageID').value = '10180';
     } else if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
-        document.getElementById('messageID').value = '14700';
+        document.getElementById('messageID').value = '16180';
         // Set message ID box value for another option
     }
   });
