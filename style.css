@@ -187,7 +187,7 @@
       font-weight: 800;
       font-size: 11px;
       background-color: #000;
-      border: 2px solid #666;
+      border: 2px solid #333;
       border-radius: 8px;
       margin: 2px 0px;
       margin-left: 0px;
@@ -232,7 +232,6 @@
     }
     #textBox {
         color: #888;
-        border: 2px solid #333;
     }
     .box-container,
     .post-container {
