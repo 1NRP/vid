@@ -80,20 +80,22 @@ async function play() {
         // Make a request to the preparation URL
         fetch(requestUrl)
         .then(response => {
-        var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
-        document.getElementById("player").src = playUrl;
-    })
+            var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
+            document.getElementById("player").src = playUrl;
+            document.getElementById("player").play(); // Autoplay the video
+        })
         .catch(error => {
-        console.error('Error fetching preparation URL:', error);
-        alert('Failed to prepare playback. Please try again later.');
-    });
+            console.error('Error fetching preparation URL:', error);
+            alert('Failed to prepare playback. Please try again later.');
+        });
 
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = qry;
+        document.getElementById("player").play(); // Autoplay the video
     }
 }
-    
+
 // Telegram Post fetching function 
   function loadNextPosts() {
     const container = document.getElementById('boxContainer');
