@@ -40,7 +40,7 @@
     }
   #pasteCopyButton {
     background-color: #444;
-    padding: 8px;
+    padding: 6px 8px 8px 6px;  /* Top, Right, Bottom, Left */
     border: none;
     color: #fff;
     border-radius: 4px;
