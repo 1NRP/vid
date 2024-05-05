@@ -99,7 +99,7 @@
       cursor: pointer;
     }
     .box-container {
-      width: 96%;
+      width: 95%;
       height: 300px;
       overflow-y: scroll;
       border: 2px solid #333;
