@@ -182,19 +182,7 @@
       Border-radius: 50%;
       text-align: center;
       padding: 6px;
-      margin-left: 0px; 
-    }
-    #nightModeIcon {
-      cursor: pointer;
-      padding: 6px;
-      margin-left: 0px;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      border: none;
-      background-color: #444;
-      width: 24px;
-      height: 24px; 
+      margin-left: 0px;  
     }
     .alert {
     position: fixed;
@@ -237,7 +225,6 @@
         border: 2px solid #333;
     }
     .poster-image,
-    #nightModeIcon,
     #player {
         filter: brightness(70%);
     }
