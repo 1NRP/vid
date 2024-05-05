@@ -8,6 +8,7 @@
       border-radius: 8px;
       border: 2px solid #333;
       overflow-y: scroll;
+      margin: 0px;
     }
     .post-details {
       display: flex;
