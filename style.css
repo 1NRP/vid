@@ -25,7 +25,7 @@
       font-family: 'Raleway', sans-serif;
       font-size: 15px;
       font-weight: 600;
-      margin: 5px 180px 5px auto;
+      margin: 5px 180px 5px 0px;
     }
     .duration {
       color: #b4b4b4;
@@ -40,6 +40,7 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      margin: 5px;
     }
     #player {
       max-width: 100dvw; /* dvw = dynamic viewport width */
