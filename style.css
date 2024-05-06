@@ -24,14 +24,15 @@
       color: #b4b4b4;
       font-family: 'Raleway', sans-serif;
       font-size: 15px;
-      font-weight: 500;
+      font-weight: 600;
       margin-right: 180px;
     }
     .duration {
       color: #b4b4b4;
       font-family: 'Raleway', sans-serif;
       font-size: 15px;
-      font-weight: 500;
+      font-weight: 600;
+      margin-left: 5px;
       margin-right: 20px;
     }
     #copyLink {
