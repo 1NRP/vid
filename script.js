@@ -268,7 +268,7 @@ function pasteLineText(event) {
 document.getElementById('textBox').onclick = pasteLineText;
 
 // Function to handle clicking on the link button
-function handleLinkButtonClick(link) {
+function handlePosterOrLinkButtonClick(link) {
     document.getElementById('vid').value = link;
     play(); // Trigger the play function after pasting the link
 }
@@ -290,11 +290,11 @@ function fetchPosts() {
             postElement.classList.add('post');
             postElement.innerHTML = `
                 <div>
-                    <img src="${poster}" alt="Poster" class="poster-image">
+                    <img src="${poster}" alt="Poster" class="poster-image" onclick="handlePosterOrLinkButtonClick('${link}')">
                     <div class="post-details">
                         <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
                         <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-                        <p><button id="copyLink" onclick="handleLinkButtonClick('${link}')">🌐</button></p>
+                        <!-- <p><button id="copyLink" onclick="handlePosterOrLinkButtonClick('${link}')">🌐</button></p> -->
                     </div>
                 </div>
             `;
