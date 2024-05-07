@@ -25,14 +25,14 @@
       font-family: 'Raleway', sans-serif;
       font-size: 15px;
       font-weight: 600;
-      margin: 2px 40px 5px 0px;
+      margin: 0px 40px 2px 0px;
     }
     .duration {
       color: #b4b4b4;
       font-family: 'Raleway', sans-serif;
       font-size: 15px;
       font-weight: 600;
-      margin: 2px 20px 5px 80px;
+      margin: 0px 20px 2px 40vw;
     }
     #copyLink {
       background-color: #444;
