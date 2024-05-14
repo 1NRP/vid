@@ -215,7 +215,7 @@
     }
     .poster-image,
     #player {
-        filter: brightness(70%);
+        filter: brightness(60%);
     }
     select,
     .input-container input[type="text"],
