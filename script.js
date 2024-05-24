@@ -282,7 +282,7 @@ function fetchPosts() {
     .then(response => response.json())
     .then(data => {
         data.items.forEach(item => {
-            const key = item.key
+            const key = item.key;
             //const poster = item.poster;
             const link = item.link;
             const durationInMinutes = Math.round(item.duration / 60);
