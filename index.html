@@ -59,7 +59,7 @@
     }
     #saveDeleteBtn {
       background-color: #444;
-      padding: 2px 1px 8px 1px;  
+      padding: 8px 8px 8px 8px;  
       border: none;
       color: #fff;
       border-radius: 4px;
@@ -300,14 +300,14 @@
 -->
     <button id="saveDeleteBtn" onclick="handleButtonClick()">☁</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" onclick="play(); getLink()">PLAY</button>
+    <button id="button-play" onclick="play()">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''">❌</button>
     </br>
 </center>
 <div class="box-container" id="boxContainer"></div>
 <div class="input-container">
   <label for="channelName"></label>
-  <button id="nightModeBtn" onclick="nightModeFunction()">☀️</button>
+  <button id="nightModeBtn" onclick="getLink()">☀️</button>
   <select id="channelName">
     <option value="tburls">Saved</option>
     <option value="desi_bhabhi_shila_terabox">1st</option>
@@ -473,17 +473,6 @@ document.addEventListener("keyup", function(event) {
         arrowRightPressed = false;
     }
 });
-
-// Show "Link Saved" alert when"PasteCopy" button is clicked
-function showAlert() {
-   const alertBox = document.createElement('div');
-   alertBox.className = 'alert';
-   alertBox.textContent = '☑️ Link Saved';
-   document.body.appendChild(alertBox);
-   setTimeout(() => {
-   alertBox.remove();
-   }, 1000);
-}
 
 // Paste link and PLAY button function
 async function play() {
