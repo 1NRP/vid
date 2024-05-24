@@ -282,7 +282,8 @@ function fetchPosts() {
     .then(response => response.json())
     .then(data => {
         data.items.forEach(item => {
-            const poster = item.poster;
+            const key = item.key
+            //const poster = item.poster;
             const link = item.link;
             const durationInMinutes = Math.round(item.duration / 60);
             const sizeInMB = (item.size / 1024 / 1024).toFixed(0);   
@@ -290,7 +291,7 @@ function fetchPosts() {
             postElement.classList.add('post');
             postElement.innerHTML = `
                 <div>
-                    <img src="${poster}" alt="Poster" class="poster-image" onclick="handlePosterOrLinkButtonClick('${link}')">
+                    <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterOrLinkButtonClick('${link}')">
                     <div class="post-details">
                         <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
                         <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
