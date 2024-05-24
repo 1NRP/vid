@@ -57,9 +57,9 @@
       max-height: 100dvh; /* dvh = dynamic viewport height */
       margin: 2px 0px 0px 0px;  /* Top, Right, Bottom, Left */
     }
-    #pasteCopyButton {
+    #saveDeleteBtn {
       background-color: #444;
-      padding: 8px 0px 8px 0px;  
+      padding: 2px 1px 8px 1px;  
       border: none;
       color: #fff;
       border-radius: 4px;
@@ -267,7 +267,7 @@
     #btn-next {
         color: #b4b4b4;
     }
-    #pasteCopyButton,
+    #saveDeleteBtn,
     #reload,
     #clearBtn,
     #nightModeBtn {
@@ -296,9 +296,9 @@
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
     <h5>If the Current TB playing method doesn't work anymore, then try using 'NEPHOBOX' method. URL configuration process for Nephobox is saved in 'TG - Saved Messages'.</h5>
     <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowUp", Clear Button(click): "ArrowRight + ArrowLeft", Paste Copy Button(click): "ArrowRight + End"
-    <button id="pasteCopyButton" onclick="handleButtonClick(); showAlert()">🗒</button>
+    <button id="saveDeleteBtn" onclick="handleButtonClick(); showAlert()">🗒</button>
 -->
-    <button id="pasteCopyButton" onclick="handleButtonClick()">☁️</button>
+    <button id="saveDeleteBtn" onclick="handleButtonClick()">☁</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''">❌</button>
@@ -463,7 +463,7 @@ document.addEventListener("keydown", function(event) {
         } else if (event.key === "ArrowLeft") {
             document.getElementById("clearBtn").click();
         } else if (event.key === "End") {
-            document.getElementById("pasteCopyButton").click();
+            document.getElementById("saveDeleteBtn").click();
         }
     }
 });
@@ -607,12 +607,12 @@ const textBox = document.getElementById('textBox');
 const placeholder = document.getElementById('vid');
 let clickCount = 0;
 let clickTimer;
-let isCopying = false;
-let editingEnabled = false;
+let deleteMode = false;
+//let editingEnabled = false;
 
 // Set initial mode to "paste"
-document.getElementById('pasteCopyButton').innerText = '☁️';
-
+document.getElementById('saveDeleteBtn').innerText = '☁';
+/*
 // Function to copy text from textbox to clipboard
 function copyTextBoxToClipboard() {
     textBox.select();
@@ -626,7 +626,7 @@ function enableEditing() {
         editingEnabled = true;
     }
 }
-
+*/
 // Handle button click
 function handleButtonClick() {
     clickCount++;
@@ -634,12 +634,12 @@ function handleButtonClick() {
     clickTimer = setTimeout(() => {
         if (clickCount >= 3) {
             toggleMode();
-            enableEditing(); // Call enableEditing function if clicked 3 times
+            //enableEditing(); // Call enableEditing function if clicked 3 times
         } else {
-            if (isCopying) {
-                copyTextBoxToClipboard(); 
+            if (deleteMode) {
+                deleteLink(); 
             } else {
-                pasteText();
+                saveLink();
             }
         }
         clickCount = 0;
@@ -648,10 +648,10 @@ function handleButtonClick() {
 
 // Function to toggle between paste and copy modes
 function toggleMode() {
-    isCopying = !isCopying;
-    document.getElementById('pasteCopyButton').innerText = isCopying ? '🗑' : '☁️';
+    deleteMode = !deleteMode;
+    document.getElementById('saveDeleteBtn').innerText = deleteMode ? '🗑' : '☁';
 }
-
+/*
 // Function to store and retrieve Terabox links using browser Cache method.
 function updateCachedContent() {
     const textBoxContent = document.getElementById('textBox').value;
@@ -671,11 +671,11 @@ function loadFromCache() {
 
 // Load cached content on page load
 loadFromCache();
-
+*/
 // Cache is updated everytime the Copy/Paste button is clicked, with a delay of 1 second
 // Cache can be manually cleared using Tamper-monkey or through the browser ("Lock" icon in chrome)
-document.getElementById('pasteCopyButton').addEventListener('click', () => {
-    setTimeout(updateCachedContent, 1000);  // 1 second delay because link is pasted after 0.8 seconds of clicking the button.
+document.getElementById('saveDeleteBtn').addEventListener('click', () => {
+    setTimeout(saveLink, 1000);  // 1 second delay because link is pasted after 0.8 seconds of clicking the button.
 });
 
 // Function to copy specific Terabox link from textBox to clipboard
