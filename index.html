@@ -320,8 +320,8 @@
   <button id="btn-next" onclick="loadNextPosts()">NEXT</button>
   <button id="reload" onclick="fetchPosts()">🔄</button>
 </div>
-<textarea id="textBox" readonly onclick="pasteLineText(event)"></textarea>
-<input type="button" onmousedown="start(event)" onmouseup="revert()" ondblclick="someFun()" value="hold click for awhile">
+<textarea id="textBox" readonly onclick="pasteLineText(event)" ondblclick="getLink()"></textarea>
+<!--  <textarea id="textBox" readonly onclick="pasteLineText(event)"></textarea>  -->
 <script>
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
 function showAlert() {
@@ -443,37 +443,6 @@ function notFoundAlert() {
 }
 // getLink();
 
-// Function to be executed on long press
-        function longPressTextBox() {
-            alert('Button long pressed for 3 seconds');
-        }
-
-        // Start the timer on mousedown
-        textBox.addEventListener('mousedown', () => {
-            pressTimer = setTimeout(longPressTextBox, 3000); // 3000 miliseconds.
-        });
-
-        // Clear the timer on mouseup and mouseleave
-        textBox.addEventListener('mouseup', () => {
-            clearTimeout(pressTimer);
-        });
-
-        textBox.addEventListener('mouseleave', () => {
-            clearTimeout(pressTimer);
-        });
-
-        // Also handle touch events for mobile devices
-        textBox.addEventListener('touchstart', () => {
-            pressTimer = setTimeout(longPressTextBox, 3000);
-        });
-
-        textBox.addEventListener('touchend', () => {
-            clearTimeout(pressTimer);
-        });
-
-        textBox.addEventListener('touchcancel', () => {
-            clearTimeout(pressTimer);
-        });
 
 // Night-Mode toggle function.
 function nightModeFunction() {
