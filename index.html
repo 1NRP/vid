@@ -295,7 +295,7 @@
 <!--
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
     <h5>If the Current TB playing method doesn't work anymore, then try using 'NEPHOBOX' method. URL configuration process for Nephobox is saved in 'TG - Saved Messages'.</h5>
-    <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowUp", Clear Button(click): "ArrowRight + ArrowLeft", Paste Copy Button(click): "ArrowRight + End"
+    <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
     <button id="saveDeleteBtn" onclick="handleButtonClick(); showAlert()">🗒</button>
 -->
     <button id="saveDeleteBtn" onclick="handleButtonClick()">☁</button>
@@ -442,7 +442,39 @@ function notFoundAlert() {
         });
 }
 // getLink();
-  
+
+// Function to be executed on long press
+        function longPressTextBox() {
+            alert('Button long pressed for 3 seconds');
+        }
+
+        // Start the timer on mousedown
+        textBox.addEventListener('mousedown', () => {
+            pressTimer = setTimeout(longPressTextBox, 3000); // 3000 miliseconds.
+        });
+
+        // Clear the timer on mouseup and mouseleave
+        textBox.addEventListener('mouseup', () => {
+            clearTimeout(pressTimer);
+        });
+
+        textBox.addEventListener('mouseleave', () => {
+            clearTimeout(pressTimer);
+        });
+
+        // Also handle touch events for mobile devices
+        textBox.addEventListener('touchstart', () => {
+            pressTimer = setTimeout(longPressTextBox, 3000);
+        });
+
+        textBox.addEventListener('touchend', () => {
+            clearTimeout(pressTimer);
+        });
+
+        textBox.addEventListener('touchcancel', () => {
+            clearTimeout(pressTimer);
+        });
+
 // Night-Mode toggle function.
 function nightModeFunction() {
     let element = document.body;
@@ -458,13 +490,13 @@ document.addEventListener("keydown", function(event) {
     
     if (arrowRightPressed) {
         if (event.key === "ArrowUp") {
-            fetchPosts();
+            saveLink();
         } else if (event.key === "ArrowDown") {
             play();
         } else if (event.key === "ArrowLeft") {
-            document.getElementById("clearBtn").click();
+            fetchPosts()
         } else if (event.key === "End") {
-            document.getElementById("saveDeleteBtn").click();
+            document.getElementById("clearBtn").click();
         }
     }
 });
