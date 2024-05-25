@@ -298,16 +298,16 @@
     <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
     <button id="saveDeleteBtn" onclick="handleButtonClick(); showAlert()">☁</button>
 -->
-    <button id="saveDeleteBtn" onclick="handleButtonClick()">☁</button>
+    <button id="saveDeleteBtn" onclick="handleButtonClick()"></button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''">❌</button>
     </br>
 </center>
 <div class="box-container" id="boxContainer"></div>
-<div class="input-container" ondblclick="getLink()">
+<div class="input-container">
   <label for="channelName"></label>
-  <button id="nightModeBtn" onclick="nightModeFunction()">☀️</button>
+  <button id="nightModeBtn" onclick="nightModeFunction()" ondblclick="getLink()">☀️</button>
   <select id="channelName">
     <option value="tburls">Saved</option>
     <option value="desi_bhabhi_shila_terabox">1st</option>
