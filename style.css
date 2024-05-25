@@ -205,8 +205,8 @@ h1 {
   position: fixed;
   top: 5dvh;
   left: 30dvw;
-  background-color: #1bd13d;
-  color: #000;
+  background-color: #1b1a1a;
+  color: #f1eaea;
   font-weight: 900;
   padding: 5px 5px;
   border: 2px solid #999;
@@ -216,8 +216,8 @@ h1 {
   position: fixed;
   top: 5dvh;
   left: 30dvw;
-  background-color: #f2074e;
-  color: #000;
+  background-color: #1b1a1a;
+  color: #f1eaea;
   font-weight: 900;
   padding: 5px 5px;
   border: 2px solid #999;
@@ -227,7 +227,7 @@ h1 {
   position: fixed;
   top: 5dvh;
   left: 25dvw;
-  background-color: #e8af05;
+  background-color: #dba503;
   color: #000;
   font-weight: 900;
   padding: 5px 5px;
