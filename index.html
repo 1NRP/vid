@@ -61,7 +61,7 @@
       background-color: #444;
       padding: 8px 8px 8px 8px;  
       border: none;
-      color: #fff;
+      color: #05d621;
       border-radius: 4px;
       cursor: pointer;
     }
@@ -321,6 +321,7 @@
   <button id="reload" onclick="fetchPosts()">🔄</button>
 </div>
 <textarea id="textBox" readonly onclick="pasteLineText(event)"></textarea>
+<input type="button" onmousedown="start(event)" onmouseup="revert()" ondblclick="someFun()" value="hold click for awhile">
 <script>
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
 function showAlert() {
@@ -591,25 +592,23 @@ async function play() {
     }
   });
 
-// Textbox for link storing.
+// Function for storing or deleting Link.
 const textBox = document.getElementById('textBox');
 const placeholder = document.getElementById('vid');
 let clickCount = 0;
 let clickTimer;
 let deleteMode = false;
-//let editingEnabled = false;
 
 // Set initial mode to "paste"
 document.getElementById('saveDeleteBtn').innerText = '☁';
 
-// Handle "saveDeletBtn" button click
+// Handle "saveDeleteBtn" button click
 function handleButtonClick() {
     clickCount++;
     clearTimeout(clickTimer);
     clickTimer = setTimeout(() => {
         if (clickCount >= 3) {
             toggleMode();
-            //enableEditing(); // Call enableEditing function if clicked 3 times
         } else {
             if (deleteMode) {
                 deleteLink(); 
@@ -626,10 +625,7 @@ function toggleMode() {
     deleteMode = !deleteMode;
     document.getElementById('saveDeleteBtn').innerText = deleteMode ? '🗑' : '☁';
 }
-
-document.getElementById('saveDeleteBtn').addEventListener('click', () => {
-    setTimeout(saveLink, 4000);  // 1 second delay because it takes 0.8 seconds to toggle the button.
-});
+document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonClick);
 
 // Function to paste specific Terabox link from textBox to video link input field.
 function pasteLineText(event) {
