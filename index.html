@@ -305,9 +305,9 @@
     </br>
 </center>
 <div class="box-container" id="boxContainer"></div>
-<div class="input-container"></div>
+<div class="input-container" ondblclick="getLink()">
   <label for="channelName"></label>
-  <button id="nightModeBtn" onclick="nightModeFunction()" ondblclick="getLink()">☀️</button>
+  <button id="nightModeBtn" onclick="nightModeFunction()">☀️</button>
   <select id="channelName">
     <option value="tburls">Saved</option>
     <option value="desi_bhabhi_shila_terabox">1st</option>
@@ -321,7 +321,6 @@
   <button id="reload" onclick="fetchPosts()">🔄</button>
 </div>
 <textarea id="textBox" readonly onclick="pasteLineText(event)"></textarea>
-<!--  <textarea id="textBox" readonly onclick="pasteLineText(event)"></textarea>  -->
 <script>
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
 function showAlert() {
