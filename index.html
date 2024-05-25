@@ -215,8 +215,8 @@
       position: fixed;
       top: 5dvh;
       left: 30dvw;
-      background-color: #1bd13d;
-      color: #000;
+      background-color: #1b1a1a;
+      color: #f1eaea;
       font-weight: 900;
       padding: 5px 5px;
       border: 2px solid #999;
@@ -226,8 +226,8 @@
       position: fixed;
       top: 5dvh;
       left: 30dvw;
-      background-color: #f2074e;
-      color: #000;
+      background-color: #1b1a1a;
+      color: #f1eaea;
       font-weight: 900;
       padding: 5px 5px;
       border: 2px solid #999;
@@ -237,7 +237,7 @@
       position: fixed;
       top: 5dvh;
       left: 25dvw;
-      background-color: #e8af05;
+      background-color: #dba503;
       color: #000;
       font-weight: 900;
       padding: 5px 5px;
@@ -618,7 +618,7 @@ function handleButtonClick() {
             }
         }
         clickCount = 0;
-    }, 700);  // 3 clicks in 0.8 seconds or 800 milliseconds.
+    }, 800);  // 3 clicks in 0.8 seconds or 800 milliseconds.
 }
 
 // Function to toggle between paste and copy modes
@@ -628,7 +628,7 @@ function toggleMode() {
 }
 
 document.getElementById('saveDeleteBtn').addEventListener('click', () => {
-    setTimeout(saveLink, 1000);  // 1 second delay because it takes 0.7 seconds to toggle the button.
+    setTimeout(saveLink, 1400);  // 1 second delay because it takes 0.8 seconds to toggle the button.
 });
 
 // Function to paste specific Terabox link from textBox to video link input field.
