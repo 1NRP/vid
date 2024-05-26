@@ -501,8 +501,8 @@ async function play() {
             return;
         }
     }
-    // Check if the URL contains 'Terabox'
-    if (qry.toLowerCase().includes("'teraboxapp', '1024terabox'")) {
+    // Check if the URL contains 'Terabox'   
+    if (/(teraboxapp|1024terabox)/.test(qry.toLowerCase())) {
         // Extract the video ID from the URL
         var videoId = qry.split('/').slice(-1)[0];
 
