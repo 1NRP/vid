@@ -150,7 +150,7 @@ function showAlert() {
      }
  });
  
- // Paste link and PLAY button function
+ // Paste link and PLAY button function (Vercel Serverless Function Method)
  async function play() {
      var qry = document.getElementById("vid").value.trim(); // Trim whitespace
      if (qry === "") {
@@ -177,7 +177,67 @@ function showAlert() {
          }
      }
      // Check if the URL contains 'Terabox'
-     if (qry.toLowerCase().includes('teraboxapp')) {
+     if (/(teraboxapp|1024terabox|freeterabox)/.test(qry.toLowerCase())) {
+         // Extract the video ID from the URL
+         var fullVideoId = qry.split('/').slice(-1)[0];
+         // Remove the first character (assuming it's always '1')
+         videoId = fullVideoId.substring(1);
+         try {
+             // Make a request to the preparation URL
+             const response = await fetch('https://1msg.vercel.app/api/Play/get-M3U8', {
+                 method: 'POST',
+                 headers: {
+                     'Content-Type': 'application/json'
+                 },
+                 body: JSON.stringify({ shortURL: videoId }),
+             });
+             if (!response.ok) {
+                 throw new Error('Failed to fetch M3U8 URL');
+             }
+             const responseData = await response.json();
+             const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + fullVideoId + ".m3u8";
+             document.getElementById("player").src = playUrl;
+             document.getElementById("player").play(); // Autoplay the video
+         } catch (error) {
+             console.error('Error fetching or processing:', error);
+             alert('Failed to prepare playback. Please try again later.');
+         }
+     } else {
+         // Not a terabox URL, play as usual
+         document.getElementById("player").src = qry;
+         document.getElementById("player").play(); // Autoplay the video
+     }
+ }
+ 
+ /*
+ // Paste link and PLAY button function (Mdiskplay Method)
+ async function play() {
+     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
+     if (qry === "") {
+         // Check if the clipboard API is supported
+         if (!navigator.clipboard) {
+             console.error('Clipboard API not supported');
+             return;
+         }
+         // Try to read text from clipboard
+         try {
+             const text = await navigator.clipboard.readText();
+             if (text.trim() === "") {
+                 alert("Please Enter URL First!");
+                 return;
+             }
+             document.getElementById('vid').value = text.trim(); // Update the input field
+             qry = text.trim(); // Update qry after pasting
+         } catch (err) {
+             console.error('Failed to read clipboard contents:', err);
+             if (err.name === 'NotAllowedError') {
+                 console.error('Permission to read clipboard denied');
+             }
+             return;
+         }
+     }
+     // Check if the URL contains 'Terabox'   
+     if (/(teraboxapp|1024terabox)/.test(qry.toLowerCase())) {
          // Extract the video ID from the URL
          var videoId = qry.split('/').slice(-1)[0];
  
@@ -204,6 +264,7 @@ function showAlert() {
          document.getElementById("player").play(); // Autoplay the video
      }
  }
+ */
  
  // Telegram Post fetching function 
    function loadNextPosts() {
@@ -219,7 +280,7 @@ function showAlert() {
        script.dataset.telegramPost = `${channelName}/${currentMessageID}`;
        script.dataset.width = `100%`;
        script.dataset.userpic = `false`;
-       script.dataset.color = `999`;
+       script.dataset.color = `bfaa30`;
        script.dataset.dark = `1`;
        container.appendChild(script);
        // Manually trigger rendering of Telegram widget
@@ -241,7 +302,7 @@ function showAlert() {
      script.dataset.telegramPost = `${channelName}/${messageID}`;
      script.dataset.width = `100%`;
      script.dataset.userpic = `false`;
-     script.dataset.color = `999`;
+     script.dataset.color = `bfaa30`;
      script.dataset.dark = `1`;
      container.appendChild(script);
      // Manually trigger rendering of Telegram widget
@@ -275,7 +336,7 @@ function showAlert() {
  let deleteMode = false;
  
  // Set initial mode to "paste"
- document.getElementById('saveDeleteBtn').innerText = '☁';
+ document.getElementById('saveDeleteBtn').innerText = '☁️';
  
  // Handle "saveDeleteBtn" button click
  function handleButtonClick() {
@@ -298,7 +359,7 @@ function showAlert() {
  // Function to toggle between paste and copy modes
  function toggleMode() {
      deleteMode = !deleteMode;
-     document.getElementById('saveDeleteBtn').innerText = deleteMode ? '🗑' : '☁';
+     document.getElementById('saveDeleteBtn').innerText = deleteMode ? '🗑️' : '☁️';
  }
  document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonClick);
  
@@ -349,7 +410,7 @@ function showAlert() {
              //const poster = item.poster;
              const link = item.link;
              const durationInMinutes = Math.round(item.duration / 60);
-             const sizeInMB = (item.size / 1024 / 1024).toFixed(0);   
+             const sizeInMB = (item.size / 1024 / 1024 / 3).toFixed(0);   
              const postElement = document.createElement('div');
              postElement.classList.add('post');
              postElement.innerHTML = `
