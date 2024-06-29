@@ -515,7 +515,7 @@ async function play() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ shortURL: videoId }),
+                body: JSON.stringify({ shortURL: fullVideoId }),
             });
             if (!response.ok) {
                 throw new Error('Failed to fetch M3U8 URL');
