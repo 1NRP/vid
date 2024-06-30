@@ -683,7 +683,7 @@ function handleButtonClick() {
     clickCount++;
     clearTimeout(clickTimer);
     clickTimer = setTimeout(() => {
-        if (clickCount >= 3) {
+        if (clickCount >= 2) {
             toggleMode();
         } else {
             if (deleteMode) {
@@ -693,7 +693,7 @@ function handleButtonClick() {
             }
         }
         clickCount = 0;
-    }, 800);  // 3 clicks in 0.8 seconds or 800 milliseconds.
+    }, 500);  // 2 clicks in 0.5 second or 500 milliseconds.
 }
 
 // Function to toggle between paste and copy modes
@@ -732,7 +732,7 @@ function pasteLineText(event) {
 async function getTeraThumbnail() {
     var lineText = document.getElementById('vid').value;
     var shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
-    var response = await fetch(`https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`);
+    var response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=15GVGA6z1fUyWeeEhZe_rXQ&root=1')}`);
     var data = await response.json();
     var imageUrl = data.url;
 
