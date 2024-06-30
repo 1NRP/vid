@@ -286,18 +286,17 @@
         color: #999;
     }
 }
-#imageContainer {
-            display: none;
-            position: absolute;
-            width: 200px;
-            height: 100px;
-            border: 1px solid black;
-            background-color: white;
-        }
-        #imageContainer img {
-            width: 100%;
-            height: 100%;
-        }
+.imageContainer {
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    border: 1px solid black;
+    background-color: white;
+}
+.imageContainer img {
+    width: 100%;
+    height: 100%;
+}
 </style>
 </head>
 <center>
@@ -334,8 +333,8 @@
   <button id="reload" onclick="fetchPosts()">🔄</button>
 </div>
 <textarea id="textBox" readonly ></textarea>
-<div id="imageContainer"></div>
 <!--  <script src="script.js"></script>  pasteLineText(event) -->
+
 <script>
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
 function showAlert() {
@@ -705,70 +704,75 @@ document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonC
 
 // Function to Paste LineText.
 function pasteLineText(event) {
-    var textBox = document.getElementById('textBox');
-    var text = textBox.value;
-    var cursorPosition = textBox.selectionStart; // Get cursor position
-    var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
-    var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
+            var textBox = document.getElementById('textBox');
+            var text = textBox.value;
+            var cursorPosition = textBox.selectionStart; // Get cursor position
+            var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
+            var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
 
-    // If no line break is found before the cursor position, start of the text
-    if (startOfLine === -1) {
-        startOfLine = 0;
-    } else {
-        startOfLine += 2; // Move past the line break
-    }
+            // If no line break is found before the cursor position, start of the text
+            if (startOfLine === -1) {
+                startOfLine = 0;
+            } else {
+                startOfLine += 2; // Move past the line break
+            }
 
-    // If no line break is found after the cursor position, end of the text
-    if (endOfLine === -1) {
-        endOfLine = text.length;
-    }
+            // If no line break is found after the cursor position, end of the text
+            if (endOfLine === -1) {
+                endOfLine = text.length;
+            }
 
-    var lineText = text.substring(startOfLine, endOfLine);
+            var lineText = text.substring(startOfLine, endOfLine);
 
-    // Paste the selected line text to the input field
-    document.getElementById('vid').value = lineText;
-}
+            // Paste the selected line text to the input field
+            document.getElementById('vid').value = lineText;
+        }
 
-async function getTeraThumbnail() {
-    var lineText = document.getElementById('vid').value;
-    var shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
-    var response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=15GVGA6z1fUyWeeEhZe_rXQ&root=1')}`);
-    var data = await response.json();
-  //  var { shareid, uk, root } = infoData;
-//    if (!infoData.list || infoData.list.length === 0) {
- //     throw new Error('No items found in the List section of the JSON.');
-//    }
-    var { size, server_filename, thumbs: { url2, url3 } } = data.list[0];
-    console.log('url2:', url2);
-   // var imageUrl = data.url2;
-    var imageContainer = document.getElementById('imageContainer');
-    imageContainer.innerHTML = `<img src="${url2}" alt="Image">`;
-    imageContainer.style.display = 'block';
-}
+        async function playa() {
+            var lineText = document.getElementById('vid').value;
+            var shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
+            var response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`)}`);
+            var data = await response.json();
+            var content = JSON.parse(data.contents);
+            var imageUrl = content.list[0].thumbs.url2;
+            var size = content.list[0].size;
+            var icon = content.list[0].thumbs.icon;
+            var shareid = content.shareid;
 
-let clickTimeout;
-const clickDelay = 300;
+            console.log('Size:', size);
+            console.log('Icon:', icon);
+            console.log('Share ID:', shareid);
 
-document.getElementById('textBox').addEventListener('click', function (event) {
-    if (clickTimeout) {
-        clearTimeout(clickTimeout);
-        clickTimeout = null;
-        getTeraThumbnail();
-    } else {
-        clickTimeout = setTimeout(function () {
-            clickTimeout = null;
-            pasteLineText(event);
-        }, clickDelay);
-    }
-});
+            // Create and show the image container
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'imageContainer';
+            imageContainer.innerHTML = `<img src="${imageUrl}" alt="Image">`;
+            document.body.appendChild(imageContainer);
 
-document.addEventListener('click', function (event) {
-    var imageContainer = document.getElementById('imageContainer');
-    if (imageContainer.style.display === 'block' && !imageContainer.contains(event.target)) {
-        imageContainer.style.display = 'none';
-    }
-});  
-  
+            // Hide the image container when clicking outside of it
+            document.addEventListener('click', function handleClickOutside(event) {
+                if (!imageContainer.contains(event.target)) {
+                    document.body.removeChild(imageContainer);
+                    document.removeEventListener('click', handleClickOutside);
+                }
+            });
+        }
+
+        let clickTimeout;
+        const clickDelay = 300;
+
+        document.getElementById('textBox').addEventListener('click', function (event) {
+            if (clickTimeout) {
+                clearTimeout(clickTimeout);
+                clickTimeout = null;
+                playa();
+            } else {
+                clickTimeout = setTimeout(function () {
+                    clickTimeout = null;
+                    pasteLineText(event);
+                }, clickDelay);
+            }
+        });  
 /*
 // Function to paste specific Terabox link from textBox to video link input field.
 function pasteLineText(event) {
