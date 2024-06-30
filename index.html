@@ -690,6 +690,50 @@ function toggleMode() {
 }
 document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonClick);
 
+// Function to Paste LineText.
+function pasteLineText(event) {
+    var textBox = document.getElementById('textBox');
+    var text = textBox.value;
+    var cursorPosition = textBox.selectionStart; // Get cursor position
+    var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
+    var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
+
+    // If no line break is found before the cursor position, start of the text
+    if (startOfLine === -1) {
+        startOfLine = 0;
+    } else {
+        startOfLine += 2; // Move past the line break
+    }
+
+    // If no line break is found after the cursor position, end of the text
+    if (endOfLine === -1) {
+        endOfLine = text.length;
+    }
+
+    var lineText = text.substring(startOfLine, endOfLine);
+
+    // Paste the selected line text to the input field
+    document.getElementById('vid').value = lineText;
+}
+
+let clickTimeout;
+const clickDelay = 300;
+
+document.getElementById('textBox').addEventListener('click', function (event) {
+    if (clickTimeout) {
+        clearTimeout(clickTimeout);
+        clickTimeout = null;
+        getTeraThumbnail();
+    } else {
+        clickTimeout = setTimeout(function () {
+            clickTimeout = null;
+            pasteLineText(event);
+        }, clickDelay);
+    }
+});
+  
+  
+/*
 // Function to paste specific Terabox link from textBox to video link input field.
 function pasteLineText(event) {
     var textBox = document.getElementById('textBox');
@@ -723,7 +767,8 @@ function handlePosterOrLinkButtonClick(link) {
     document.getElementById('vid').value = link;
     play(); // Trigger the play function after pasting the link
 }
-
+*/
+  
 // Function to load posts from the server
 function fetchPosts() {
     const postsContainer = document.getElementById('posts-container');
