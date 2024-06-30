@@ -245,17 +245,17 @@
       border-radius: 5px;
     }
     .thumbnailContainer {
-      position: absolute;
-      top: 5dvh;
+      position: fixed;
+      top: 4dvh;
       left: 5dvw;
-      width: 90%;
+      width: 88%;
       height: 350px;
       border-radius: 5px;
       padding: 5px 5px;
       border: 2px solid #444;
       background-color: #000;
     }
-    .thumbnailContainer img {
+    .thumbnail {
       max-width: 100dvw;
       max-height: 100dvh;
       border-radius: 5px;
@@ -273,6 +273,7 @@
         border: 2px solid #333;
     }
     .poster-image,
+    .thumbnail,
     #boxContainer,
     #player {
         filter: brightness(60%);
@@ -737,15 +738,15 @@ async function showThumbnail(lineText) {
     //var icon = content.list[0].thumbs.icon;
     //var shareid = content.shareid;
    
-    // Create and show the image container
+    // Create and show the Thumbnail container
     const thumbnailContainer = document.createElement('div');
     thumbnailContainer.className = 'thumbnailContainer';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" alt="Image">`;
+    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" alt="Thumbnail Image">`;
     document.body.appendChild(thumbnailContainer);
-    // Hide the image container when clicking outside of it
+    // Hide the Thumbnail container when clicking outside of it
     document.addEventListener('click', function handleClickOutside(event) {
-        if (!imageContainer.contains(event.target)) {
-            document.body.removeChild(imageContainer);
+        if (!thumbnailContainer.contains(event.target)) {
+            document.body.removeChild(thumbnailContainer);
             document.removeEventListener('click', handleClickOutside);
         }
     });
