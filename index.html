@@ -675,7 +675,7 @@ let clickCount = 0;
 let clickTimer;
 let deleteMode = false;
 
-// Set initial mode to "paste"
+// Set initial mode to "Save"
 document.getElementById('saveDeleteBtn').innerText = '☁️';
 
 // Handle "saveDeleteBtn" button click
@@ -734,10 +734,15 @@ async function getTeraThumbnail() {
     var shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
     var response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=15GVGA6z1fUyWeeEhZe_rXQ&root=1')}`);
     var data = await response.json();
-    var imageUrl = data.url;
-
+  //  var { shareid, uk, root } = infoData;
+//    if (!infoData.list || infoData.list.length === 0) {
+ //     throw new Error('No items found in the List section of the JSON.');
+//    }
+    var { size, server_filename, thumbs: { url2, url3 } } = data.list[0];
+    console.log('url2:', url2);
+   // var imageUrl = data.url2;
     var imageContainer = document.getElementById('imageContainer');
-    imageContainer.innerHTML = `<img src="${imageUrl}" alt="Image">`;
+    imageContainer.innerHTML = `<img src="${url2}" alt="Image">`;
     imageContainer.style.display = 'block';
 }
 
