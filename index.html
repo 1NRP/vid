@@ -682,7 +682,7 @@ function handleButtonClick() {
     clickCount++;
     clearTimeout(clickTimer);
     clickTimer = setTimeout(() => {
-        if (clickCount >= 2) {
+        if (clickCount >= 3) {
             toggleMode();
         } else {
             if (deleteMode) {
@@ -692,7 +692,7 @@ function handleButtonClick() {
             }
         }
         clickCount = 0;
-    }, 500);  // 2 clicks in 0.5 second or 500 milliseconds.
+    }, 800);  // 3 clicks in 0.8 second or 800 milliseconds.
 }
 
 // Function to toggle between paste and copy modes
@@ -703,6 +703,86 @@ function toggleMode() {
 document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonClick);
 
 // Function to Paste LineText.
+function pasteLineText(event) {
+            var textBox = document.getElementById('textBox');
+            var text = textBox.value;
+            var cursorPosition = textBox.selectionStart; // Get cursor position
+            var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
+            var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
+
+            // If no line break is found before the cursor position, start of the text
+            if (startOfLine === -1) {
+                startOfLine = 0;
+            } else {
+                startOfLine += 2; // Move past the line break
+            }
+
+            // If no line break is found after the cursor position, end of the text
+            if (endOfLine === -1) {
+                endOfLine = text.length;
+            }
+
+            var lineText = text.substring(startOfLine, endOfLine);
+
+            // Paste the selected line text to the input field
+            document.getElementById('vid').value = lineText;
+        }
+
+        async function aplay() {
+            var lineText = document.getElementById('vid').value;
+            var shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
+
+            // Debug: log the extracted shortURL
+            console.log('Extracted shortURL:', shortURL);
+
+            var response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`)}`);
+            var data = await response.json();
+            var content = JSON.parse(data.contents);
+
+            // Debug: log the entire content
+            console.log('Fetched content:', content);
+
+            var imageUrl = content.list[0].thumbs.url2;
+            var size = content.list[0].size;
+            var icon = content.list[0].thumbs.icon;
+            var shareid = content.shareid;
+
+            console.log('Size:', size);
+            console.log('Icon:', icon);
+            console.log('Share ID:', shareid);
+
+            // Create and show the image container
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'imageContainer';
+            imageContainer.innerHTML = `<img src="${imageUrl}" alt="Image">`;
+            document.body.appendChild(imageContainer);
+
+            // Hide the image container when clicking outside of it
+            document.addEventListener('click', function handleClickOutside(event) {
+                if (!imageContainer.contains(event.target)) {
+                    document.body.removeChild(imageContainer);
+                    document.removeEventListener('click', handleClickOutside);
+                }
+            });
+        }
+
+        let clickTimeout;
+        const clickDelay = 300;
+
+        document.getElementById('textBox').addEventListener('click', function (event) {
+            if (clickTimeout) {
+                clearTimeout(clickTimeout);
+                clickTimeout = null;
+                aplay();
+            } else {
+                clickTimeout = setTimeout(function () {
+                    clickTimeout = null;
+                    pasteLineText(event);
+                }, clickDelay);
+            }
+        });
+
+/*
 function pasteLineText(event) {
             var textBox = document.getElementById('textBox');
             var text = textBox.value;
@@ -772,7 +852,8 @@ function pasteLineText(event) {
                     pasteLineText(event);
                 }, clickDelay);
             }
-        });  
+        });
+*/
 /*
 // Function to paste specific Terabox link from textBox to video link input field.
 function pasteLineText(event) {
