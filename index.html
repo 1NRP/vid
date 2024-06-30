@@ -218,7 +218,7 @@
       background-color: #1bd13d;
       color: #000;
       font-weight: 900;
-      padding: 5px 5px;
+      padding: 5px;
       border: 2px solid #999;
       border-radius: 5px;
     }
@@ -229,7 +229,7 @@
       background-color: #f2074e;
       color: #000;
       font-weight: 900;
-      padding: 5px 5px;
+      padding: 5px;
       border: 2px solid #999;
       border-radius: 5px;
     }
@@ -240,26 +240,49 @@
       background-color: #e8af05;
       color: #000;
       font-weight: 900;
-      padding: 5px 5px;
+      padding: 5px;
       border: 2px solid #999;
       border-radius: 5px;
-    }
+    }/*
     .thumbnailContainer {
       position: fixed;
-      top: 4dvh;
+      top: 2dvh;
       left: 5dvw;
       width: 88%;
       height: 350px;
       border-radius: 5px;
-      padding: 5px 5px;
+      padding: 2px 2px;
       border: 2px solid #444;
       background-color: #000;
     }
     .thumbnail {
-      max-width: 100dvw;
-      max-height: 100dvh;
+      max-width: 100%;
+      max-height: 100%;
       border-radius: 5px;
     }
+  */
+
+.thumbnailContainer {
+  position: fixed;
+  top: 2dvh;
+  left: 5dvw;
+  width: 88%;
+  height: 350px;
+  border-radius: 5px;
+  padding: 2px;
+  border: 2px solid #444;
+  background-color: #000;
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+}
+
+.thumbnail {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto; /* Ensures the image maintains its aspect ratio */
+  height: auto; /* Ensures the image maintains its aspect ratio */
+}
   
 /* Code for Night-Mode toggle. */
 .nightMode {
@@ -764,45 +787,10 @@ document.getElementById('textBox').addEventListener('click', function (event) {
             clickTimeout = null;
             var lineText = getLineText(event);
             document.getElementById('vid').value = lineText;
+            play(); // Trigger Video Play function.
         }, clickDelay);
     }
 });
-
-/*
-// Function to paste specific Terabox link from textBox to video link input field.
-function pasteLineText(event) {
-    var textBox = document.getElementById('textBox');
-    var text = textBox.value;
-    var cursorPosition = textBox.selectionStart; // Get cursor position
-    var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
-    var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
-
-    // If no line break is found before the cursor position, start of the text
-    if (startOfLine === -1) {
-        startOfLine = 0;
-    } else {
-        startOfLine += 2; // Move past the line break
-    }
-
-    // If no line break is found after the cursor position, end of the text
-    if (endOfLine === -1) {
-        endOfLine = text.length;
-    }
-
-    var lineText = text.substring(startOfLine, endOfLine);
-
-    // Paste the selected line text to the input field
-       document.getElementById('vid').value = lineText;
-    play(); // Trigger the play function after pasting the link
-}
-document.getElementById('textBox').onclick = pasteLineText;
-
-// Function to handle clicking on the link button
-function handlePosterOrLinkButtonClick(link) {
-    document.getElementById('vid').value = link;
-    play(); // Trigger the play function after pasting the link
-}
-*/
   
 // Function to load posts from the server
 function fetchPosts() {
