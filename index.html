@@ -770,7 +770,13 @@ document.getElementById('textBox').addEventListener('click', function (event) {
         }, clickDelay);
     }
 });
-  
+
+// Function to handle clicking on the link button
+function handlePosterOrLinkButtonClick(link) {
+    document.getElementById('vid').value = link;
+    play(); // Trigger the play function after pasting the link
+}
+
 // Function to load posts from the server
 function fetchPosts() {
     const postsContainer = document.getElementById('posts-container');
