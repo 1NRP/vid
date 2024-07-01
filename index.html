@@ -675,23 +675,21 @@ async function play() {
     }
   });
 
-// Tg link
+// Paste Telegram link into Video input field.
 document.addEventListener('DOMContentLoaded', function() {
-  const copyLinkElement = document.querySelector('a');
-
-  copyLinkElement.addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent the link from being followed
-    copyToClipboard(this.href);
-    alert('Link copied to clipboard!');
+  const pasteTGLink = document.querySelector('a'); // 'a' is for Link tag.
+  pasteTGLink.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the link from being visited.
+    pasteIntoInput(this.href);
+    play();
   });
-
-  // Function to copy text to clipboard
-  function copyToClipboard(text) {
+  // 'pasteIntoInput' function.
+  function pasteIntoInput(tgLink) {
     const textarea = document.createElement('textarea');
-    textarea.value = text;
+    textarea.value = tgLink;
     document.body.appendChild(textarea);
     textarea.select();
-    document.execCommand('copy');
+    document.getElementById('vid').value = tgLink;
     document.body.removeChild(textarea);
   }
 });
