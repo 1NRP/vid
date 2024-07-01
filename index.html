@@ -675,6 +675,27 @@ async function play() {
     }
   });
 
+// Tg link
+document.addEventListener('DOMContentLoaded', function() {
+  const copyLinkElement = document.querySelector('a');
+
+  copyLinkElement.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the link from being followed
+    copyToClipboard(this.href);
+    alert('Link copied to clipboard!');
+  });
+
+  // Function to copy text to clipboard
+  function copyToClipboard(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+  }
+});
+  
 // Function for storing or deleting Link.
 const textBox = document.getElementById('textBox');
 const placeholder = document.getElementById('vid');
