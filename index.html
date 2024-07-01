@@ -780,12 +780,12 @@ document.getElementById('textBox').addEventListener('click', function (event) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
         var lineText = getLineText(event);
+        document.getElementById('vid').value = lineText;
         play(); // Trigger Video Play function.
     } else {
         clickTimeout = setTimeout(function () {
             clickTimeout = null;
             var lineText = getLineText(event);
-            document.getElementById('vid').value = lineText;
             showThumbnail(lineText);
         }, clickDelay);
     }
