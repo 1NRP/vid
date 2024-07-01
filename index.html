@@ -612,7 +612,6 @@ async function play() {
     }
 }
 
-/*
 // Telegram Post fetching function 
   function loadNextPosts() {
     const container = document.getElementById('boxContainer');
@@ -674,10 +673,11 @@ async function play() {
         // Set message ID box value for another option
     }
   });
-
+  
+/*
 // Paste Telegram link into Video input field.
 document.addEventListener('DOMContentLoaded', function() {
-  const pasteTGLink = document.querySelector('a'); // 'a' is for Link tag.
+  const pasteTGLink = document.querySelector('a'); // 'a' is for Link/Anchor tag.
   pasteTGLink.addEventListener('click', function(event) {
     event.preventDefault(); // Prevent the link from being visited.
     pasteIntoInput(this.href);
@@ -694,76 +694,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 */
-
-function loadNextPosts() {
-  const container = document.getElementById('boxContainer');
-  const channelName = document.getElementById('channelName').value;
-  const inputVal = document.getElementById('messageID').value;
-  const [interval, startID] = inputVal.includes('/') ? inputVal.split('/').map(Number) : [1, parseInt(inputVal)];
-  for (let i = 0; i < 21; i++) {
-    const currentMessageID = startID + (i * interval);
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = `https://telegram.org/js/telegram-widget.js?22`;
-    script.dataset.telegramPost = `${channelName}/${currentMessageID}`;
-    script.dataset.width = `100%`;
-    script.dataset.userpic = `false`;
-    script.dataset.color = `bfaa30`;
-    script.dataset.dark = `1`;
-    container.appendChild(script);
-    // Manually trigger rendering of Telegram widget
-    window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(container.lastChild);
-  }
-  // Update current channel name
-  currentChannelName = channelName;
-  // Update message ID input field
-  document.getElementById('messageID').value = `${interval}/${startID + (21 * interval)}`; // Update for next batch
-}
-
-function fetchSinglePost() {
-  const container = document.getElementById('boxContainer');
-  const channelName = document.getElementById('channelName').value;
-  const messageID = document.getElementById('messageID').value;
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = `https://telegram.org/js/telegram-widget.js?22`;
-  script.dataset.telegramPost = `${channelName}/${messageID}`;
-  script.dataset.width = `100%`;
-  script.dataset.userpic = `false`;
-  script.dataset.color = `bfaa30`;
-  script.dataset.dark = `1`;
-  container.appendChild(script);
-  // Manually trigger rendering of Telegram widget
-  window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(container.lastChild);
-  // Update current message ID
-  currentMessageID = messageID.split('/')[1];
-  // Update initial message ID for subsequent Next button clicks
-  initialMessageID = parseInt(currentMessageID) + 1;
-}
-document.addEventListener('DOMContentLoaded', function() {
-  const container = document.getElementById('boxContainer');
-  
-  // Event delegation to handle clicks on dynamically loaded content
-  container.addEventListener('click', function(event) {
-    const target = event.target;
-    if (target.tagName.toLowerCase() === 'a') {
-      event.preventDefault(); // Prevent the link from being visited
-      const tgLink = target.href;
-      pasteIntoInput(tgLink); // Function to handle the link (e.g., paste into 'vid')
-      play(); // Function to play any action you need
-    }
-  });
-});
-function pasteIntoInput(tgLink) {
-  document.getElementById('vid').value = tgLink; // Assuming 'vid' is an input element
-}
-
-function play() {
-  console.log('Playing...'); // Placeholder for your actual play logic
-  // Implement your logic for playing here
-}
-
-
   
 // Function for storing or deleting Link.
 const textBox = document.getElementById('textBox');
