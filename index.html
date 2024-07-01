@@ -774,19 +774,19 @@ async function showThumbnail(lineText) {
     });
 }
 let clickTimeout;
-const clickDelay = 300;
+const clickDelay = 200;
 document.getElementById('textBox').addEventListener('click', function (event) {
     if (clickTimeout) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
         var lineText = getLineText(event);
-        showThumbnail(lineText);
+        play(); // Trigger Video Play function.
     } else {
         clickTimeout = setTimeout(function () {
             clickTimeout = null;
             var lineText = getLineText(event);
             document.getElementById('vid').value = lineText;
-            play(); // Trigger Video Play function.
+            showThumbnail(lineText);
         }, clickDelay);
     }
 });
