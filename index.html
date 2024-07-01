@@ -586,7 +586,7 @@ async function play() {
     // Check if the URL contains 'Terabox'   
     if (/(teraboxapp|1024terabox)/.test(qry.toLowerCase())) {
         // Extract the video ID from the URL
-        var videoId = qry.split('/').slice(-1)[0];
+        var viodeoId = qry.split('/').slice(-1)[0];
 
         // Remove the first character (assuming it's always '1')
         videoId = videoId.substring(1);
