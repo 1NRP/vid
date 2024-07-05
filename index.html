@@ -524,7 +524,7 @@ async function play() {
         }
     }
     // Check if the URL contains 'Terabox'
-    if (/(teraboxapp|1024terabox|freeterabox)/.test(qry.toLowerCase())) {
+    if (/(teraboxapp|teraboxlink|1024terabox|freeterabox)/.test(qry.toLowerCase())) {
         // Extract the video ID from the URL
         var fullVideoId = qry.split('/').slice(-1)[0];
         // Remove the first character (assuming it's always '1')
@@ -584,7 +584,7 @@ async function play() {
         }
     }
     // Check if the URL contains 'Terabox'   
-    if (/(teraboxapp|1024terabox|freeterabox)/.test(qry.toLowerCase())) {
+    if (/(teraboxapp|teraboxlink|1024terabox|freeterabox)/.test(qry.toLowerCase())) {
         // Extract the video ID from the URL
         var videoId = qry.split('/').slice(-1)[0];
 
