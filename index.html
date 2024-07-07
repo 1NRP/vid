@@ -675,35 +675,27 @@ async function play() {
     }
   });
 
+/*
 // Paste Telegram link into Video input field.
-function extractLink() {
-  // Get all elements with class "tgme_widget_message_text js-message_text"
-  let elements = document.getElementsByClassName('tgme_widget_message_text js-message_text');
-  // There should be only one element with this class
-  if (elements.length === 1) {
-    let messageText = elements[0].innerHTML;
-    // Find the position of the first anchor tag (<a>)
-    let startIndex = messageText.indexOf('<a');
-    if (startIndex !== -1) {
-      // Find the end of the first anchor tag
-      let endIndex = messageText.indexOf('</a>', startIndex);
-      if (endIndex !== -1) {
-        // Extract the href attribute
-        let hrefStartIndex = messageText.indexOf('href="', startIndex);
-        if (hrefStartIndex !== -1 && hrefStartIndex < endIndex) {
-          hrefStartIndex += 'href="'.length;
-          let hrefEndIndex = messageText.indexOf('"', hrefStartIndex);
-          if (hrefEndIndex !== -1 && hrefEndIndex < endIndex) {
-            let href = messageText.substring(hrefStartIndex, hrefEndIndex);
-            document.getElementById('vid').value = href;
-            play();
-          }
-        }
-      }
-    }
+document.addEventListener('DOMContentLoaded', function() {
+  const pasteTGLink = document.querySelector('a'); // 'a' is for Link/Anchor tag.
+  pasteTGLink.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the link from being visited.
+    pasteIntoInput(this.href);
+    play();
+  });
+  // 'pasteIntoInput' function.
+  function pasteIntoInput(tgLink) {
+    const textarea = document.createElement('textarea');
+    textarea.value = tgLink;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.getElementById('vid').value = tgLink;
+    document.body.removeChild(textarea);
   }
-}                                                      
-  
+});                                
+*/
+
 // Function for storing or deleting Link.
 const textBox = document.getElementById('textBox');
 const placeholder = document.getElementById('vid');
