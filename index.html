@@ -496,7 +496,7 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-
+/*
 // Paste link and PLAY button function (Vercel Serverless Function Method)
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -555,8 +555,8 @@ async function play() {
         document.getElementById("player").play(); // Autoplay the video
     }
 }
+*/
 
-/*
 // Paste link and PLAY button function (Mdiskplay Method)
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -587,22 +587,20 @@ async function play() {
     if (/(teraboxapp|teraboxlink|1024terabox|freeterabox)/.test(qry.toLowerCase())) {
         // Extract the video ID from the URL
         var videoId = qry.split('/').slice(-1)[0];
-
         // Remove the first character (assuming it's always '1')
         videoId = videoId.substring(1);
-
         // Construct the request URL for preparation
         var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
-        // Make a request to the preparation URL
-        fetch(requestUrl)
-        .then(response => {
+        // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
+        fetch(requestUrl) {
+        //.then(response => {
             var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById("player").play(); // Autoplay the video
-        })
+        }//)
         .catch(error => {
             console.error('Error fetching preparation URL:', error);
-            alert('Failed to prepare playback. Please try again later.');
+            alert('Failed to prepare playback. Error:', error);
         });
 
     } else {
@@ -611,7 +609,7 @@ async function play() {
         document.getElementById("player").play(); // Autoplay the video
     }
 }
-*/
+
   
 // Telegram Post fetching function 
   function loadNextPosts() {
@@ -696,16 +694,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });                                
 */
 
-// Function for storing or deleting Link.
+// Logic for toggling the mode between 'storing' and 'deleting' Link.
 const textBox = document.getElementById('textBox');
 const placeholder = document.getElementById('vid');
 let clickCount = 0;
 let clickTimer;
 let deleteMode = false;
-
 // Set initial mode to "Save"
 document.getElementById('saveDeleteBtn').innerText = '☁️';
-
 // Handle "saveDeleteBtn" button click
 function handleButtonClick() {
     clickCount++;
