@@ -541,7 +541,7 @@ async function play() {
             if (!response.ok) {
                 throw new Error('Failed to fetch M3U8 URL');
             }
-            //const responseData = await response.json();
+            const responseData = await response.json();
             const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + fullVideoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById("player").play(); // Autoplay the video
@@ -593,6 +593,11 @@ async function play() {
         var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
         // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
         fetch(requestUrl)
+        /*.then(response => {    // Uncomment if response is required.
+            var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
+            document.getElementById("player").src = playUrl;
+            document.getElementById("player").play(); // Autoplay the video.
+        })  */
         .catch(error => {
             console.error('Error fetching preparation URL:', error);
             alert('Failed to prepare playback. Error:', error);
@@ -600,7 +605,7 @@ async function play() {
         // Construct the playUrl immediately without waiting for fetch response
         var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
         document.getElementById("player").src = playUrl;
-        document.getElementById("player").play(); // Autoplay the video
+        document.getElementById("player").play(); // Autoplay the video.
 
     } else {
         // Not a terabox URL, play as usual
