@@ -764,7 +764,7 @@ async function showThumbnail(lineText) {
     // Create and show the Thumbnail container
     const thumbnailContainer = document.createElement('div');
     thumbnailContainer.className = 'thumbnailContainer';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="document.getElementById('vid').value='${lineText}'; play();" alt="Thumbnail Image">`;
+    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image">`;
     document.body.appendChild(thumbnailContainer);
     // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
@@ -792,10 +792,11 @@ document.getElementById('textBox').addEventListener('click', function (event) {
     }
 });
 
-// Function to handle clicking on the link button
-function handlePosterClick(link) {
-    document.getElementById('vid').value = link;
-    play(); // Trigger the play function after pasting the link.
+// Function to handle clicking on the Thumbnail.
+function handleThumbnailClick(lineText) {
+    document.getElementById('vid').value = lineText;
+    play();
+    document.body.removeChild(thumbnailContainer);
 }
 
 // Function to load posts from the server
@@ -831,8 +832,13 @@ function fetchPosts() {
         console.error('Error:', error);
     });
 }
-// fetchPosts();    // Remove "//" at beginning to load photos at page loading.
-
+// fetchPosts();    // Uncomment "fetchPosts();" to load photos at page loading.
+// Function to handle clicking on the Poster.
+function handlePosterClick(link) {
+    document.getElementById('vid').value = link;
+    play();
+}
+  
 </script>
 </body>
 </html>
