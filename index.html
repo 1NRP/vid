@@ -205,8 +205,8 @@
     .thumbnailContainer {
       position: fixed;
       top: 0dvh;
-      left: 5dvw;
-      width: 88%;
+      left: 0dvw;
+      width: 98%;
       height: 350px;
       border-radius: 5px;
       padding: 2px;
@@ -341,7 +341,7 @@
   <button id="reload" onclick="fetchPosts()">🔄</button>
 </div>
 <textarea id="textBox" readonly ></textarea>
-<!--  <script src="script.js"></script>  pasteLineText(event) -->
+<!--  <script src="script.js"></script>  -->
 
 <script>
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
@@ -497,7 +497,7 @@ document.addEventListener("keyup", function(event) {
 });
 
 /*
-// Paste link and PLAY button function (Vercel Serverless Function Method)
+// (Vercel Serverless Function Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
     if (qry === "") {
@@ -557,7 +557,7 @@ async function play() {
 }
 */
 
-// Paste link and PLAY button function (Mdiskplay Method)
+// (Mdiskplay Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
     if (qry === "") {
@@ -764,9 +764,9 @@ async function showThumbnail(lineText) {
     // Create and show the Thumbnail container
     const thumbnailContainer = document.createElement('div');
     thumbnailContainer.className = 'thumbnailContainer';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" alt="Thumbnail Image">`;
+    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="document.getElementById('vid').value=${lineText}" alt="Thumbnail Image">`;
     document.body.appendChild(thumbnailContainer);
-    // Hide the Thumbnail container when clicking outside of it
+    // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
         if (!thumbnailContainer.contains(event.target)) {
             document.body.removeChild(thumbnailContainer);
