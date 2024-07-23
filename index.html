@@ -314,20 +314,19 @@
     <br>
 <!--
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
-    <h5>If the Current TB playing method doesn't work anymore, then try using 'NEPHOBOX' method. URL configuration process for Nephobox is saved in 'TG - Saved Messages'.</h5>
     <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
-    <button id="saveDeleteBtn" onclick="handleButtonClick(); showAlert()">☁️</button>
+    <button id="Example Button" onclick="function-1(); function-2(); function-3">3 Functions On One Button Click Example</button>
 -->
-    <button id="saveDeleteBtn" onclick="handleButtonClick()">☁️</button>
+    <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''">❌</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''">✖️</button>
     </br>
 </center>
 <div class="box-container" id="boxContainer"></div>
 <div class="input-container">
   <label for="channelName"></label>
-  <button id="nightModeBtn" onclick="nightModeFunction()" ondblclick="getLink()">☀️</button>
+  <button id="nightModeBtn" onclick="nightModeFunction()" ondblclick="getLink()">🌗</button>
   <select id="channelName">
     <option value="tburls">Saved</option>
     <option value="desi_bhabhi_shila_terabox">1st</option>
@@ -338,7 +337,7 @@
   <input type="text" id="messageID">
   <button id="go-btn" onclick="fetchSinglePost()">GO</button>
   <button id="btn-next" onclick="loadNextPosts()">NEXT</button>
-  <button id="reload" onclick="fetchPosts()">🔄</button>
+  <button id="reload" onclick="fetchPosts()">♻️</button>
 </div>
 <textarea id="textBox" readonly ></textarea>
 <!--  <script src="script.js"></script>  -->
@@ -705,7 +704,7 @@ let clickCount = 0;
 let clickTimer;
 let deleteMode = false;
 // Set initial mode to "Save"
-document.getElementById('saveDeleteBtn').innerText = '☁️';
+document.getElementById('saveDeleteBtn').innerText = '🌐';
 // Handle "saveDeleteBtn" button click
 function handleButtonClick() {
     clickCount++;
@@ -727,7 +726,7 @@ function handleButtonClick() {
 // Function to toggle between paste and copy modes
 function toggleMode() {
     deleteMode = !deleteMode;
-    document.getElementById('saveDeleteBtn').innerText = deleteMode ? '🗑️' : '☁️';
+    document.getElementById('saveDeleteBtn').innerText = deleteMode ? '🗑️' : '🌐';
 }
 document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonClick);
 
@@ -764,7 +763,7 @@ async function showThumbnail(lineText) {
     // Create and show the Thumbnail container
     const thumbnailContainer = document.createElement('div');
     thumbnailContainer.className = 'thumbnailContainer';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}', this.parentNode)" alt="Thumbnail Image">`;
+    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}', thumbnailContainer)" alt="Thumbnail Image">`;
     document.body.appendChild(thumbnailContainer);
     // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
@@ -821,7 +820,7 @@ function fetchPosts() {
                     <div class="post-details">
                         <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
                         <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-                        <!-- <p><button id="copyLink" onclick="handlePosterOrLinkButtonClick('${link}')">🌐</button></p> -->
+                        <!-- <p><button id="copyLink" onclick="handlePosterOrLinkButtonClick('${link}')">🔗</button></p> -->
                     </div>
                 </div>
             `;
