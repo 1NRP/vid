@@ -764,7 +764,7 @@ async function showThumbnail(lineText) {
     // Create and show the Thumbnail container
     const thumbnailContainer = document.createElement('div');
     thumbnailContainer.className = 'thumbnailContainer';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="document.getElementById('vid').value='${lineText}'" alt="Thumbnail Image">`;
+    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="document.getElementById('vid').value='${lineText}'; play();" alt="Thumbnail Image">`;
     document.body.appendChild(thumbnailContainer);
     // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
