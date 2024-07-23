@@ -205,8 +205,8 @@
     .thumbnailContainer {
       position: fixed;
       top: 0dvh;
-      left: 0dvw;
-      width: 98%;
+      left: 5dvw;
+      width: 88%;
       height: 350px;
       border-radius: 5px;
       padding: 2px;
@@ -764,7 +764,7 @@ async function showThumbnail(lineText) {
     // Create and show the Thumbnail container
     const thumbnailContainer = document.createElement('div');
     thumbnailContainer.className = 'thumbnailContainer';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="document.getElementById('vid').value=${lineText}" alt="Thumbnail Image">`;
+    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="document.getElementById('vid').value='${lineText}'" alt="Thumbnail Image">`;
     document.body.appendChild(thumbnailContainer);
     // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
@@ -793,9 +793,9 @@ document.getElementById('textBox').addEventListener('click', function (event) {
 });
 
 // Function to handle clicking on the link button
-function handlePosterOrLinkButtonClick(link) {
+function handlePosterClick(link) {
     document.getElementById('vid').value = link;
-    play(); // Trigger the play function after pasting the link
+    play(); // Trigger the play function after pasting the link.
 }
 
 // Function to load posts from the server
@@ -816,7 +816,7 @@ function fetchPosts() {
             postElement.classList.add('post');
             postElement.innerHTML = `
                 <div>
-                    <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterOrLinkButtonClick('${link}')">
+                    <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
                     <div class="post-details">
                         <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
                         <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
