@@ -309,14 +309,8 @@
 </head>
 <center>
     <div class="post-container" id="posts-container"></div>
-    <video muted controls="controls" id="player" tabindex="0" loop="loop" src="" width="100%">
-    </video>
+    <video controls="controls" id="player" tabindex="0" loop="loop" src="" width="100%" muted></video>
     <br>
-<!--
-    <h1>⭐ Nihar Ranjan's Player ⭐</h1>
-    <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
-    <button id="Example Button" onclick="function-1(); function-2(); function-3">3 Functions On One Button Click Example</button>
--->
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
@@ -328,7 +322,6 @@
   <label for="channelName"></label>
   <button id="nightModeBtn" onclick="nightModeFunction()" ondblclick="getLink()">🌗</button>
   <select id="channelName">
-    <option value="tburls">Saved</option>
     <option value="desi_bhabhi_shila_terabox">1st</option>
     <option value="desi_bhabhi_nisha_mdisk">2nd</option>
      <!-- Add more channel options here if needed -->
@@ -339,8 +332,14 @@
   <button id="btn-next" onclick="loadNextPosts()">NEXT</button>
   <button id="reload" onclick="fetchPosts()">♻️</button>
 </div>
-<textarea id="textBox" readonly ></textarea>
-<!--  <script src="script.js"></script>  -->
+<textarea id="textBox" resizable="no" readonly></textarea>
+<!--
+    <h1>⭐ Nihar Ranjan's Player ⭐</h1>
+    <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
+    <button id="Example Button" onclick="function-1(); function-2(); function-3">3 Functions On One Button Click Example</button>
+
+<script src="script.js"></script>  
+-->
 
 <script>
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
@@ -666,13 +665,13 @@ async function play() {
     var selectedValue = this.value;
 
     // Latest message ID for different channels.
-    if (selectedValue === 'tburls') {
-        document.getElementById('messageID').value = '2';
-    } else if (selectedValue === 'desi_bhabhi_shila_terabox') {
-        document.getElementById('messageID').value = '13000';
+    if (selectedValue === 'desi_bhabhi_shila_terabox') {
+        document.getElementById('messageID').value = '14000';
     } else if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
-        document.getElementById('messageID').value = '19000';
-        // Set message ID box value for another option
+        document.getElementById('messageID').value = '20000';
+    } else if (selectedValue === 'Example-Channel') {
+        document.getElementById('messageID').value = '100';
+        // Set message ID box value for another option.
     }
   });
 
