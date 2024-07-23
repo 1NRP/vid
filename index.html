@@ -764,7 +764,7 @@ async function showThumbnail(lineText) {
     // Create and show the Thumbnail container
     const thumbnailContainer = document.createElement('div');
     thumbnailContainer.className = 'thumbnailContainer';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image">`;
+    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}', this.parentNode)" alt="Thumbnail Image">`;
     document.body.appendChild(thumbnailContainer);
     // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
@@ -793,7 +793,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
 });
 
 // Function to handle clicking on the Thumbnail.
-function handleThumbnailClick(lineText) {
+function handleThumbnailClick(lineText, thumbnailContainer) {
     document.getElementById('vid').value = lineText;
     play();
     document.body.removeChild(thumbnailContainer);
