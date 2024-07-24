@@ -494,7 +494,7 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-/*
+
 // (Vercel Serverless Function Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -542,7 +542,7 @@ async function play() {
             const responseData = await response.json();
             const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + fullVideoId + ".m3u8";
             document.getElementById("player").src = playUrl;
-            document.getElementById("player").play(); // Autoplay the video
+            document.getElementById("player").play();
         } catch (error) {
             console.error('Error fetching or processing:', error);
             alert('Failed to prepare playback. Please try again later.');
@@ -550,11 +550,11 @@ async function play() {
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = qry;
-        document.getElementById("player").play(); // Autoplay the video
+        document.getElementById("player").play();
     }
 }
-*/
 
+/*
 // (Mdiskplay Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -595,7 +595,7 @@ async function play() {
             var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById("player").play(); // Autoplay the video.
-        })  */
+        })  * /
         .catch(error => {
             console.error('Error fetching preparation URL:', error);
             alert('Failed to prepare playback. Error:', error);
@@ -611,7 +611,7 @@ async function play() {
         document.getElementById("player").play(); // Autoplay the video
     }
 }
-
+*/
   
 // Telegram Post fetching function 
   function loadNextPosts() {
