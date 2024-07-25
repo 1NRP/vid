@@ -3,6 +3,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#444">
   <link rel="icon" sizes="192x192" href="images/skyblue_favicon.png">
   <link rel="stylesheet" href="style.css">
@@ -536,6 +537,23 @@ function handlePosterClick(link) {
     document.getElementById('vid').value = link;
     play();
   }
+
+// Progressive Web App Service Worker Script.
+window.addEventListener('load', () => {
+  registerSW();
+});
+async function registerSW() {
+  if ('serviceWorker' in navigator) {
+    try {
+      await navigator
+            .serviceWorker
+            .register('serviceWorker.js');
+    }
+    catch (e) {
+      console.log('Service Worker registration failed.');
+    }
+  }
+}
 
 </script>
 </body>
