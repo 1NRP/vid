@@ -55,16 +55,6 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    .alert {
-      position: fixed;
-      top: 4dvh;
-      left: 60dvw;
-      background-color: #2a4a6a;
-      color: #fff;
-      padding: 5px 5px;
-      border: 2px solid #999;
-      border-radius: 5px;
-    }
     input[type=text],
     select {
       width: 60%;
@@ -225,34 +215,50 @@
       position: fixed;
       top: 5dvh;
       left: 30dvw;
-      background-color: #1bd13d;
       color: #000;
       font-weight: 900;
       padding: 5px;
-      border: 2px solid #999;
+      border: 2px solid #000;
       border-radius: 5px;
+      animation-name: save;
+      animation-duration: 1s;
     }
     .deleteAlert {
       position: fixed;
       top: 5dvh;
       left: 30dvw;
-      background-color: #f2074e;
       color: #000;
       font-weight: 900;
       padding: 5px;
-      border: 2px solid #999;
+      border: 2px solid #000;
       border-radius: 5px;
+      animation-name: delete;
+      animation-duration: 1s;
     }
     .notFoundAlert {
       position: fixed;
       top: 5dvh;
       left: 25dvw;
-      background-color: #e8af05;
       color: #000;
       font-weight: 900;
       padding: 5px;
-      border: 2px solid #999;
+      border: 2px solid #000;
       border-radius: 5px;
+      animation-name: notFound;
+      animation-duration: 1s;
+    }
+    /* 'Alerts' Animations */
+    @keyframes save {
+      from {background-color: #fff; padding: 5px}
+      to {background-color: #1bd13d; padding: 10px}
+    }
+    @keyframes delete {
+      from {background-color: #fff; padding: 5px}
+      to {background-color: #f2074e; padding: 10px}
+    }
+    @keyframes notFound {
+      from {background-color: #fff; padding: 5px}
+      to {background-color: #e8af05; padding: 10px}
     }
 /* Code for Night-Mode toggle. */
 .nightMode {
