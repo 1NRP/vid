@@ -740,13 +740,14 @@ function getLineText(event) {
     if (startOfLine === -1) {
         startOfLine = 0;
     } else {
-        startOfLine += 2; // Move past the line break
+        startOfLine += 2; // Move past the line break.
     }
     // If no line break is found after the cursor position, end of the text
     if (endOfLine === -1) {
         endOfLine = text.length;
     }
-    return text.substring(startOfLine, endOfLine);
+    var lineText = text.substring(startOfLine, endOfLine);
+    return { lineText: lineText, startOfLine: startOfLine };
 }
 async function showThumbnail(lineText) {
     var shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
@@ -778,13 +779,17 @@ document.getElementById('textBox').addEventListener('click', function (event) {
     if (clickTimeout) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
-        var lineText = getLineText(event);
+        var { lineText, startOfLine } = getLineText(event);
         document.getElementById('vid').value = lineText;
-        play(); // Trigger Video Play function.
+        play();
+        // Change lineText color on click.
+        var textBox = document.getElementById('textBox');
+        textBox.setSelectionRange(startOfLine, startOfLine + lineText.length);
+        textBox.style.color = 'red';
     } else {
         clickTimeout = setTimeout(function () {
             clickTimeout = null;
-            var lineText = getLineText(event);
+            var { lineText } = getLineText(event);
             showThumbnail(lineText);
         }, clickDelay);
     }
