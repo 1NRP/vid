@@ -218,7 +218,7 @@
       color: #000;
       font-weight: 900;
       padding: 5px;
-      border: 2px solid #000;
+      border: none;
       border-radius: 5px;
       animation-name: save;
       animation-duration: 1s;
@@ -230,7 +230,7 @@
       color: #000;
       font-weight: 900;
       padding: 5px;
-      border: 2px solid #000;
+      border: none;
       border-radius: 5px;
       animation-name: delete;
       animation-duration: 1s;
@@ -242,22 +242,22 @@
       color: #000;
       font-weight: 900;
       padding: 5px;
-      border: 2px solid #000;
+      border: none;
       border-radius: 5px;
       animation-name: notFound;
       animation-duration: 1s;
     }
     /* 'Alerts' Animations */
     @keyframes save {
-      from {background-color: #fff; padding: 5px}
+      from {background-color: #666; padding: 5px}
       to {background-color: #1bd13d; padding: 10px}
     }
     @keyframes delete {
-      from {background-color: #fff; padding: 5px}
+      from {background-color: #666; padding: 5px}
       to {background-color: #f2074e; padding: 10px}
     }
     @keyframes notFound {
-      from {background-color: #fff; padding: 5px}
+      from {background-color: #666; padding: 5px}
       to {background-color: #e8af05; padding: 10px}
     }
 /* Code for Night-Mode toggle. */
