@@ -3,20 +3,21 @@
     "short_name":"NRP",
     "start_url":"index.html",
     "display":"standalone",
-    "background_color":"#fff888",
+    "background_color":"#1686e0",
     "theme_color":"black",
     "scope": ".",
     "description":"Progressive Web App Version Of 'Nihar's Video Player'.",
     "icons":[
     {
-    "src":"images/Transparent-image-192x192.png",                      
-    "sizes":"192x192",
+    "src":"images/solid-black-512.png",                      
+    "sizes":"512x512",
     "type":"image/png"
     },
     {
-    "src":"images/green_favicon.png",
+    "src":"images/solid-black-512.png",
     "sizes":"512x512",
-    "type":"image/png"
+    "type":"image/png",
+    "purpose":"maskable"
     }
   ]
 }
