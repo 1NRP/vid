@@ -3,14 +3,15 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#444">
-  <link rel="icon" sizes="192x192" href="images/skyblue_favicon.png">
+  <link rel="icon" sizes="192x192" href="images/green-512.png">
   <link rel="stylesheet" href="style.css">
   <title>Nihar's Video Player</title>
 </head>
 <center>
     <div class="post-container" id="posts-container"></div>
-    <video controls="controls" id="player" tabindex="0" loop="loop" src="" width="100%" muted></video>
+    <video controls="controls" id="player" tabindex="0" poster="images/my_name_logo_3.png" loop="loop" src="" width="100%" muted></video>
     <br>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
@@ -536,6 +537,23 @@ function handlePosterClick(link) {
     document.getElementById('vid').value = link;
     play();
   }
+
+// Progressive Web App Service Worker Script.
+window.addEventListener('load', () => {
+  registerSW();
+});
+async function registerSW() {
+  if ('serviceWorker' in navigator) {
+    try {
+      await navigator
+            .serviceWorker
+            .register('serviceWorker.js');
+    }
+    catch (e) {
+      console.log('Service Worker registration failed.');
+    }
+  }
+}
 
 </script>
 </body>

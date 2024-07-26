@@ -185,7 +185,7 @@
     }
     .thumbnailContainer {
       position: fixed;
-      top: 0dvh;
+      top: 2dvh;
       left: 5dvw;
       width: 88%;
       height: 350px;

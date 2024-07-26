@@ -1,0 +1,23 @@
+{
+    "name":"Nihar's Video Player",
+    "short_name":"NRP",
+    "start_url":"index.html",
+    "display":"standalone",
+    "background_color":"#1686e0",
+    "theme_color":"black",
+    "scope": ".",
+    "description":"Progressive Web App Version Of 'Nihar's Video Player'.",
+    "icons":[
+    {
+    "src":"images/solid-black-512.png",                      
+    "sizes":"512x512",
+    "type":"image/png"
+    },
+    {
+    "src":"images/solid-black-512.png",
+    "sizes":"512x512",
+    "type":"image/png",
+    "purpose":"maskable"
+    }
+  ]
+}
