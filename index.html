@@ -314,8 +314,8 @@ async function play() {
     }
 }
 
-  
-// Telegram Post fetching function 
+/*
+// (Telegram Widget Method) Telegram Post fetching function.
   function loadNextPosts() {
     const container = document.getElementById('boxContainer');
     const channelName = document.getElementById('channelName').value;
@@ -361,6 +361,101 @@ async function play() {
     // Update initial message ID for subsequent Next button clicks
     initialMessageID = parseInt(currentMessageID) + 1;
   }
+  */
+
+// (Iframe Embed Method - To easily paste TB-Link into Video input field) Telegram Post fetching function.
+let currentMessageID = 0;
+let currentChannelName = '';
+let initialMessageID = 0;
+
+function createPostContainer(src) {
+    const postContainer = document.createElement('div');
+    postContainer.className = 'post-container';
+    const iframe = document.createElement('iframe');
+    iframe.src = src;
+
+    const button = document.createElement('button');
+    button.className = 'get-src-button';
+    button.innerText = 'PLAY';
+    button.onclick = function() {
+        getIframeLink(iframe); // Pass the specific iframe to the function
+    };
+
+    postContainer.appendChild(iframe);
+    postContainer.appendChild(button);
+    return postContainer;
+}
+
+async function getIframeLink(iframe) {
+    const src = iframe.src;
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = ''; // Clear previous results
+
+    try {
+        const proxyUrl = 'https://api.allorigins.win/get?url=';
+        const response = await fetch(proxyUrl + encodeURIComponent(src));
+        const data = await response.json();
+        const htmlText = data.contents;
+        // Parse the HTML and extract anchor tags
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+        const anchors = doc.querySelectorAll('a');
+        // Filter anchor tags containing specific keywords
+        const keywords = ['teraboxapp', 'teraboxlink', '1024terabox', 'freeterabox'];
+        let found = false;
+
+        anchors.forEach(anchor => {
+            const href = anchor.href;
+            if (keywords.some(keyword => href.includes(keyword))) {
+                const anchorText = `<a href="${href}" target="_blank">${href}</a>`;
+                const div = document.createElement('div');
+                div.className = 'anchor-tag';
+                div.innerHTML = anchorText;
+                resultDiv.appendChild(div);
+                found = true;
+            }
+        });
+        if (!found) {
+            resultDiv.innerHTML = '<p>No anchor tags with specified keywords found.</p>';
+        }
+    } catch (error) {
+        resultDiv.innerHTML = '<p>Error fetching the URL. Please make sure it is correct and accessible.</p>';
+        console.error('Error fetching HTML:', error);
+    }
+}
+
+function loadNextPosts() {
+    const container = document.getElementById('boxContainer');
+    const channelName = document.getElementById('channelName').value;
+    const inputVal = document.getElementById('messageID').value;
+    const [interval, startID] = inputVal.includes('/') ? inputVal.split('/').map(Number) : [1, parseInt(inputVal)];
+    container.innerHTML = ''; // Clear previous posts
+    
+    for (let i = 0; i < 21; i++) { // Load 21 posts
+        currentMessageID = startID + (i * interval); // Increment messageID with the interval
+        const src = `https://t.me/${channelName}/${currentMessageID}?embed=1&userpic=false&color=bfaa30&dark=1`;
+        const postContainer = createPostContainer(src);
+        container.appendChild(postContainer);
+    }
+    // Update current channel name and message ID input field
+    currentChannelName = channelName;
+    document.getElementById('messageID').value = `${interval}/${currentMessageID}`; // Retain the original format
+}
+
+function fetchSinglePost() {
+    const container = document.getElementById('boxContainer');
+    const channelName = document.getElementById('channelName').value;
+    const messageID = document.getElementById('messageID').value;
+    container.innerHTML = ''; // Clear previous posts
+
+    const src = `https://t.me/${channelName}/${messageID}?embed=1&userpic=false&color=bfaa30&dark=1`;
+    const postContainer = createPostContainer(src);
+    container.appendChild(postContainer);
+
+    // Update current message ID and initial message ID
+    currentMessageID = messageID.split('/')[1];
+    initialMessageID = parseInt(currentMessageID) + 1;
+}
   
   document.getElementById('channelName').addEventListener('change', function() {
     // Get the selected option value
