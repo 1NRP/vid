@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -109,14 +110,29 @@
       margin: 2px 0px;
       cursor: pointer;
     }
-    #input-container {
-      display: flex;
-      width: 120px;
-      max-width: 200px;
-      align-items: center;
-      margin-bottom: 10px;
-      cursor: pointer;
+    .TG-post-container {
+      display: inline-block;
+      border: none;
+      background: transparent;
+      width: auto;
+      height: auto;
+      overflow: hidden;
     }
+    .TG-Play {
+      background-Color: #007bff;
+      color: #000;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 1000;
+      padding: 4px 8px;
+      margin: 2px 2px 0px 150px;
+    }
+    .TG-Play:hover {
+      background-color: #444;
+    }
+
     #nightModeBtn {
       cursor: pointer;
       border: none;
@@ -226,8 +242,9 @@
       position: fixed;
       top: 5dvh;
       left: 30dvw;
+      background-color: #1bd13d;
       color: #000;
-      font-weight: 900;
+      font-weight: 1000;
       padding: 5px;
       border: none;
       border-radius: 5px;
@@ -238,8 +255,9 @@
       position: fixed;
       top: 5dvh;
       left: 30dvw;
+      background-color: #f2074e;
       color: #000;
-      font-weight: 900;
+      font-weight: 1000;
       padding: 5px;
       border: none;
       border-radius: 5px;
@@ -250,8 +268,9 @@
       position: fixed;
       top: 5dvh;
       left: 25dvw;
+      background-color: #e8af05
       color: #000;
-      font-weight: 900;
+      font-weight: 1000;
       padding: 5px;
       border: none;
       border-radius: 5px;
@@ -260,16 +279,16 @@
     }
     /* 'Alerts' Animations */
     @keyframes save {
-      from {background-color: #666; padding: 5px; top: 5dvh;}
-      to {background-color: #1bd13d; padding: 20px; top: 10dvh;}
+      from {font-size: 10px; padding: 5px; top: 5dvh;}
+      to {font-size: 25px; padding: 20px; top: 10dvh;}
     }
     @keyframes delete {
-      from {background-color: #666; padding: 5px; top: 5dvh;}
-      to {background-color: #f2074e; padding: 20px; top: 10dvh;}
+      from {font-size: 10px; padding: 5px; top: 5dvh;}
+      to {font-size: 25px; padding: 20px; top: 10dvh;}
     }
     @keyframes notFound {
-      from {background-color: #666; padding: 5px; top: 5dvh;}
-      to {background-color: #e8af05; padding: 20px; top: 10dvh;}
+      from {font-size: 10px; padding: 5px; top: 5dvh;}
+      to {font-size: 25px; padding: 20px; top: 10dvh;}
     }
 /* Code for Night-Mode toggle. */
 .nightMode {
@@ -630,17 +649,18 @@ function fetchSinglePost() {
     script.dataset.telegramPost = `${channelName}/${messageID}`;
     script.dataset.width = `100%`;
     script.dataset.userpic = `false`;
-    script.dataset.color = `bfaa30`;
+    script.dataset.color = `b4b4b4`;
     script.dataset.dark = `1`;
   
     // Create a container for the post and button
     const postContainer = document.createElement('div');
-    postContainer.className = 'post-container';
+    postContainer.className = 'TG-post-container';
     // Add script to the post container
     postContainer.appendChild(script);
     // Create and add a button
     const button = document.createElement('button');
-    button.textContent = 'Get Iframe Link';
+    button.className = 'TG-Play'
+    button.textContent = 'PLAY';
     button.onclick = function() {
         getIframeLink(postContainer.querySelector('script'));
     };
@@ -669,17 +689,17 @@ function loadNextPosts() {
       script.dataset.telegramPost = `${channelName}/${currentMessageID}`;
       script.dataset.width = `100%`;
       script.dataset.userpic = `false`;
-      script.dataset.color = `bfaa30`;
+      script.dataset.color = `b4b4b4`;
       script.dataset.dark = `1`;
-  
-      // Create a container for each post and button
+      // Create a container for each post and button.
       const postContainer = document.createElement('div');
-      postContainer.className = 'post-container';
+      postContainer.className = 'TG-post-container';
       // Add script to the post container
       postContainer.appendChild(script);
       // Create and add a button
       const button = document.createElement('button');
-      button.textContent = 'Get Iframe Link';
+      button.className = 'TG-Play'
+      button.textContent = 'PLAY';
       button.onclick = function() {
         getIframeLink(postContainer.querySelector('script'));
       };
@@ -691,10 +711,24 @@ function loadNextPosts() {
     }
     // Update current channel name and message ID.
     currentChannelName = channelName;
-    document.getElementById('messageID').value = `${interval}/${currentMessageID}`; // Retain the original format
+    document.getElementById('messageID').value = `${interval}/${currentMessageID}`;
 }
+document.getElementById('channelName').addEventListener('change', function() {
+    // Get the selected option value
+    var selectedValue = this.value;
+    // Latest message ID for different channels.
+    if (selectedValue === 'desi_bhabhi_shila_terabox') {
+        document.getElementById('messageID').value = '14000';
+    } else if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
+        document.getElementById('messageID').value = '20000';
+    } else if (selectedValue === 'Example-Channel') {
+        document.getElementById('messageID').value = '100';
+        // Set message ID box value for another option.
+    }
+  });
+// Extract the TB Link from the Telegram post.
 async function getIframeLink(script) {
-    // Retrieve iframe from script's data attribute
+    // Retrieve iframe from script's data attribute.
     const iframeSrc = script.dataset.telegramPost;
     const iframe = document.querySelector(`iframe[src*="${iframeSrc}"]`);
     if (!iframe) {
@@ -714,16 +748,16 @@ async function getIframeLink(script) {
         // Filter anchor tags containing TB Links.
         const keywords = ['teraboxapp', 'teraboxlink', '1024terabox', 'freeterabox'];
         let found = false;
-        let anchorText = '';
+        let TBoxAnchorLink = '';
         anchors.forEach(anchor => {
             const href = anchor.href;
             if (keywords.some(keyword => href.includes(keyword))) {
-                anchorText = href;
+                TBoxAnchorLink = href;
                 found = true;
             }
         });
         if (found) {
-            document.getElementById('vid').value = anchorText;
+            document.getElementById('vid').value = TBoxAnchorLink;
             play();
         } else {
             alert("No TB Link was found.");
