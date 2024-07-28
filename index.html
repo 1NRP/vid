@@ -338,7 +338,7 @@
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''">✖️</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''" ondblclick="document.getElementById('vid').value='Click PLAY To Reset Player.'">✖️</button>
     </br>
 </center>
 <div class="box-container" id="boxContainer"></div>
