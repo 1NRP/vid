@@ -101,13 +101,13 @@
       cursor: pointer;
     }
     .box-container {
-      width: 95%;
+      width: 97%;
       height: 300px;
       overflow-y: scroll;
       border: 2px solid #333;
-      padding: 6px;
+      padding: 2px;
       border-radius: 8px;
-      margin: 2px 0px;
+      margin: 2px;
       cursor: pointer;
     }
     .TG-post-container {
@@ -126,13 +126,12 @@
       cursor: pointer;
       font-size: 15px;
       font-weight: 1000;
-      padding: 4px 8px;
-      margin: 2px 2px 0px 150px;
+      padding: 4px 10px;
+      margin: 0px 0px 0px 270px;
     }
     .TG-Play:hover {
-      background-color: #444;
+      background-color: #888;
     }
-
     #nightModeBtn {
       cursor: pointer;
       border: none;
@@ -231,7 +230,7 @@
     }
     h1 {
       color: DodgerBlue;
-      font-family: 'Raleway', sans-serif;
+      font-family: Helvetica, Cursive, Palatino, Courier, sans-serif;
       font-size: 26px;
       font-weight: 600;
       line-height: 50px;
@@ -268,7 +267,7 @@
       position: fixed;
       top: 5dvh;
       left: 25dvw;
-      background-color: #e8af05
+      background-color: #e8af05;
       color: #000;
       font-weight: 1000;
       padding: 5px;
@@ -279,16 +278,16 @@
     }
     /* 'Alerts' Animations */
     @keyframes save {
-      from {font-size: 10px; padding: 5px; top: 5dvh;}
-      to {font-size: 25px; padding: 20px; top: 10dvh;}
+      from {font-size: 10px; top: 5dvh;}
+      to {font-size: 25px; top: 10dvh;}
     }
     @keyframes delete {
-      from {font-size: 10px; padding: 5px; top: 5dvh;}
-      to {font-size: 25px; padding: 20px; top: 10dvh;}
+      from {font-size: 10px; top: 5dvh;}
+      to {font-size: 25px; top: 10dvh;}
     }
     @keyframes notFound {
-      from {font-size: 10px; padding: 5px; top: 5dvh;}
-      to {font-size: 25px; padding: 20px; top: 10dvh;}
+      from {font-size: 10px; top: 5dvh;}
+      to {font-size: 25px; top: 10dvh;}
     }
 /* Code for Night-Mode toggle. */
 .nightMode {
@@ -350,7 +349,7 @@
   <select id="channelName">
     <option value="desi_bhabhi_shila_terabox">1st</option>
     <option value="desi_bhabhi_nisha_mdisk">2nd</option>
-     <!-- Add more channel options here if needed -->
+     <!-- Add more channel options here if needed. -->
   </select>
   <label for="messageID"></label>
   <input type="text" id="messageID">
@@ -651,13 +650,12 @@ function fetchSinglePost() {
     script.dataset.userpic = `false`;
     script.dataset.color = `b4b4b4`;
     script.dataset.dark = `1`;
-  
     // Create a container for the post and button
     const postContainer = document.createElement('div');
     postContainer.className = 'TG-post-container';
     // Add script to the post container
     postContainer.appendChild(script);
-    // Create and add a button
+    // Create and add PLAY button
     const button = document.createElement('button');
     button.className = 'TG-Play'
     button.textContent = 'PLAY';
@@ -674,44 +672,44 @@ function fetchSinglePost() {
     // Update initial message ID for subsequent NEXT button clicks.
     initialMessageID = parseInt(currentMessageID) + 1;
 }
-
 function loadNextPosts() {
     const container = document.getElementById('boxContainer');
     const channelName = document.getElementById('channelName').value;
     const inputVal = document.getElementById('messageID').value;
     const [interval, startID] = inputVal.includes('/') ? inputVal.split('/').map(Number) : [1, parseInt(inputVal)];
-  
+   
+    let lastMessageID = startID; // Track the last message ID
     for (let i = 0; i < 21; i++) { // 21 is the number of posts to be loaded when 'NEXT' button is clicked.
-      const currentMessageID = startID + (i * interval); // Increment messageID with the interval
+      const currentMessageID = lastMessageID + (i * interval); // Increment messageID with the interval
       const script = document.createElement('script');
       script.async = true;
       script.src = `https://telegram.org/js/telegram-widget.js?22`;
       script.dataset.telegramPost = `${channelName}/${currentMessageID}`;
       script.dataset.width = `100%`;
       script.dataset.userpic = `false`;
-      script.dataset.color = `b4b4b4`;
+      script.dataset.color = `bfaa30`;
       script.dataset.dark = `1`;
-      // Create a container for each post and button.
+      // Create a container for each post and button
       const postContainer = document.createElement('div');
       postContainer.className = 'TG-post-container';
       // Add script to the post container
       postContainer.appendChild(script);
-      // Create and add a button
+      // Create and add PLAY button
       const button = document.createElement('button');
-      button.className = 'TG-Play'
+      button.className = 'TG-Play';
       button.textContent = 'PLAY';
       button.onclick = function() {
         getIframeLink(postContainer.querySelector('script'));
       };
-  
       postContainer.appendChild(button);
       container.appendChild(postContainer);
-      // Manually trigger rendering of Telegram widget.
+      // Manually trigger rendering of Telegram widget
       window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(postContainer.querySelector('script'));
     }
-    // Update current channel name and message ID.
+    // Update current channel name
     currentChannelName = channelName;
-    document.getElementById('messageID').value = `${interval}/${currentMessageID}`;
+    // Update message ID input field with the last calculated message ID.
+    document.getElementById('messageID').value = `${interval}/${lastMessageID + (20 * interval)}`; // Retain the original format, calculating the last message ID correctly
 }
 document.getElementById('channelName').addEventListener('change', function() {
     // Get the selected option value
@@ -767,6 +765,72 @@ async function getIframeLink(script) {
         console.error('Error fetching HTML:', error);
     }
 }
+
+/*
+// Old Telegram Post fetching method. Only fetches the Posts.
+// This method does not add a button (PLAY) to paste the TB Link into the video input field.
+// It can't paste the link because Javascript can not be executed on embedded elements which are not from 'same-origin'.
+function loadNextPosts() {
+    const container = document.getElementById('boxContainer');
+    const channelName = document.getElementById('channelName').value;
+    const inputVal = document.getElementById('messageID').value;
+    const [interval, startID] = inputVal.includes('/') ? inputVal.split('/').map(Number) : [1, parseInt(inputVal)];
+    for (let i = 0; i < 21; i++) { // 21 is the no. of Posts to be loaded when 'NEXT' button is clicked.
+      currentMessageID = startID + (i * interval); // Increment messageID with the interval
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://telegram.org/js/telegram-widget.js?22`;
+      script.dataset.telegramPost = `${channelName}/${currentMessageID}`;
+      script.dataset.width = `100%`;
+      script.dataset.userpic = `false`;
+      script.dataset.color = `bfaa30`;
+      script.dataset.dark = `1`;
+      container.appendChild(script);
+      // Manually trigger rendering of Telegram widget
+      window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(container.lastChild);
+    }
+    // Update current channel name
+    currentChannelName = channelName;
+    // Update message ID input field
+    document.getElementById('messageID').value = `${interval}/${currentMessageID}`; // Retain the original format
+  }
+
+  function fetchSinglePost() {
+    const container = document.getElementById('boxContainer');
+    const channelName = document.getElementById('channelName').value;
+    const messageID = document.getElementById('messageID').value;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://telegram.org/js/telegram-widget.js?22`;
+    script.dataset.telegramPost = `${channelName}/${messageID}`;
+    script.dataset.width = `100%`;
+    script.dataset.userpic = `false`;
+    script.dataset.color = `bfaa30`;
+    script.dataset.dark = `1`;
+    container.appendChild(script);
+    // Manually trigger rendering of Telegram widget
+    window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(container.lastChild);
+    // Update current message ID
+    currentMessageID = messageID.split('/')[1];
+    // Update initial message ID for subsequent Next button clicks
+    initialMessageID = parseInt(currentMessageID) + 1;
+  }
+  
+  document.getElementById('channelName').addEventListener('change', function() {
+    // Get the selected option value
+    var selectedValue = this.value;
+
+    // Latest message ID for different channels.
+    if (selectedValue === 'desi_bhabhi_shila_terabox') {
+        document.getElementById('messageID').value = '14000';
+    } else if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
+        document.getElementById('messageID').value = '20000';
+    } else if (selectedValue === 'Example-Channel') {
+        document.getElementById('messageID').value = '100';
+        // Set message ID box value for another option.
+    }
+  });
+*/
 
 // Logic for toggling the mode between 'storing' and 'deleting' Link.
 const textBox = document.getElementById('textBox');
