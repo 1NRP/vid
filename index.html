@@ -652,8 +652,6 @@ function fetchSinglePost() {
     // Create a container for the post and button
     const postContainer = document.createElement('div');
     postContainer.className = 'TG-post-container';
-    // Add script to the post container
-    postContainer.appendChild(script);
     // Create and add PLAY button
     const button = document.createElement('button');
     button.className = 'TG-Play'
@@ -663,6 +661,8 @@ function fetchSinglePost() {
     };
     postContainer.appendChild(button);
     container.innerHTML = ''; // Clear previous posts
+    // Add script/Posts to the post container
+    postContainer.appendChild(script);
     container.appendChild(postContainer);
     // Manually trigger rendering of Telegram widget
     window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(postContainer.querySelector('script'));
@@ -691,8 +691,6 @@ function loadNextPosts() {
       // Create a container for each post and button
       const postContainer = document.createElement('div');
       postContainer.className = 'TG-post-container';
-      // Add script to the post container
-      postContainer.appendChild(script);
       // Create and add PLAY button
       const button = document.createElement('button');
       button.className = 'TG-Play';
@@ -701,6 +699,8 @@ function loadNextPosts() {
         getIframeLink(postContainer.querySelector('script'));
       };
       postContainer.appendChild(button);
+      // Add script/Posts to the post container
+      postContainer.appendChild(script);
       container.appendChild(postContainer);
       // Manually trigger rendering of Telegram widget
       window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(postContainer.querySelector('script'));
