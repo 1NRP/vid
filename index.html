@@ -678,7 +678,7 @@ function loadNextPosts() {
     const [interval, startID] = inputVal.includes('/') ? inputVal.split('/').map(Number) : [1, parseInt(inputVal)];
    
     let lastMessageID = startID; // Track the last message ID
-    for (let i = 0; i < 21; i++) { // 21 is the number of posts to be loaded when 'NEXT' button is clicked.
+    for (let i = 0; i < 11; i++) { // 11 is the number of posts to be loaded when 'NEXT' button is clicked.
       const currentMessageID = lastMessageID + (i * interval); // Increment messageID with the interval
       const script = document.createElement('script');
       script.async = true;
@@ -725,7 +725,7 @@ document.getElementById('channelName').addEventListener('change', function() {
   });
 // Extract the TB Link from the Telegram post.
 async function getIframeLink(script) {
-    // Retrieve iframe from script's data attribute.
+    // Retrieve iframe source from script's data attribute.
     const iframeSrc = script.dataset.telegramPost;
     const iframe = document.querySelector(`iframe[src*="${iframeSrc}"]`);
     if (!iframe) {
@@ -745,22 +745,22 @@ async function getIframeLink(script) {
         // Filter anchor tags containing TB Links.
         const keywords = ['teraboxapp', 'teraboxlink', '1024terabox', 'freeterabox'];
         let found = false;
-        let TBoxAnchorLink = '';
+        let TBoxLink = '';
         anchors.forEach(anchor => {
             const href = anchor.href;
             if (keywords.some(keyword => href.includes(keyword))) {
-                TBoxAnchorLink = href;
+                TBoxLink = href;
                 found = true;
             }
         });
         if (found) {
-            document.getElementById('vid').value = TBoxAnchorLink;
+            document.getElementById('vid').value = TBoxLink;
             play();
         } else {
             alert("No TB Link was found.");
         }
     } catch (error) {
-        alert("Error fetching the URL. Please make sure it is correct.");
+        alert("Error fetching the URL. Please make sure the URL is correct.");
         console.error('Error fetching HTML:', error);
     }
 }
