@@ -723,11 +723,13 @@ document.getElementById('channelName').addEventListener('change', function() {
     } else if (selectedValue === 'Example-Channel') {
      // document.getElementById('messageID').value = '100';
      // thirdMessageID();
-        // Set message ID box value for another option.
+        // Set message ID value for another option.
     }
   });
 
 // Fetch the Last Message ID of the 1st Telegram Channel.
+// Takes some time for the Message ID to reflect in the box given the large amount of code in a Telegram Channel's website.
+// About 100 posts are present before the last post in this Telegram Channel.
 async function firstMessageID() {
     const TgChannel = 'https://t.me/s/desi_bhabhi_shila_terabox'; // Telegram Channel URL to fetch and parse
     try {
@@ -764,6 +766,8 @@ document.getElementById('messageID').value = messageNumber;
 }
 
 // Fetch the Last Message ID of the 2nd Telegram Channel.
+// Takes some time for the Message ID to reflect in the box given the large amount of code in a Telegram Channel's website.
+// About 100 posts are present before the last post in this Telegram Channel.
 async function secondMessageID() {
     const TgChannel = 'https://t.me/s/desi_bhabhi_nisha_mdisk'; // Telegram Channel URL to fetch and parse
     try {
