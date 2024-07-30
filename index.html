@@ -327,13 +327,13 @@
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''" ondblclick="document.getElementById('vid').value='Click PLAY To Reset Player.'">✖️</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''" ondblclick="fetchPosts()">✖️</button>
     </br>
 </center>
 <div id="boxContainer"></div>
 <div>
   <label for="channelName"></label>
-  <button id="nightModeBtn" onclick="nightModeFunction()" ondblclick="getLink()">🌗</button>
+  <button id="nightModeBtn" onclick="nightModeFunction()">🌗</button>
   <select id="channelName">
     <option value="desi_bhabhi_shila_terabox">1st</option>
     <option value="desi_bhabhi_nisha_mdisk">2nd</option>
@@ -343,7 +343,7 @@
   <input id="messageID">
   <button id="go-btn" onclick="fetchSinglePost()">GO</button>
   <button id="btn-next" onclick="loadNextPosts()">NEXT</button>
-  <button id="reload" onclick="fetchPosts()">♻️</button>
+  <button id="reload" onclick="getLink()" ondblclick="document.getElementById('vid').value='Click PLAY To Reset Player.'>♻️</button>
 </div>
 <textarea id="textBox" readonly></textarea>
 <!--
