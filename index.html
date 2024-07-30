@@ -697,29 +697,16 @@ function loadNextPosts() {
     // Update current channel name
     currentChannelName = channelName;
     // Update message ID input field with the last calculated message ID.
-    document.getElementById('messageID').value = `${interval}/${lastMessageID + (20 * interval)}`; // Retain the original format, calculating the last message ID correctly
+    document.getElementById('messageID').value = `${interval}/${lastMessageID + (20 * interval)}`;
 }
+
+// Event listener to get the Last Message's ID of the selected Telegram Channel.
+// Takes some time for the Message ID to reflect in the box given the large amount of code in a Telegram Channel's website.
+// Approximately 100 posts are present before the last post in these Telegram Channels.
 document.getElementById('channelName').addEventListener('change', function() {
-    // Get the selected option value
-    var selectedValue = this.value;
-    // Latest message ID for different channels.
-    if (selectedValue === 'desi_bhabhi_shila_terabox') {
-        getMessageID();
-     // document.getElementById('messageID').value = '14000';
-    } else if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
-        getMessageID();
-     // document.getElementById('messageID').value = '20000';
-    } else if (selectedValue === 'Example-Channel') {
-     // document.getElementById('messageID').value = '100';
-     // thirdMessageID();
-        // Set message ID value for another option.
-    }
-  });
-
-
-async function getMessageID() {
+    async function getMessageID() {
     const channelName = document.getElementById('channelName').value;
-    const TgChannel = 'https://t.me/' + `${channelName}`; // Telegram Channel URL to fetch and parse.
+    const TgChannel = 'https://t.me/s/' + `${channelName}`; // Telegram Channel URL to fetch and parse.
     try {
         const proxyUrl = 'https://api.allorigins.win/get?url=';
         const response = await fetch(proxyUrl + encodeURIComponent(TgChannel));
@@ -743,91 +730,16 @@ async function getMessageID() {
         if (lastMessage) {
             const numberAfterSlash = lastMessage.lastIndexOf('/');
             const messageNumber = lastMessage.substring(numberAfterSlash + 1);
-document.getElementById('messageID').value = messageNumber;
+            document.getElementById('messageID').value = messageNumber;
         } else {
             alert("No Link in the Message ID format was found.");
         }
     } catch (error) {
-        alert("Error fetching Telegram last Message ID");
-        console.error('Error fetching the Message ID:', error);
+        alert("Error fetching Telegram Channel's source code.");
+        console.error('Error fetching the source code of the selected Telegram Channel.:', error);
     }
 }
-
-// Fetch the Last Message ID of the 1st Telegram Channel.
-// Takes some time for the Message ID to reflect in the box given the large amount of code in a Telegram Channel's website.
-// About 100 posts are present before the last post in this Telegram Channel.
-async function firstMessageID() {
-    const TgChannel = 'https://t.me/s/desi_bhabhi_shila_terabox'; // Telegram Channel URL to fetch and parse
-    try {
-        const proxyUrl = 'https://api.allorigins.win/get?url=';
-        const response = await fetch(proxyUrl + encodeURIComponent(TgChannel));
-        const data = await response.json();
-        const htmlText = data.contents;
-        // Parse the HTML content
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlText, 'text/html');
-        // Extract all anchor/link tags
-        const anchors = doc.querySelectorAll('a');
-        const keyword = 'https://t.me/desi_bhabhi_shila_terabox/';
-        let lastMessage = ''; // Variable to store the last matching link
-        // Iterate over anchor tags to find the last matching link
-        anchors.forEach(anchor => {
-            const href = anchor.href;
-            if (href.includes(keyword)) {
-                lastMessage = href; // Update lastMessage with the latest match
-            }
-        });
-        // Extract the messageID which is after the last '/'
-        if (lastMessage) {
-            const numberAfterSlash = lastMessage.lastIndexOf('/');
-            const messageNumber = lastMessage.substring(numberAfterSlash + 1);
-document.getElementById('messageID').value = messageNumber;
-        } else {
-            alert("No Link in the Message ID format was found.");
-        }
-    } catch (error) {
-        alert("Error fetching Telegram last Message ID");
-        console.error('Error fetching the Message ID:', error);
-    }
-}
-
-// Fetch the Last Message ID of the 2nd Telegram Channel.
-// Takes some time for the Message ID to reflect in the box given the large amount of code in a Telegram Channel's website.
-// About 100 posts are present before the last post in this Telegram Channel.
-async function secondMessageID() {
-    const TgChannel = 'https://t.me/s/desi_bhabhi_nisha_mdisk'; // Telegram Channel URL to fetch and parse
-    try {
-        const proxyUrl = 'https://api.allorigins.win/get?url=';
-        const response = await fetch(proxyUrl + encodeURIComponent(TgChannel));
-        const data = await response.json();
-        const htmlText = data.contents;
-        // Parse the HTML content
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlText, 'text/html');
-        // Extract all anchor/link tags
-        const anchors = doc.querySelectorAll('a');
-        const keyword = 'https://t.me/desi_bhabhi_nisha_mdisk/';
-        let lastMessage = ''; // Variable to store the last matching link
-        // Iterate over anchor tags to find the last matching link
-        anchors.forEach(anchor => {
-            const href = anchor.href;
-            if (href.includes(keyword)) {
-                lastMessage = href; // Update lastMessage with the latest match
-            }
-        });
-        // Extract the messageID which is after the last '/'
-        if (lastMessage) {
-            const numberAfterSlash = lastMessage.lastIndexOf('/');
-            const messageNumber = lastMessage.substring(numberAfterSlash + 1);
-document.getElementById('messageID').value = messageNumber;
-        } else {
-            alert("No Link in the Message ID format was found.");
-        }
-    } catch (error) {
-        alert("Error fetching Telegram last Message ID");
-        console.error('Error fetching the Message ID:', error);
-    }
-}
+});
 
 // Extract the TB Link from the Telegram post.
 async function getIframeLink(script) {
