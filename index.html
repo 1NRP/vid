@@ -19,7 +19,7 @@
       border-radius: 8px;
       border: 2px solid #333;
       overflow-y: scroll;
-      margin: 210px 0px 0px 0px;
+      margin: 230px 0px 0px 0px;
     }
     .post-details {
       display: flex;
@@ -54,10 +54,12 @@
     }
     #player {
       position: fixed;
-      top: 1vh;
+      top: 2px;
+      border: 2px solid #333;
+      border-radius: 6px;
       left: 0vw;
       max-width: 100dvw; /* dvw = dynamic viewport width */
-      max-height: 100dvh; /* dvh = dynamic viewport height */
+      max-height: 85dvh; /* dvh = dynamic viewport height */
       margin: 4px 0px 0px 0px;  /* Top, Right, Bottom, Left */
     }
     #saveDeleteBtn {
@@ -127,8 +129,7 @@
       margin: 0px 0px 4px 170px;
     }
     .TG-Play:hover {
-      color: #b4b4b4;
-      background-color: #000;
+      background-color: #555;
     }
     #nightModeBtn {
       border: 2px solid #555;
@@ -346,7 +347,7 @@
   <input id="messageID">
   <button id="go-btn" onclick="fetchSinglePost()">GO</button>
   <button id="btn-next" onclick="loadNextPosts()">NEXT</button>
-  <button id="reload" onclick="document.getElementById('vid').value='Click PLAY To Reset Player.'" ondblclick="getLink()">♻️</button>
+  <button id="reload" onclick="document.getElementById('player').src=''" ondblclick="getLink()">♻️</button>
 </div>
 <textarea id="textBox" readonly></textarea>
 <!--
