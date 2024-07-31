@@ -19,7 +19,7 @@
       border-radius: 8px;
       border: 2px solid #333;
       overflow-y: scroll;
-      margin: 230px 0px 0px 0px;
+      margin: 225px 0px 0px 0px;
     }
     .post-details {
       display: flex;
@@ -55,10 +55,11 @@
     #player {
       position: fixed;
       top: 2px;
+      left: 0vw;
       border: 2px solid #333;
       border-radius: 6px;
-      left: 0vw;
-      max-width: 100dvw; /* dvw = dynamic viewport width */
+      background-color: #000;
+      max-width: 98.5dvw; /* dvw = dynamic viewport width */
       max-height: 85dvh; /* dvh = dynamic viewport height */
       margin: 4px 0px 0px 0px;  /* Top, Right, Bottom, Left */
     }
@@ -138,7 +139,7 @@
       Border-radius: 50%;
       text-align: center;
       padding: 6px;
-      margin-left: 0px;
+      margin-left: 3px;
     }
     #channelName {
       width: 80px;
@@ -183,7 +184,7 @@
       border: 2px solid #555;
       color: #fff;
       border-radius: 50%;
-      margin-left: 5px;
+      margin-left: 7px;
     }
     #textBox {
       width: 96%;
@@ -235,7 +236,7 @@
     #go-btn:hover,
     #btn-next:hover,
     #reload:hover {
-      background-color: #59192c;
+      background-color: #007bff;
     }
     .saveAlert {
       position: fixed;
@@ -331,13 +332,14 @@
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''" ondblclick="fetchPosts()">✖️</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').src=''">✖️</button>
     </br>
 </center>
+<br> <!--  To create gap between 1st and 2nd line of buttons.  -->
 <div id="boxContainer"></div>
 <div>
   <label for="channelName"></label>
-  <button id="nightModeBtn" onclick="nightModeFunction()">🌗</button>
+  <button id="nightModeBtn" onclick="nightModeFunction()" ondblclick="getLink()">🌗</button>
   <select id="channelName">
     <option value="desi_bhabhi_shila_terabox">1st</option>
     <option value="desi_bhabhi_nisha_mdisk">2nd</option>
@@ -345,19 +347,17 @@
   </select>
   <label for="messageID"></label>
   <input id="messageID">
-  <button id="go-btn" onclick="fetchSinglePost()">GO</button>
+  <button id="go-btn" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
   <button id="btn-next" onclick="loadNextPosts()">NEXT</button>
-  <button id="reload" onclick="document.getElementById('player').src=''" ondblclick="getLink()">♻️</button>
+  <button id="reload" onclick="fetchPosts()">♻️</button>
 </div>
 <textarea id="textBox" readonly></textarea>
 <!--
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
     <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
     <button id="Example Button" onclick="function-1(); function-2(); function-3">3 Functions On One Button Click Example</button>
-
 <script src="script.js"></script>  
 -->
-
 <script>
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
 function showAlert() {
