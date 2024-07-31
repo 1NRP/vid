@@ -15,11 +15,11 @@
     }
     .post-container {
       width: 99%;
-      height: 400px;
+      height: 350px;
       border-radius: 8px;
       border: 2px solid #333;
       overflow-y: scroll;
-      margin: 225px 0px 0px 0px;
+      margin: 225px 0px -15px 0px;
     }
     .post-details {
       display: flex;
@@ -185,7 +185,7 @@
       border: 2px solid #555;
       color: #fff;
       border-radius: 50%;
-      margin-left: 7px;
+      margin-left: 10px;
     }
     #textBox {
       width: 96%;
@@ -609,19 +609,19 @@ async function play() {
         var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
         // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
         fetch(requestUrl)
-        /*.then(response => {    // Uncomment if response is required.
+        .then(response => {    // Comment it (& uncomment "DIRECT" code below) if response is not required.
             var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById("player").play(); // Autoplay the video.
-        })  */
+        })  
         .catch(error => {
             console.error('Error fetching preparation URL:', error);
             alert('Failed to prepare playback. Error:', error);
         });
-        // Construct the playUrl immediately without waiting for fetch response.
-        var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
-        document.getElementById("player").src = playUrl;
-        document.getElementById("player").play(); // Autoplay the video.
+        // "DIRECT"-Construct the playUrl immediately without waiting for fetch response.
+        //var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
+        //document.getElementById("player").src = playUrl;
+        //document.getElementById("player").play(); // Autoplay the video.
 
     } else {
         // Not a terabox URL, play as usual
