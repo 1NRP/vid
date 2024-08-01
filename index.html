@@ -738,7 +738,7 @@ document.getElementById('channelName').addEventListener('change', async function
             // Extract the messageID which is after the last '/'
             if (lastMessage) {
                 const numberAfterSlash = lastMessage.lastIndexOf('/');
-                const messageNumber = lastMessage.substring(numberAfterSlash + 1);
+                const messageNumber = lastMessage.substring(numberAfterSlash + 1) - 110;
                 document.getElementById('messageID').value = messageNumber;
             } else {
                 alert("No Link in the Message ID format was found.");
