@@ -19,7 +19,7 @@
       border-radius: 8px;
       border: 2px solid #333;
       overflow-y: scroll;
-      margin: 210px 0px -15px 0px;
+      margin: 215px 0px -15px 0px;
     }
     .post-details {
       display: flex;
@@ -333,7 +333,7 @@
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').style.maxHeight='25dvh'" ondblclick="document.getElementById('player').src=''">✖️</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').style.maxHeight='210px'" ondblclick="document.getElementById('player').src=''">✖️</button>
     </br>
 </center>
 <br> <!--  To create gap between 1st and 2nd line of buttons.  -->
@@ -560,6 +560,7 @@ async function play() {
             const responseData = await response.json();
             const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + fullVideoId + ".m3u8";
             document.getElementById("player").src = playUrl;
+            document.getElementById('player').style.maxHeight='85dvh';
             document.getElementById("player").play();
         } catch (error) {
             console.error('Error fetching or processing:', error);
@@ -568,6 +569,7 @@ async function play() {
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = qry;
+        document.getElementById('player').style.maxHeight='85dvh';
         document.getElementById("player").play();
     }
 }
@@ -612,6 +614,7 @@ async function play() {
         .then(response => {    // Comment it (& uncomment "DIRECT" code below) if response is not required.
             var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
             document.getElementById("player").src = playUrl;
+            document.getElementById('player').style.maxHeight='85dvh';
             document.getElementById("player").play(); // Autoplay the video.
         })  
         .catch(error => {
@@ -626,6 +629,7 @@ async function play() {
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = qry;
+        document.getElementById('player').style.maxHeight='85dvh';
         document.getElementById("player").play(); // Autoplay the video
     }
 }
