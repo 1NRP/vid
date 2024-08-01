@@ -333,7 +333,7 @@
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').src=''">✖️</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').style.maxHeight='25dvh'" ondblclick="document.getElementById('player').src=''">✖️</button>
     </br>
 </center>
 <br> <!--  To create gap between 1st and 2nd line of buttons.  -->
