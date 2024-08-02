@@ -303,6 +303,411 @@
     }
     /* Animations */
     @keyframes save {
+      from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+      to {font-size: 25px; top: 10dvh;; transform: rotate(0deg)}
+    }
+    @keyframes delete {
+      from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+      to {font-size: 25px; top: 10dvh; transform: rotate(0deg)}
+    }
+    @keyframes notFound {
+      from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+      to {font-size: 25px; top: 10dvh; transform: rotate(0deg)}
+    }
+    @keyframes menu {
+      from {opacity: 0; top: 20dvh}
+      to {opacity: 1; top: 60dvh}
+    }
+/* Code for Night-Mode toggle. */
+.nightMode {
+    body {
+        background-color: #000;  
+        color: #b4b4b4;
+    }
+    .poster-image,
+    .thumbnail,
+    .TG-post-container,
+    #player {
+        filter: brightness(60%);
+    }
+    #channelName,
+    #messageID,
+    #go-btn,
+    #hamburgerMenu,
+    #btn-next {
+        color: #b4b4b4;
+    }
+    #copyLink,
+    #saveDeleteBtn,
+    #reload,
+    #nightModeBtn {
+        color: #b4b4b4b4;
+        border: 2px solid #555;
+    }
+    #vid,
+    #textBox,
+    #button-play,
+    .size,
+    .duration {
+        color: #999;
+    }
+  }
+</style>
+</head>
+<center>
+    <div class="post-container" id="posts-container"></div>
+    <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
+    <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
+    <button id="button-play" onclick="play()">PLAY</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').style.maxHeight='205px'" ondblclick="document.getElementById('player').src=''">✖️</button>
+    </br>
+</center>
+<br> <!--  To create gap between 1st and 2nd line of buttons.  -->
+<div id="boxContainer"></div>
+<button id="hamburgerMenu" onclick="document.getElementById('menuBox').style.display='inline'">☰</button>
+  <select id="channelName">
+    <option value="desi_bhabhi_shila_terabox">1st</option>
+    <option value="desi_bhabhi_nisha_mdisk">2nd</option>
+     <!-- Add more channel options here if needed. -->
+  </select>
+  <input id="messageID">
+  <button id="go-btn" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
+  <button id="btn-next" onclick="loadNextPosts()">NEXT</button>
+  <button id="reload" onclick="fetchPosts()">♻️</button>
+</div>
+<textarea id="textBox" readonly></textarea>
+<div id="menuBox">
+    <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
+    <button class="menuButtons" onclick="getLink()">🔗</button>
+    <button class="menuButtons">⛔</button>
+</div>
+
+<!--
+    <h1>⭐ Nihar Ranjan's Player ⭐</h1>
+    <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
+    <button id="Example Button" onclick="function-1(); function-2(); function-3">3 Functions On One Button Click Example</button>
+<script src="script.js"></script>  
+-->
+<script>
+
+document.addEventListener('click', function(event) {
+    const menuBox = document.getElementById('menuBox');
+    if (menuBox && menuBox.contains(event.target)) {      
+        setTimeout(() => {
+        menuBox.style.display = 'none';
+        }, 300);
+    }
+});
+
+</script>
+
+
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000">
+  <link rel="icon" sizes="192x192" href="images/green-512.png">
+  <!--  <link rel="stylesheet" href="style.css">  -->
+  <title>Nihar's Video Player</title>
+<style>
+      body {
+      background-color: #000;  
+      color: #fff;
+    }
+    .post-container {
+      width: 99%;
+      height: 350px;
+      border-radius: 8px;
+      border: 2px solid #333;
+      overflow-y: scroll;
+      margin: 215px 0px -15px 0px;
+    }
+    .post-details {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .poster-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .size {
+      color: #b4b4b4;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0px 40px 1px 0px;
+    }
+    .duration {
+      color: #b4b4b4;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0px 20px 1px 35vw;
+    }
+    #copyLink {
+      background-color: #000;
+      padding: 6px;
+      border: 2px solid #555;
+      border-radius: 4px;
+      margin: 2px;
+    }
+    #player {
+      position: fixed;
+      top: 0px;
+      left: 0vw;
+      border: 2px solid #333;
+      border-radius: 6px;
+      background-color: #000;
+      max-width: 98.5dvw; /* dvw = dynamic viewport width */
+      max-height: 85dvh; /* dvh = dynamic viewport height */
+      margin: 0px 0px 0px 0px;  /* Top, Right, Bottom, Left */
+    }
+    #saveDeleteBtn {
+      background-color: #000;
+      padding: 6px;  
+      border: 2px solid #555;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #vid {
+      width: 57%;
+      max-width: 300px;
+      padding: 6px 2px;
+      display: inline-block;
+      background-color: #000;
+      color: #b4b4b4;
+      font-weight: 600;
+      border: 2px solid #555;
+      border-radius: 4px;
+      box-sizing: border-bx;
+    }
+    #button-play {
+      background-color: #000;
+      width: 17%;
+      color: #b4b4b4;
+      font-weight: 600;
+      max-width: 100px;
+      padding: 6px;
+      border: 2px solid #555;
+      border-radius: 4px;
+    }
+    #clearBtn {
+      background-color: #000;
+      color: #fff; 
+      max-width: 50px;
+      padding: 6px;
+      border: 2px solid #555;
+      border-radius: 4px;
+    }
+    #boxContainer {
+      width: 97%;
+      height: 300px;
+      overflow-y: scroll;
+      border: 2px solid #333;
+      padding: 2px;
+      border-radius: 8px;
+      margin: 2px;
+      display: none;
+    }
+    .TG-post-container {
+      display: inline-block;
+      border: none;
+      background: transparent;
+      width: auto;
+      height: auto;
+      margin: 0px;
+      overflow: hidden;
+    }
+    .TG-Play {
+      background-Color: #007bff;
+      color: #000;
+      border: none;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 1000;
+      padding: 4px 60px;
+      margin: 0px 0px 4px 170px;
+    }
+    .TG-Play:hover {
+      background-color: #555;
+    }
+    #hamburgerMenu {
+      border: 2px solid #555;
+      background-color: #000;
+      color: #fff;
+      border-radius: 50%;
+      padding: 5px 9px;
+      font-weight: 1000;
+      margin-left: 3px;
+    }
+    .menuButtons {
+      background-color: #000;
+      padding: 6px;
+      border: 2px solid #888;
+      color: #fff;
+      border-radius: 10px;
+      margin: 0px 4px;
+    }
+    #menuBox {
+      position: fixed;
+      top: 60dvh;
+      left: 50vw;
+      display: none;
+      padding: 4px 8px 4px 8px;
+      font-weight: 800;
+      background-color: #000;
+      border: 2px solid #444;
+      border-radius: 50px;
+      margin: 0px 20px 0px 0px;
+      animation-name: menu;
+      animation-duration: 0.5s;
+    }
+    #channelName {
+      width: 80px;
+      padding: 4px 2px 4px 15px;
+      margin-left: 0px;
+      color: #fff;
+      border: 2px solid #555;
+      background-color: #000;
+      font-weight: 600;
+      border-radius: 40px;
+    }
+    #messageID {
+      width: 60px;
+      padding: 5px 8px;
+      color: #fff;
+      background-color: #000;
+      font-weight: 600;
+      border: 2px solid #555;
+      border-radius: 40px;
+      margin-right: 0px;
+    }
+    #go-btn {
+      background-color: #000; 
+      padding: 5px 0px;
+      width: 30px;
+      color: #fff;
+      font-weight: 600;
+      border: 2px solid #555;
+      border-radius: 50%;
+    }
+    #btn-next {
+      background-color: #000;
+      padding: 5px 8px;
+      border: 2px solid #555;
+      font-weight: 600;
+      border-radius: 40px;
+      color: #fff;
+    }
+    #reload {
+      background-color: #000;
+      padding: 6px;
+      border: 2px solid #555;
+      color: #fff;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+    #textBox {
+      width: 96%;
+      height: 150px;
+      padding: 10px 5px;
+      color: #b4b4b4;
+      font-weight: 800;
+      font-size: 11px;
+      resize: none;
+      background-color: #000;
+      border: 2px solid #333;
+      border-radius: 8px;
+      margin: 2px 0px;
+      margin-left: 0px;
+    }
+    .thumbnailContainer {
+      position: fixed;
+      top: 2dvh;
+      left: 5dvw;
+      width: 88%;
+      height: 350px;
+      border-radius: 5px;
+      padding: 2px;
+      border: 2px solid #0a8030;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    h1 {
+      color: DodgerBlue;
+      font-family: Helvetica, Cursive, Palatino, Courier, sans-serif;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 50px;
+      margin: 0 0 4px;
+      text-align: center;
+    }
+    #copyLink:hover,
+    #button-play:hover,
+    #clearBtn:hover,
+    .menuButtons:hover,
+    #hamburgerMenu:hover,
+    #channelName:hover,
+    #go-btn:hover,
+    #btn-next:hover,
+    #reload:hover {
+      background-color: #007bff;
+    }
+    .saveAlert {
+      position: fixed;
+   /* top: 5dvh; */
+      left: 30dvw;
+      background-color: #1bd13d;
+      color: #000;
+      font-weight: 1000;
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+      animation-name: save;
+      animation-duration: 1s;
+    }
+    .deleteAlert {
+      position: fixed;
+   /* top: 5dvh; */
+      left: 30dvw;
+      background-color: #f2074e;
+      color: #000;
+      font-weight: 1000;
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+      animation-name: delete;
+      animation-duration: 1s;
+    }
+    .notFoundAlert {
+      position: fixed;
+   /* top: 5dvh; */
+      left: 20dvw;
+      background-color: #e8af05;
+      color: #000;
+      font-weight: 1000;
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+      animation-name: notFound;
+      animation-duration: 1s;
+    }
+    /* Animations */
+    @keyframes save {
       from {font-size: 10px; top: 5dvh; transform: rotate(30deg)}
       to {font-size: 25px; top: 10dvh;; transform: rotate(0deg)}
     }
@@ -366,7 +771,7 @@
 </center>
 <br> <!--  To create gap between 1st and 2nd line of buttons.  -->
 <div id="boxContainer"></div>
-<button id="hamburgerMenu" onclick="document.getElementById('menuBox).style.display='inline'">☰</button>
+<button id="hamburgerMenu" onclick="document.getElementById('menuBox').style.display='inline'">☰</button>
   <select id="channelName">
     <option value="desi_bhabhi_shila_terabox">1st</option>
     <option value="desi_bhabhi_nisha_mdisk">2nd</option>
@@ -384,7 +789,7 @@
     <button class="menuButtons" onclick="exampleFunction()">⛔</button>
 </div>
 
-<!--
+
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
     <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
     <button id="Example Button" onclick="function-1(); function-2(); function-3">3 Functions On One Button Click Example</button>
