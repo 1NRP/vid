@@ -152,8 +152,8 @@
     }
     #menuBox {
       position: fixed;
-      top: 80dvh;
-      left: 15vw;
+      top: 60dvh;
+      left: 50vw;
       display: none;
       padding: 4px 8px 4px 8px;
       font-weight: 800;
@@ -163,15 +163,6 @@
       margin: 0px 20px 0px 0px;
       animation-name: menu;
       animation-duration: 0.5s;
-    }
-    #nightModeBtn {
-      border: 2px solid #555;
-      background-color: #000;
-      color: #fff;
-      Border-radius: 50%;
-      text-align: center;
-      padding: 6px;
-      margin-left: 3px;
     }
     #channelName {
       width: 80px;
@@ -312,20 +303,20 @@
     }
     /* Animations */
     @keyframes save {
-      from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+      from {font-size: 10px; top: 5dvh; transform: rotate(30deg)}
       to {font-size: 25px; top: 10dvh;; transform: rotate(0deg)}
     }
     @keyframes delete {
-      from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+      from {font-size: 10px; top: 5dvh; transform: rotate(30deg)}
       to {font-size: 25px; top: 10dvh; transform: rotate(0deg)}
     }
     @keyframes notFound {
-      from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+      from {font-size: 10px; top: 5dvh; transform: rotate(30deg)}
       to {font-size: 25px; top: 10dvh; transform: rotate(0deg)}
     }
     @keyframes menu {
-      from {opacity: 0; top: 40dvh}
-      to {opacity: 1; top: 80dvh}
+      from {opacity: 0; top: 20dvh}
+      to {opacity: 1; top: 60dvh}
     }
 /* Code for Night-Mode toggle. */
 .nightMode {
@@ -375,7 +366,7 @@
 </center>
 <br> <!--  To create gap between 1st and 2nd line of buttons.  -->
 <div id="boxContainer"></div>
-<button id="hamburgerMenu" onclick="menuBox()">☰</button>
+<button id="hamburgerMenu" onclick="document.getElementById('menuBox).style.display='inline'">☰</button>
   <select id="channelName">
     <option value="desi_bhabhi_shila_terabox">1st</option>
     <option value="desi_bhabhi_nisha_mdisk">2nd</option>
@@ -390,7 +381,7 @@
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
     <button class="menuButtons" onclick="getLink()">🔗</button>
-    <button class="menuButtons" onclick="exampleFunction()">⭐</button>
+    <button class="menuButtons" onclick="exampleFunction()">⛔</button>
 </div>
 
 <!--
@@ -1038,17 +1029,16 @@ function handlePosterClick(link) {
     document.getElementById('vid').value = link;
     play();
   }
-
-
-// Show or Hide Hamburger menu box.
-function menuBox() {
-   const alertBox = document.getElementById('menuBox');
-   if (alertBox.style.display === 'inline') {
-       alertBox.style.display = 'none';
-   } else {
-       alertBox.style.display = 'inline';
-   }
-}
+  
+// Hide menuBox when clicked on it.
+document.addEventListener('click', function(event) {
+    const menuBox = document.getElementById('menuBox');
+    if (menuBox && menuBox.contains(event.target)) {      
+        setTimeout(() => {
+        menuBox.style.display = 'none';
+        }, 300);
+    }
+});
 
 // Progressive Web App Service Worker Script.
 window.addEventListener('load', () => {
