@@ -19,7 +19,7 @@
       border-radius: 8px;
       border: 2px solid #333;
       overflow-y: scroll;
-      margin: 215px 0px -15px 0px;
+      margin: 215px 0px 5px 0px;
     }
     .post-details {
       display: flex;
@@ -355,9 +355,8 @@
 </style>
 </head>
 <center>
-    <div class="post-container" id="posts-container"></div>
+    <div id="post-container"></div>
     <video controls="controls" id="player" tabindex="0" poster="images/my_name_logo_1.2.1.jpg" loop="loop" src="" width="100%" muted></video>
-    <br>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
