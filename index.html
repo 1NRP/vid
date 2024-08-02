@@ -355,12 +355,12 @@
 </style>
 </head>
 <center>
+    <video controls="controls" id="player" tabindex="0" poster="images/my_name_logo_1.2.1.jpg" loop="loop" src="" width="100%" muted></video>
     <div class="post-container" id="posts-container"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').style.maxHeight='205px'" ondblclick="document.getElementById('player').src=''">✖️</button>
-    </br>
 </center>
 <br> <!--  To create gap between 1st and 2nd line of buttons.  -->
 <div id="boxContainer"></div>
