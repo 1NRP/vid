@@ -141,6 +141,7 @@
       padding: 5px 9px;
       font-weight: 1000;
       margin-left: 3px;
+      transition: transform 0.4s ease;
     }
     .menuButtons {
       background-color: #000;
@@ -316,7 +317,7 @@
     }
     @keyframes menu {
       from {opacity: 0; top: 20dvh}
-      to {opacity: 1; top: 60dvh}
+      to {opacity: 1; top: 70dvh}
     }
 /* Code for Night-Mode toggle. */
 .nightMode {
@@ -340,6 +341,7 @@
     #copyLink,
     #saveDeleteBtn,
     #reload,
+    .menuButtons,
     #nightModeBtn {
         color: #b4b4b4b4;
         border: 2px solid #555;
@@ -364,7 +366,7 @@
 </center>
 <div style="height: 2px"></div> <!--  To create gap between 1st and 2nd row of buttons.  -->
 <div id="boxContainer"></div>
-<button id="hamburgerMenu" class="secondRow" onclick="menuBox()">☰</button>
+<button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(90deg)' ? 'rotate(0deg)' : 'rotate(90deg)');">☰</button>
   <select id="channelName" class="secondRow">
     <option value="desi_bhabhi_shila_terabox">1st</option>
     <option value="desi_bhabhi_nisha_mdisk">2nd</option>
