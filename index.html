@@ -13,13 +13,13 @@
       background-color: #000;  
       color: #fff;
     }
-    .post-container {
+    #post-container {
       width: 99%;
       height: 350px;
       border-radius: 8px;
       border: 2px solid #333;
       overflow-y: scroll;
-      margin: 215px 0px 5px 0px;
+      margin: 215px 0px 4px 0px;
     }
     .post-details {
       display: flex;
@@ -152,8 +152,8 @@
     }
     #menuBox {
       position: fixed;
-      top: 60dvh;
-      left: 50vw;
+      top: 70dvh;
+      left: 40vw;
       display: none;
       padding: 4px 8px 4px 8px;
       font-weight: 800;
@@ -360,20 +360,20 @@
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').style.maxHeight='205px'" ondblclick="document.getElementById('player').src=''">✖️</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').style.maxHeight='205px'" ondblclick="document.getElementById('player').src=''; var elements = document.getElementsByClassName('secondRow'); for (var i = 0; i < elements.length; i++) { elements[i].style.display = (elements[i].style.display === 'none' || elements[i].style.display === '') ? 'inline' : 'none'; }">✖️</button>
 </center>
-<br> <!--  To create gap between 1st and 2nd line of buttons.  -->
+<div style="height: 2px"></div> <!--  To create gap between 1st and 2nd row of buttons.  -->
 <div id="boxContainer"></div>
-<button id="hamburgerMenu" onclick="menuBox()">☰</button>
-  <select id="channelName">
+<button id="hamburgerMenu" class="secondRow" onclick="menuBox()">☰</button>
+  <select id="channelName" class="secondRow">
     <option value="desi_bhabhi_shila_terabox">1st</option>
     <option value="desi_bhabhi_nisha_mdisk">2nd</option>
      <!-- Add more channel options here if needed. -->
   </select>
-  <input id="messageID">
-  <button id="go-btn" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
-  <button id="btn-next" onclick="loadNextPosts()">NEXT</button>
-  <button id="reload" onclick="fetchPosts()">♻️</button>
+  <input id="messageID" class="secondRow">
+  <button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
+  <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
+  <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 </div>
 <textarea id="textBox" readonly></textarea>
 <div id="menuBox">
@@ -381,7 +381,6 @@
     <button class="menuButtons" onclick="getLink()">🔗</button>
     <button class="menuButtons">⭐</button>
 </div>
-
 <!--
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
     <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
