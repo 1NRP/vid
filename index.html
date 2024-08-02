@@ -991,7 +991,7 @@ function handleThumbnailClick(lineText, thumbnailContainer) {
 }
 // Function to load posts from the server
 function fetchPosts() {
-    const postsContainer = document.getElementById('posts-container');
+    const postsContainer = document.getElementById('post-container');
     postsContainer.innerHTML = ''; // Clear previous posts
 
     fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=2')
