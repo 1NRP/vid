@@ -64,10 +64,10 @@
       max-height: 85dvh; /* dvh = dynamic viewport height */
       margin: 0px 0px 0px 0px;  /* Top, Right, Bottom, Left */
     }
-    /* Hide the full-screen button in HTML 5 Player */
+    /* Hide the full-screen button in HTML 5 Player.
     video::-webkit-media-controls-fullscreen-button {
       display: none;
-    }
+    }  */
     #saveDeleteBtn {
       background-color: #000;
       padding: 6px;  
@@ -372,7 +372,7 @@
 </head>
 <center>
     <div id="post-container"></div>
-    <video controls="controls" id="player" tabindex="0" poster="images/my_name_logo_1.2.1.jpg" loop="loop" src="" width="100%" muted></video>
+    <video id="player" controls controlsList="nofullscreen" tabindex="0" poster="images/my_name_logo_1.2.1.jpg" loop="loop" src="" width="100%" muted></video>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()" ondblclick="fetchPosts()" >PLAY</button>
@@ -395,7 +395,7 @@
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
     <button class="menuButtons" onclick="getLink()">🔗</button>
-    <button class="menuButtons">⭐</button>
+    <button class="menuButtons" style="padding: 5px 8px" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">⛶</button>
 </div>
 <!--
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
