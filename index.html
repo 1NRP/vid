@@ -374,7 +374,7 @@
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()" ondblclick="fetchPosts()" >PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').style.maxHeight='205px'" ondblclick="document.getElementById('player').src=''; Array.from(document.getElementsByClassName('secondRow')).forEach(el => el.style.display='inline')">✖️</button>
+    <button id="clearBtn" onclick="document.getElementById('player').style.maxHeight='205px'" ondblclick="document.getElementById('player').src=''; Array.from(document.getElementsByClassName('secondRow')).forEach(el => el.style.display='inline')">✖️</button>
    </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
@@ -561,7 +561,7 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-/*
+
 // (Vercel Serverless Function Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -622,8 +622,8 @@ async function play() {
         document.getElementById("player").play();
     }
 }
-*/
 
+/*
 // (Mdiskplay Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -682,7 +682,7 @@ async function play() {
         document.getElementById("player").play(); // Autoplay the video
     }
 }
-
+*/
 
 // Telegram Post fetching function.
 function fetchSinglePost() {
