@@ -37,7 +37,7 @@ function showAlert() {
        const textValue = textarea.value.trim();
          if (textValue) {
              try {
-                 const response = await fetch('https://1msg.vercel.app/api/Temporary/saveLink', {
+                 const response = await fetch('https://1msg.vercel.app/api/Play/saveLink', {
                      method: 'POST',
                      headers: {
                          'Content-Type': 'application/json'
@@ -65,7 +65,7 @@ function showAlert() {
      
      if (deleteValue) {
          try {
-             const response = await fetch('https://1msg.vercel.app/api/Temporary/deleteLink', {
+             const response = await fetch('https://1msg.vercel.app/api/Play/deleteLink', {
                  method: 'POST',
                  headers: {
                      'Content-Type': 'application/json'
@@ -94,7 +94,7 @@ function showAlert() {
  
  // Retrive the Links from KV Cloud storage.
    async function getLink() {
-       const response = await fetch('https://1msg.vercel.app/api/Temporary/getLink', {
+       const response = await fetch('https://1msg.vercel.app/api/Play/getLink', {
            method: 'GET',
          })
          .then(response => response.json())
@@ -185,7 +185,7 @@ function showAlert() {
          videoId = fullVideoId.substring(1);
          try {
              // Make a request to the preparation URL
-             const response = await fetch('https://1msg.vercel.app/api/Temporary/get-M3U8', {
+             const response = await fetch('https://1msg.vercel.app/api/Play/get-M3U8', {
                  method: 'POST',
                  headers: {
                      'Content-Type': 'application/json'
