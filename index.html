@@ -376,7 +376,7 @@
     <button id="button-play" onclick="play()" ondblclick="fetchPosts()" >PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').style.maxHeight='205px'" ondblclick="document.getElementById('player').src=''; Array.from(document.getElementsByClassName('secondRow')).forEach(el => el.style.display='inline')">✖️</button>
    </center>
-<div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons.  -->
+<div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
 <button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(90deg)' ? 'rotate(0deg)' : 'rotate(90deg)');">☰</button>
   <select id="channelName" class="secondRow">
@@ -393,12 +393,13 @@
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
     <button class="menuButtons" onclick="getLink()">🔗</button>
-    <button class="menuButtons" style="padding: 5px 8px" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
-    <button class="menuButtons" style="font-weight: 1000" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
+    <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
-    <button class="menuButtons" onclick="getLink()">🔵</button>
-    <button class="menuButtons" onclick="getLink()">🔵</button>
-    <button class="menuButtons" onclick="getLink()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
 <!--
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
