@@ -444,7 +444,7 @@ function notFoundAlert() {
       const textValue = textarea.value.trim();
         if (textValue) {
             try {
-                const response = await fetch('https://1msg-bq1zepmxs-1nrp.vercel.app/api/Play/saveLink', {
+                const response = await fetch('https://1msg.vercel.app/api/Temporary/saveLink', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -472,7 +472,7 @@ function notFoundAlert() {
     
     if (deleteValue) {
         try {
-            const response = await fetch('https://1msg-bq1zepmxs-1nrp.vercel.app/api/Play/deleteLink', {
+            const response = await fetch('https://1msg.vercel.app/api/Temporary/deleteLink', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -501,7 +501,7 @@ function notFoundAlert() {
 
 // Retrive the Links from KV Cloud storage.
   async function getLink() {
-      const response = await fetch('https://1msg-bq1zepmxs-1nrp.vercel.app/api/Play/getLink', {
+      const response = await fetch('https://1msg.vercel.app/api/Temporary/getLink', {
           method: 'GET',
         })
         .then(response => response.json())
@@ -585,14 +585,14 @@ async function play() {
         }
     }
     // Check if the URL contains 'Terabox'
-    if (/(teraboxapp|teraboxlink|1024terabox|freeterabox)/.test(qry.toLowerCase())) {
+    if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
         // Extract the video ID from the URL
         var fullVideoId = qry.split('/').slice(-1)[0];
         // Remove the first character (assuming it's always '1')
         videoId = fullVideoId.substring(1);
         try {
             // Make a request to the preparation URL
-            const response = await fetch('https://1msg-bq1zepmxs-1nrp.vercel.app/api/Play/get-M3U8', {
+            const response = await fetch('https://1msg.vercel.app/api/Temporary/get-M3U8', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -647,7 +647,7 @@ async function play() {
         }
     }
     // Check if the URL contains 'Terabox'   
-    if (/(teraboxapp|teraboxlink|1024terabox|freeterabox)/.test(qry.toLowerCase())) {
+    if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
         // Extract the video ID from the URL
         var videoId = qry.split('/').slice(-1)[0];
         // Remove the first character (assuming it's always '1')
@@ -657,7 +657,7 @@ async function play() {
         // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
         fetch(requestUrl)
         .then(response => {    // Comment it (& uncomment "DIRECT" code below) if response is not required.
-            var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
+            var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById('player').style.maxHeight='85dvh';
             document.getElementById("player").play(); // Autoplay the video.
