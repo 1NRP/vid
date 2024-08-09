@@ -37,7 +37,7 @@ function showAlert() {
        const textValue = textarea.value.trim();
          if (textValue) {
              try {
-                 const response = await fetch('https://1msg.vercel.app/api/Play/saveLink', {
+                 const response = await fetch('https://1msg.vercel.app/api/Temporary/saveLink', {
                      method: 'POST',
                      headers: {
                          'Content-Type': 'application/json'
@@ -65,7 +65,7 @@ function showAlert() {
      
      if (deleteValue) {
          try {
-             const response = await fetch('https://1msg.vercel.app/api/Play/deleteLink', {
+             const response = await fetch('https://1msg.vercel.app/api/Temporary/deleteLink', {
                  method: 'POST',
                  headers: {
                      'Content-Type': 'application/json'
@@ -94,7 +94,7 @@ function showAlert() {
  
  // Retrive the Links from KV Cloud storage.
    async function getLink() {
-       const response = await fetch('https://1msg.vercel.app/api/Play/getLink', {
+       const response = await fetch('https://1msg.vercel.app/api/Temporary/getLink', {
            method: 'GET',
          })
          .then(response => response.json())
@@ -150,7 +150,8 @@ function showAlert() {
      }
  });
  
- // Paste link and PLAY button function (Vercel Serverless Function Method)
+ 
+ // (Vercel Serverless Function Method) Paste link and PLAY button function.
  async function play() {
      var qry = document.getElementById("vid").value.trim(); // Trim whitespace
      if (qry === "") {
@@ -177,19 +178,19 @@ function showAlert() {
          }
      }
      // Check if the URL contains 'Terabox'
-     if (/(teraboxapp|1024terabox|freeterabox)/.test(qry.toLowerCase())) {
+     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
          // Extract the video ID from the URL
          var fullVideoId = qry.split('/').slice(-1)[0];
          // Remove the first character (assuming it's always '1')
          videoId = fullVideoId.substring(1);
          try {
              // Make a request to the preparation URL
-             const response = await fetch('https://1msg.vercel.app/api/Play/get-M3U8', {
+             const response = await fetch('https://1msg.vercel.app/api/Temporary/get-M3U8', {
                  method: 'POST',
                  headers: {
                      'Content-Type': 'application/json'
                  },
-                 body: JSON.stringify({ shortURL: videoId }),
+                 body: JSON.stringify({ shortURL: fullVideoId }),
              });
              if (!response.ok) {
                  throw new Error('Failed to fetch M3U8 URL');
@@ -197,7 +198,8 @@ function showAlert() {
              const responseData = await response.json();
              const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + fullVideoId + ".m3u8";
              document.getElementById("player").src = playUrl;
-             document.getElementById("player").play(); // Autoplay the video
+             document.getElementById('player').style.maxHeight='85dvh';
+             document.getElementById("player").play();
          } catch (error) {
              console.error('Error fetching or processing:', error);
              alert('Failed to prepare playback. Please try again later.');
@@ -205,12 +207,13 @@ function showAlert() {
      } else {
          // Not a terabox URL, play as usual
          document.getElementById("player").src = qry;
-         document.getElementById("player").play(); // Autoplay the video
+         document.getElementById('player').style.maxHeight='85dvh';
+         document.getElementById("player").play();
      }
  }
  
  /*
- // Paste link and PLAY button function (Mdiskplay Method)
+ // (Mdiskplay Method) Paste link and PLAY button function.
  async function play() {
      var qry = document.getElementById("vid").value.trim(); // Trim whitespace
      if (qry === "") {
@@ -227,7 +230,7 @@ function showAlert() {
                  return;
              }
              document.getElementById('vid').value = text.trim(); // Update the input field
-             qry = text.trim(); // Update qry after pasting
+             qry = text.trim();
          } catch (err) {
              console.error('Failed to read clipboard contents:', err);
              if (err.name === 'NotAllowedError') {
@@ -237,37 +240,202 @@ function showAlert() {
          }
      }
      // Check if the URL contains 'Terabox'   
-     if (/(teraboxapp|1024terabox)/.test(qry.toLowerCase())) {
+     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
          // Extract the video ID from the URL
          var videoId = qry.split('/').slice(-1)[0];
- 
          // Remove the first character (assuming it's always '1')
          videoId = videoId.substring(1);
- 
          // Construct the request URL for preparation
          var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
-         // Make a request to the preparation URL
+         // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
          fetch(requestUrl)
-         .then(response => {
-             var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
+         .then(response => {    // Comment it (& uncomment "DIRECT" code below) if response is not required.
+             var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
              document.getElementById("player").src = playUrl;
-             document.getElementById("player").play(); // Autoplay the video
-         })
+             document.getElementById('player').style.maxHeight='85dvh';
+             document.getElementById("player").play(); // Autoplay the video.
+         })  
          .catch(error => {
              console.error('Error fetching preparation URL:', error);
-             alert('Failed to prepare playback. Please try again later.');
+             alert('Failed to prepare playback. Error:', error);
          });
+         // "DIRECT"-Construct the playUrl immediately without waiting for fetch response.
+         //var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
+         //document.getElementById("player").src = playUrl;
+         //document.getElementById("player").play(); // Autoplay the video.
  
      } else {
          // Not a terabox URL, play as usual
          document.getElementById("player").src = qry;
+         document.getElementById('player').style.maxHeight='85dvh';
          document.getElementById("player").play(); // Autoplay the video
      }
  }
  */
+ // Telegram Post fetching function.
+ function fetchSinglePost() {
+     const container = document.getElementById('boxContainer');
+     const channelName = document.getElementById('channelName').value;
+     const messageID = document.getElementById('messageID').value;
+     const script = document.createElement('script');
+     script.async = true;
+     script.src = `https://telegram.org/js/telegram-widget.js?22`;
+     script.dataset.telegramPost = `${channelName}/${messageID}`;
+     script.dataset.width = `100%`;
+     script.dataset.userpic = `false`;
+     script.dataset.color = `b4b4b4`;
+     script.dataset.dark = `1`;
+     // Create a container for the post and button
+     const postContainer = document.createElement('div');
+     postContainer.className = 'TG-post-container';
+     // Create and add PLAY button
+     const button = document.createElement('button');
+     button.className = 'TG-Play'
+     button.textContent = 'PLAY';
+     button.onclick = function() {
+         getIframeLink(postContainer.querySelector('script'));
+     };
+     postContainer.appendChild(button);
+     container.innerHTML = ''; // Clear previous posts
+     // Add script/Posts to the post container
+     postContainer.appendChild(script);
+     container.appendChild(postContainer);
+     // Manually trigger rendering of Telegram widget
+     window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(postContainer.querySelector('script'));
+     // Update current message ID
+     currentMessageID = messageID.split('/')[1];
+     // Update initial message ID for subsequent NEXT button clicks.
+     initialMessageID = parseInt(currentMessageID) + 1;
+ }
+ function loadNextPosts() {
+     const container = document.getElementById('boxContainer');
+     const channelName = document.getElementById('channelName').value;
+     const inputVal = document.getElementById('messageID').value;
+     const [interval, startID] = inputVal.includes('/') ? inputVal.split('/').map(Number) : [1, parseInt(inputVal)];
+    
+     let lastMessageID = startID; // Track the last message ID
+     for (let i = 0; i < 11; i++) { // 11 is the number of posts to be loaded when 'NEXT' button is clicked.
+       const currentMessageID = lastMessageID + (i * interval); // Increment messageID with the interval
+       const script = document.createElement('script');
+       script.async = true;
+       script.src = `https://telegram.org/js/telegram-widget.js?22`;
+       script.dataset.telegramPost = `${channelName}/${currentMessageID}`;
+       script.dataset.width = `100%`;
+       script.dataset.userpic = `false`;
+       script.dataset.color = `b4b4b4`;
+       script.dataset.dark = `1`;
+       // Create a container for each post and button
+       const postContainer = document.createElement('div');
+       postContainer.className = 'TG-post-container';
+       // Create and add PLAY button
+       const button = document.createElement('button');
+       button.className = 'TG-Play';
+       button.textContent = 'PLAY';
+       button.onclick = function() {
+         getIframeLink(postContainer.querySelector('script'));
+       };
+       postContainer.appendChild(button);
+       // Add script/Posts to the post container
+       postContainer.appendChild(script);
+       container.appendChild(postContainer);
+       // Manually trigger rendering of Telegram widget
+       window.TelegramWidget && window.TelegramWidget.initWidget && window.TelegramWidget.initWidget(postContainer.querySelector('script'));
+     }
+     // Update current channel name
+     currentChannelName = channelName;
+     // Update message ID input field with the last calculated message ID.
+     document.getElementById('messageID').value = `${interval}/${lastMessageID + (20 * interval)}`;
+ }
  
- // Telegram Post fetching function 
-   function loadNextPosts() {
+ // Event listener to get the Last Message's ID of the selected Telegram Channel.
+ // Takes some time for the Message ID to reflect in the box given the large amount of code in a Telegram Channel's website.
+ // Approximately 100 posts are present before the last post in these Telegram Channels.
+ document.getElementById('channelName').addEventListener('change', async function() {
+     async function getMessageID() {
+         const channelName = document.getElementById('channelName').value;
+         const TgChannel = 'https://t.me/s/' + encodeURIComponent(channelName); // Telegram Channel URL to fetch and parse.
+         try {
+             const proxyUrl = 'https://api.allorigins.win/get?url=';
+             const response = await fetch(proxyUrl + encodeURIComponent(TgChannel));
+             const data = await response.json();
+             const htmlText = data.contents;
+             // Parse the HTML content
+             const parser = new DOMParser();
+             const doc = parser.parseFromString(htmlText, 'text/html');
+             // Extract all anchor/link tags
+             const anchors = doc.querySelectorAll('a');
+             const keywords = ['https://t.me/desi_bhabhi_shila_terabox/', 'https://t.me/desi_bhabhi_nisha_mdisk'];
+             let lastMessage = ''; // Variable to store the last matching link
+             // Iterate over anchor tags to find the last matching link
+             anchors.forEach(anchor => {
+                 const href = anchor.href;
+                 if (keywords.some(keyword => href.includes(keyword))) {
+                     lastMessage = href; // Update lastMessage with the latest match
+                 }
+             });
+             // Extract the messageID which is after the last '/'
+             if (lastMessage) {
+                 const numberAfterSlash = lastMessage.lastIndexOf('/');
+                 const messageNumber = lastMessage.substring(numberAfterSlash + 1) - 110;
+                 document.getElementById('messageID').value = messageNumber;
+             } else {
+                 alert("No Link in the Message ID format was found.");
+             }
+         } catch (error) {
+             alert("Error fetching Telegram Channel's source code.");
+             console.error('Error fetching the source code of the selected Telegram Channel:', error);
+         }
+     }
+     await getMessageID();
+ });
+ 
+ // Extract the TB Link from the Telegram post.
+ async function getIframeLink(script) {
+     // Retrieve iframe source from script's data attribute.
+     const iframeSrc = script.dataset.telegramPost;
+     const iframe = document.querySelector(`iframe[src*="${iframeSrc}"]`);
+     if (!iframe) {
+         alert("Iframe not found.");
+         return;
+     }
+     const src = iframe.src;
+     try {
+         const proxyUrl = 'https://api.allorigins.win/get?url=';
+         const response = await fetch(proxyUrl + encodeURIComponent(src));
+         const data = await response.json();
+         const htmlText = data.contents;
+         // Parse the HTML and extract anchor tags.
+         const parser = new DOMParser();
+         const doc = parser.parseFromString(htmlText, 'text/html');
+         const anchors = doc.querySelectorAll('a');
+         // Filter anchor tags containing TB Links.
+         const keywords = ['teraboxapp', 'teraboxlink', '1024terabox', 'freeterabox'];
+         let found = false;
+         let TBoxLink = '';
+         anchors.forEach(anchor => {
+             const href = anchor.href;
+             if (keywords.some(keyword => href.includes(keyword))) {
+                 TBoxLink = href;
+                 found = true;
+             }
+         });
+         if (found) {
+             document.getElementById('vid').value = TBoxLink;
+             play();
+         } else {
+             alert("No TB Link was found.");
+         }
+     } catch (error) {
+         alert("Error fetching the URL. Please make sure the URL is correct.");
+         console.error('Error fetching HTML:', error);
+     }
+ }
+ 
+ /*
+ // Old Telegram Post fetching method. Only fetches the Posts.
+ // This method does not add a button (PLAY) to paste the TB Link into the video input field.
+ // It can't paste the link because Javascript can not be executed on embedded elements which are not from 'same-origin'.
+ function loadNextPosts() {
      const container = document.getElementById('boxContainer');
      const channelName = document.getElementById('channelName').value;
      const inputVal = document.getElementById('messageID').value;
@@ -318,26 +486,25 @@ function showAlert() {
      var selectedValue = this.value;
  
      // Latest message ID for different channels.
-     if (selectedValue === 'tburls') {
-         document.getElementById('messageID').value = '2';
-     } else if (selectedValue === 'desi_bhabhi_shila_terabox') {
-         document.getElementById('messageID').value = '10180';
+     if (selectedValue === 'desi_bhabhi_shila_terabox') {
+         document.getElementById('messageID').value = '14000';
      } else if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
-         document.getElementById('messageID').value = '16180';
-         // Set message ID box value for another option
+         document.getElementById('messageID').value = '20000';
+     } else if (selectedValue === 'Example-Channel') {
+         document.getElementById('messageID').value = '100';
+         // Set message ID box value for another option.
      }
    });
+ */
  
- // Function for storing or deleting Link.
+ // Logic for toggling the mode between 'storing' and 'deleting' Link.
  const textBox = document.getElementById('textBox');
  const placeholder = document.getElementById('vid');
  let clickCount = 0;
  let clickTimer;
  let deleteMode = false;
- 
- // Set initial mode to "paste"
- document.getElementById('saveDeleteBtn').innerText = '☁️';
- 
+ // Set initial mode to "Save"
+ document.getElementById('saveDeleteBtn').innerText = '🌐';
  // Handle "saveDeleteBtn" button click
  function handleButtonClick() {
      clickCount++;
@@ -353,56 +520,89 @@ function showAlert() {
              }
          }
          clickCount = 0;
-     }, 800);  // 3 clicks in 0.8 seconds or 800 milliseconds.
+     }, 800);  // 3 clicks in 0.8 second or 800 milliseconds.
  }
  
  // Function to toggle between paste and copy modes
  function toggleMode() {
      deleteMode = !deleteMode;
-     document.getElementById('saveDeleteBtn').innerText = deleteMode ? '🗑️' : '☁️';
+     document.getElementById('saveDeleteBtn').innerText = deleteMode ? '🗑️' : '🌐';
  }
  document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonClick);
  
- // Function to paste specific Terabox link from textBox to video link input field.
- function pasteLineText(event) {
+ // Function to show Thumbnail and Paste LineText in link input field.
+ function getLineText(event) {
      var textBox = document.getElementById('textBox');
      var text = textBox.value;
      var cursorPosition = textBox.selectionStart; // Get cursor position
      var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
      var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
- 
-     // If no line break is found before the cursor position, start of the text
+     // If no line break is found before the cursor position.
      if (startOfLine === -1) {
          startOfLine = 0;
      } else {
          startOfLine += 2; // Move past the line break
      }
- 
      // If no line break is found after the cursor position, end of the text
      if (endOfLine === -1) {
          endOfLine = text.length;
      }
- 
-     var lineText = text.substring(startOfLine, endOfLine);
- 
-     // Paste the selected line text to the input field
-        document.getElementById('vid').value = lineText;
-     play(); // Trigger the play function after pasting the link
+     return text.substring(startOfLine, endOfLine);
  }
- document.getElementById('textBox').onclick = pasteLineText;
- 
- // Function to handle clicking on the link button
- function handlePosterOrLinkButtonClick(link) {
-     document.getElementById('vid').value = link;
-     play(); // Trigger the play function after pasting the link
+ async function showThumbnail(lineText) {
+     var shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
+     var response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`)}`);
+     var data = await response.json();
+     var jsonParams = JSON.parse(data.contents);
+     var imageUrl = jsonParams.list[0].thumbs.url2;
+     //Below parameters are examples of how to extract different values from the fetched JSON file.
+     //var size = content.list[0].size;
+     //var icon = content.list[0].thumbs.icon;
+     //var shareid = content.shareid;
+    
+     // Create and show the Thumbnail container.
+     const thumbnailContainer = document.createElement('div');
+     thumbnailContainer.className = 'thumbnailContainer';
+     thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}', this.parentNode)" alt="Thumbnail Image">`;
+     document.body.appendChild(thumbnailContainer);
+     // Hide the Thumbnail container when clicking outside of it.
+     document.addEventListener('click', function handleClickOutside(event) {
+         if (!thumbnailContainer.contains(event.target)) {
+             document.body.removeChild(thumbnailContainer);
+             document.removeEventListener('click', handleClickOutside);
+         }
+     });
  }
+ let clickTimeout;
+ const clickDelay = 200;
+ document.getElementById('textBox').addEventListener('click', function (event) {
+     if (clickTimeout) {
+         clearTimeout(clickTimeout);
+         clickTimeout = null;
+         var lineText = getLineText(event);
+         document.getElementById('vid').value = lineText;
+         play();
+     } else {
+         clickTimeout = setTimeout(function () {
+             clickTimeout = null;
+             var lineText = getLineText(event);
+             showThumbnail(lineText);
+         }, clickDelay);
+     }
+ });
  
+ // Function to handle clicking on the Thumbnail.
+ function handleThumbnailClick(lineText, thumbnailContainer) {
+     document.getElementById('vid').value = lineText;
+     play();
+     document.body.removeChild(thumbnailContainer);
+ }
  // Function to load posts from the server
  function fetchPosts() {
-     const postsContainer = document.getElementById('posts-container');
+     const postsContainer = document.getElementById('post-container');
      postsContainer.innerHTML = ''; // Clear previous posts
  
-     fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=3')
+     fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=2')
      .then(response => response.json())
      .then(data => {
          data.items.forEach(item => {
@@ -415,11 +615,11 @@ function showAlert() {
              postElement.classList.add('post');
              postElement.innerHTML = `
                  <div>
-                     <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterOrLinkButtonClick('${link}')">
+                     <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
                      <div class="post-details">
                          <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
                          <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-                         <!-- <p><button id="copyLink" onclick="handlePosterOrLinkButtonClick('${link}')">🌐</button></p> -->
+                         <!-- <p><button id="copyLink" onclick="handlePosterClick('${link}')">🔗</button></p> -->
                      </div>
                  </div>
              `;
@@ -430,5 +630,46 @@ function showAlert() {
          console.error('Error:', error);
      });
  }
- // fetchPosts();    // Remove "//" at beginning to load photos at page loading.
+ // fetchPosts();    // Uncomment "fetchPosts();" to load photos at page loading.
+ // Function to handle clicking on the Poster.
+ function handlePosterClick(link) {
+     document.getElementById('vid').value = link;
+     play();
+   }
  
+ // Show or Hide Hamburger menu box.
+ function menuBox() {
+    const alertBox = document.getElementById('menuBox');
+    if (alertBox.style.display === 'inline') {
+        alertBox.style.display = 'none';
+    } else {
+        alertBox.style.display = 'inline';
+    }
+ }
+ // Hide menuBox when clicked on it.
+ document.addEventListener('click', function(event) {
+     const menuBox = document.getElementById('menuBox');
+     if (menuBox && menuBox.contains(event.target)) {      
+         setTimeout(() => {
+         menuBox.style.display = 'none';
+         }, 300);
+     }
+ });
+   
+ // Progressive Web App Service Worker Script.
+ window.addEventListener('load', () => {
+   registerSW();
+ });
+ async function registerSW() {
+   if ('serviceWorker' in navigator) {
+     try {
+       await navigator
+             .serviceWorker
+             .register('serviceWorker.js');
+     }
+     catch (e) {
+       console.log('Service Worker registration failed.');
+     }
+   }
+ }
+  

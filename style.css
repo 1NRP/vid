@@ -1,303 +1,359 @@
-    body {
-      background-color: #000;  
-      color: #fff;
-    }
-    .post-container {
-      width: 99%;
-      height: 400px;
-      border-radius: 8px;
-      border: 2px solid #333;
-      overflow-y: scroll;
-      margin: 0px;
-    }
-    .post-details {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
-    .poster-image {
-      max-width: 100%;
-      height: auto;
-      border-radius: 4px;
-    }
-    .size {
-      color: #b4b4b4;
-      font-family: 'Raleway', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      margin: 0px 40px 1px 0px;
-    }
-    .duration {
-      color: #b4b4b4;
-      font-family: 'Raleway', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      margin: 0px 20px 1px 35vw;
-    }
-    #copyLink {
-      background-color: #444;
-      padding: 6px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin: 5px;
-    }
-    #player {
-      max-width: 100dvw; /* dvw = dynamic viewport width */
-      max-height: 100dvh; /* dvh = dynamic viewport height */
-      margin: 2px 0px 0px 0px;  /* Top, Right, Bottom, Left */
-    }
-    #saveDeleteBtn {
-      background-color: #444;
-      padding: 8px 8px 8px 8px;  
-      border: none;
-      color: #fff;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    input[type=text],
-    select {
-      width: 60%;
-      max-width: 300px;
-      padding: 6px 2px;
-      display: inline-block;
-      background-color: #000;
-      color: #b4b4b4;
-      font-weight: 600;
-      border: 2px solid #666;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    #button-play {
-      background-color: #444;
-      width: 17%;
-      color: #b4b4b4;
-      font-weight: 600;
-      max-width: 100px;
-      padding: 8px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    #clearBtn {
-      background-color: #444;
-      color: #fff; 
-      max-width: 50px;
-      padding: 8px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .box-container {
-      width: 95%;
-      height: 300px;
-      overflow-y: scroll;
-      border: 2px solid #333;
-      padding: 6px;
-      border-radius: 8px;
-      margin: 2px 0px;
-      cursor: pointer;
-    }
-    #input-container {
-      display: flex;
-      width: 120px;
-      max-width: 200px;
-      align-items: center;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-    #nightModeBtn {
-      cursor: pointer;
-      border: none;
-      background-color: #444;
-      color: #fff;
-      Border-radius: 50%;
-      text-align: center;
-      padding: 6px;
-      margin-left: 0px;
-    }
-    select {
-      width: 80px;
-      padding: 4px 2px 4px 15px;
-      margin-left: 0px;
-      color: #fff;
-      border: 2px solid #555;
-      background-color: #333;
-      font-weight: 600;
-      border-radius: 40px;
-    }
-    .input-container label {
-      cursor: pointer;
-    }
-    .input-container input[type="text"] {
-      width: 80px;
-      padding: 4px 10px;
-      color: #fff;
-      background-color: #333;
-      font-weight: 600;
-      border: 2px solid #555;
-      border-radius: 40px;
-      margin-right: 0px;
-      cursor: pointer;
-    }
-    #go-btn {
-      background-color: #444;
-      padding: 6px;
-      width: 30px;
-      color: #fff;
-      font-weight: 600;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-    #btn-next {
-      background-color: #444;
-      padding: 4px;
-      width: 50px;
-      border: none;
-      font-weight: 600;
-      border-radius: 4px;
-      color: #fff;
-      cursor: pointer;
-    }
-    #reload {
-      background-color: #444;
-      padding: 6px;
-      border: none;
-      color: #fff;
-      border-radius: 50%;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-    #textBox {
-      width: 96%;
-      height: 150px;
-      padding: 10px 5px;
-      color: #b4b4b4;
-      font-weight: 800;
-      font-size: 11px;
-      resize: none;
-      background-color: #000;
-      border: 2px solid #333;
-      border-radius: 8px;
-      margin: 2px 0px;
-      margin-left: 0px;
-    }
-    .thumbnailContainer {
-      position: fixed;
-      top: 2dvh;
-      left: 5dvw;
-      width: 88%;
-      height: 350px;
-      border-radius: 5px;
-      padding: 2px;
-      border: 2px solid #0a8030;
-      background-color: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .thumbnail {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    h1 {
-      color: DodgerBlue;
-      font-family: 'Raleway', sans-serif;
-      font-size: 26px;
-      font-weight: 600;
-      line-height: 50px;
-      margin: 0 0 4px;
-      text-align: center;
-    }
-    .saveAlert {
-      position: fixed;
-      top: 5dvh;
-      left: 30dvw;
-      color: #000;
-      font-weight: 900;
-      padding: 5px;
-      border: none;
-      border-radius: 5px;
-      animation-name: save;
-      animation-duration: 1s;
-    }
-    .deleteAlert {
-      position: fixed;
-      top: 5dvh;
-      left: 30dvw;
-      color: #000;
-      font-weight: 900;
-      padding: 5px;
-      border: none;
-      border-radius: 5px;
-      animation-name: delete;
-      animation-duration: 1s;
-    }
-    .notFoundAlert {
-      position: fixed;
-      top: 5dvh;
-      left: 25dvw;
-      color: #000;
-      font-weight: 900;
-      padding: 5px;
-      border: none;
-      border-radius: 5px;
-      animation-name: notFound;
-      animation-duration: 1s;
-    }
-    /* 'Alerts' Animations */
-    @keyframes save {
-      from {background-color: #666; padding: 5px}
-      to {background-color: #1bd13d; padding: 10px}
-    }
-    @keyframes delete {
-      from {background-color: #666; padding: 5px}
-      to {background-color: #f2074e; padding: 10px}
-    }
-    @keyframes notFound {
-      from {background-color: #666; padding: 5px}
-      to {background-color: #e8af05; padding: 10px}
-    }
+body {
+  background-color: #000;  
+  color: #fff;
+}
+#post-container {
+  width: 99%;
+  height: 350px;
+  border-radius: 8px;
+  border: 2px solid #333;
+  overflow-y: scroll;
+  margin: 215px 0px 4px 0px;
+}
+.post-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.poster-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+.size {
+  color: #b4b4b4;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0px 40px 1px 0px;
+}
+.duration {
+  color: #b4b4b4;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0px 20px 1px 35vw;
+}
+#copyLink {
+  background-color: #000;
+  padding: 6px;
+  border: 2px solid #555;
+  border-radius: 4px;
+  margin: 2px;
+}
+#player {
+  position: fixed;
+  top: 0px;
+  left: 0vw;
+  z-index: 30;
+  border: 2px solid #333;
+  border-radius: 6px;
+  background-color: #000;
+  max-width: 98.5dvw; /* dvw = dynamic viewport width */
+  max-height: 85dvh; /* dvh = dynamic viewport height */
+  margin: 0px 0px 0px 0px;  /* Top, Right, Bottom, Left */
+}
+/* Hide the full-screen button in HTML 5 Player.
+video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}  */
+#saveDeleteBtn {
+  background-color: #000;
+  padding: 6px;  
+  border: 2px solid #555;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#vid {
+  width: 57%;
+  max-width: 300px;
+  padding: 6px 2px;
+  display: inline-block;
+  background-color: #000;
+  color: #b4b4b4;
+  font-weight: 600;
+  border: 2px solid #555;
+  border-radius: 4px;
+  box-sizing: border-bx;
+}
+#button-play {
+  background-color: #000;
+  width: 17%;
+  color: #b4b4b4;
+  font-weight: 600;
+  max-width: 100px;
+  padding: 6px;
+  border: 2px solid #555;
+  border-radius: 4px;
+}
+#clearBtn {
+  background-color: #000;
+  color: #fff; 
+  position: relative;
+  z-index: 50;
+  max-width: 50px;
+  padding: 6px;
+  border: 2px solid #555;
+  border-radius: 4px;
+}
+#boxContainer {
+  width: 97%;
+  height: 300px;
+  overflow-y: scroll;
+  border: 2px solid #333;
+  padding: 2px;
+  border-radius: 8px;
+  margin: 2px;
+  display: none;
+}
+.TG-post-container {
+  display: inline-block;
+  border: none;
+  background: transparent;
+  width: auto;
+  height: auto;
+  margin: 0px;
+  overflow: hidden;
+}
+.TG-Play {
+  background-Color: #007bff;
+  color: #000;
+  border: none;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 1000;
+  padding: 4px 60px;
+  margin: 0px 0px 4px 170px;
+}
+.TG-Play:hover {
+  background-color: #555;
+}
+#hamburgerMenu {
+  border: 2px solid #555;
+  background-color: #000;
+  color: #fff;
+  border-radius: 50%;
+  padding: 5px 9px;
+  font-weight: 1000;
+  margin-left: 3px;
+  transition: transform 0.4s ease;
+}
+.menuButtons {
+  background-color: #000;
+  padding: 6px;
+  border: 2px solid #888;
+  color: #fff;
+  border-radius: 10px;
+  margin: 0px 4px;
+}
+#menuBox {
+  position: fixed;
+  top: 70dvh;
+  left: 40vw;
+  display: none;
+  padding: 4px 8px 4px 8px;
+  font-weight: 800;
+  background-color: #000;
+  border: 2px solid #444;
+  border-radius: 50px;
+  margin: 0px 20px 0px 0px;
+  animation-name: menu;
+  animation-duration: 0.5s;
+}
+#channelName {
+  width: 80px;
+  padding: 4px 2px 4px 15px;
+  margin-left: 0px;
+  color: #fff;
+  border: 2px solid #555;
+  background-color: #000;
+  font-weight: 600;
+  border-radius: 40px;
+}
+#messageID {
+  width: 60px;
+  padding: 5px 8px;
+  color: #fff;
+  background-color: #000;
+  font-weight: 600;
+  border: 2px solid #555;
+  border-radius: 40px;
+  margin-right: 0px;
+}
+#go-btn {
+  background-color: #000; 
+  padding: 5px 0px;
+  width: 30px;
+  color: #fff;
+  font-weight: 600;
+  border: 2px solid #555;
+  border-radius: 50%;
+}
+#btn-next {
+  background-color: #000;
+  padding: 5px 8px;
+  border: 2px solid #555;
+  font-weight: 600;
+  border-radius: 40px;
+  color: #fff;
+}
+#reload {
+  background-color: #000;
+  padding: 6px;
+  border: 2px solid #555;
+  color: #fff;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+#textBox {
+  width: 96%;
+  height: 150px;
+  padding: 10px 5px;
+  color: #b4b4b4;
+  font-weight: 800;
+  font-size: 11px;
+  resize: none;
+  background-color: #000;
+  border: 2px solid #333;
+  border-radius: 8px;
+  margin: 2px 0px;
+  margin-left: 0px;
+}
+.thumbnailContainer {
+  position: fixed;
+  top: 2dvh;
+  left: 5dvw;
+  z-index: 35;
+  width: 88%;
+  height: 350px;
+  border-radius: 5px;
+  padding: 2px;
+  border: 2px solid #0a8030;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+h1 {
+  color: DodgerBlue;
+  font-family: Helvetica, Cursive, Palatino, Courier, sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 50px;
+  margin: 0 0 4px;
+  text-align: center;
+}
+.secondRow {
+  display: none;
+}
+#copyLink:hover,
+#button-play:hover,
+#clearBtn:hover,
+.menuButtons:hover,
+#hamburgerMenu:hover,
+#channelName:hover,
+#go-btn:hover,
+#btn-next:hover,
+#reload:hover {
+  background-color: #007bff;
+}
+.saveAlert {
+  position: fixed;
+/* top: 5dvh; */
+  left: 30dvw;
+  z-index: 40;
+  background-color: #1bd13d;
+  color: #000;
+  font-weight: 1000;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  animation-name: save;
+  animation-duration: 1s;
+}
+.deleteAlert {
+  position: fixed;
+/* top: 5dvh; */
+  left: 30dvw;
+  z-index: 40;
+  background-color: #f2074e;
+  color: #000;
+  font-weight: 1000;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  animation-name: delete;
+  animation-duration: 1s;
+}
+.notFoundAlert {
+  position: fixed;
+/* top: 5dvh; */
+  left: 20dvw;
+  z-index: 40;
+  background-color: #e8af05;
+  color: #000;
+  font-weight: 1000;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  animation-name: notFound;
+  animation-duration: 1s;
+}
+/* Animations */
+@keyframes save {
+  from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+  to {font-size: 25px; top: 10dvh;; transform: rotate(0deg)}
+}
+@keyframes delete {
+  from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+  to {font-size: 25px; top: 10dvh; transform: rotate(0deg)}
+}
+@keyframes notFound {
+  from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+  to {font-size: 25px; top: 10dvh; transform: rotate(0deg)}
+}
+@keyframes menu {
+  from {opacity: 0; top: 20dvh}
+  to {opacity: 1; top: 70dvh}
+}
 /* Code for Night-Mode toggle. */
 .nightMode {
-    body {
-        background-color: #000;  
-        color: #b4b4b4;
-    }
-    input[type=text],
-    select {
-        color: #999;
-        border: 2px solid #333;
-    }
-    .poster-image,
-    .thumbnail,
-    #boxContainer,
-    #player {
-        filter: brightness(60%);
-    }
-    select,
-    .input-container input[type="text"],
-    #go-btn,
-    #btn-next {
-        color: #b4b4b4;
-    }
-    #saveDeleteBtn,
-    #reload,
-    #clearBtn,
-    #nightModeBtn {
-        color: #8888;
-    }
-    #textBox {
-        color: #888;
-    }
-    .box-container,
-    .post-container {
-        border: 2px solid #333;
-    }
-    .size,
-    .duration {
-        color: #999;
-    }
-  }
+body {
+    background-color: #000;  
+    color: #b4b4b4;
+}
+.poster-image,
+.thumbnail,
+.TG-post-container,
+#player {
+    filter: brightness(60%);
+}
+#channelName,
+#messageID,
+#go-btn,
+#hamburgerMenu,
+#btn-next {
+    color: #b4b4b4;
+}
+#copyLink,
+#saveDeleteBtn,
+#reload,
+.menuButtons,
+#nightModeBtn {
+    color: #b4b4b4b4;
+    border: 2px solid #555;
+}
+#vid,
+#textBox,
+#button-play,
+.size,
+.duration {
+    color: #999;
+}
+}
