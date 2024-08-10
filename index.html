@@ -260,6 +260,14 @@
       margin: 0 0 4px;
       text-align: center;
     }
+    #brightnessSlider {
+      height: 25dvh;
+      display: none;
+      position: fixed;
+      top: 50dvh;
+      left: 60dvw;
+      transform: rotate(270deg);
+    }
     .secondRow {
       display: none;
     }
@@ -396,13 +404,14 @@
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
     <button class="menuButtons" onclick="getLink()">🔗</button>
     <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (style.display === 'block' ? 'none' : 'block');">☀️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
+<input id="brightnessSlider" type="range" min="50" max="150" value="100" class="slider">
 <!--
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
     <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
@@ -426,6 +435,13 @@ var el = document.getElementById('player');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
   document.getElementById('player').style.maxHeight='205px';
+});
+
+// Brightness Control Functionality.
+const brSlider = document.getElementById('brightnessSlider');
+brSlider.addEventListener('input', function () {
+    const brightnessValue = this.value;
+    document.body.style.filter = `brightness(${brightnessValue}%)`;
 });
 
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
