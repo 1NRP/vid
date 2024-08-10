@@ -6,6 +6,7 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#000">
   <link rel="icon" sizes="192x192" href="images/green-512.png">
+  <script src="long-press-brief-code.js"></script>
   <!--  <link rel="stylesheet" href="style.css">  -->
   <title>Nihar's Video Player</title>
 <style>
@@ -373,8 +374,8 @@
     <video id="player" controls controlsList="nofullscreen" tabindex="0" poster="images/my_name_logo_1.2.1.jpg" loop="loop" src="" width="100%" muted></video>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" onclick="play()" ondblclick="fetchPosts()" >PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('player').style.maxHeight='205px'" ondblclick="document.getElementById('player').src=''; Array.from(document.getElementsByClassName('secondRow')).forEach(el => el.style.display='inline')">✖️</button>
+    <button id="button-play" onclick="play()" >PLAY</button>
+    <button id="clearBtn" onclick="document.getElementById('player').style.maxHeight='205px'">✖️</button>
    </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
@@ -409,6 +410,32 @@
 <script src="script.js"></script>  
 -->
 <script>
+// Long Press Events. (currently 1500 milliseconds delay)
+var el = document.getElementById('textBox');
+el.addEventListener('long-press', function(e) {
+  e.preventDefault()
+  getLink();
+});
+
+var el = document.getElementById('button-play');
+el.addEventListener('long-press', function(e) {
+  e.preventDefault()
+  fetchPosts();
+});
+
+var el = document.getElementById('player');
+el.addEventListener('long-press', function(e) {
+  e.preventDefault()
+  document.getElementById('player').src='';
+});
+
+var el = document.getElementById('clearBtn');
+el.addEventListener('long-press', function(e) {
+  e.preventDefault()
+  Array.from(document.getElementsByClassName('secondRow')).forEach(el => el.style.display='inline');
+  document.getElementById('vid').value='';
+});
+
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
 function showAlert() {
    const alertBox = document.createElement('div');
