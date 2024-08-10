@@ -141,23 +141,21 @@ video::-webkit-media-controls-fullscreen-button {
 }
 .menuButtons {
   background-color: #000;
-  padding: 6px;
+  padding: 8px;
   border: 2px solid #888;
   color: #fff;
   border-radius: 10px;
-  margin: 0px 4px;
+  margin: 2px 4px;
 }
 #menuBox {
   position: fixed;
-  top: 70dvh;
+  top: 60dvh;
   left: 40vw;
   display: none;
-  padding: 4px 8px 4px 8px;
-  font-weight: 800;
+  padding: 4px;
   background-color: #000;
   border: 2px solid #444;
-  border-radius: 50px;
-  margin: 0px 20px 0px 0px;
+  border-radius: 20px;
   animation-name: menu;
   animation-duration: 0.5s;
 }
@@ -307,20 +305,20 @@ h1 {
 }
 /* Animations */
 @keyframes save {
-  from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+  from {font-size: 10px; top: 5dvh; transform: rotate(30deg)}
   to {font-size: 25px; top: 10dvh;; transform: rotate(0deg)}
 }
 @keyframes delete {
-  from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+  from {font-size: 10px; top: 5dvh; transform: rotate(30deg)}
   to {font-size: 25px; top: 10dvh; transform: rotate(0deg)}
 }
 @keyframes notFound {
-  from {font-size: 10px; top: 5dvh; transform: rotate(45deg)}
+  from {font-size: 10px; top: 5dvh; transform: rotate(30deg)}
   to {font-size: 25px; top: 10dvh; transform: rotate(0deg)}
 }
 @keyframes menu {
   from {opacity: 0; top: 20dvh}
-  to {opacity: 1; top: 70dvh}
+  to {opacity: 1; top: 60dvh}
 }
 /* Code for Night-Mode toggle. */
 .nightMode {
