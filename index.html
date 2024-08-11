@@ -16,7 +16,7 @@
     }
     #post-container {
       width: 99%;
-      height: 370px;
+      height: 380px;
       border-radius: 8px;
       border: 2px solid #333;
       overflow-y: scroll;
@@ -166,6 +166,7 @@
       left: 40vw;
       display: none;
       padding: 4px;
+      z-index: 40;
       background-color: #031522;
       border: 2px solid #444;
       border-radius: 20px;
@@ -261,12 +262,9 @@
       text-align: center;
     }
     #brightnessSlider {
-      height: 40vh;
+      height: 80%;
+      margin: 0% 30%;
       display: flex;
-      position: fixed;
-      top: 50dvh;
-      left: 60dvw;
-      transform: rotate(270deg);
     }
     .secondRow {
       display: none;
@@ -436,7 +434,7 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('player');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
-  document.getElementById('player').style.maxHeight='205px';
+  document.getElementById('player').style.maxHeight='200px';
 });
 
 // Brightness Control Functionality.
@@ -444,6 +442,8 @@ const brSlider = document.getElementById('brightnessSlider');
 brSlider.addEventListener('input', function () {
     const brightnessValue = this.value;
     document.getElementById('defaultPositionElements').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('player').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('menuBo').style.filter = `brightness(${brightnessValue}%)`;
 });
 
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
