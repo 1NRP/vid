@@ -400,21 +400,20 @@
 <textarea id="textBox" readonly></textarea>
 <input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
 </div>
-<div id="Fixed-Position-Elements">
-    <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" tabindex="0" loop="loop" src="" width="100%" muted></video> 
-    <div id="menuBox">
-        <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
-        <button class="menuButtons" onclick="getLink()">🔗</button>
-        <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
-        <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
-        <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
-        <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-        <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-        <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-        <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-    </div>
-</div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
+<!--  Fixed Position Elements. -->
+<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" tabindex="0" loop="loop" src="" width="100%" muted></video> 
+<div id="menuBox">
+    <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
+    <button class="menuButtons" onclick="getLink()">🔗</button>
+    <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
+    <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
+    <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+</div>
 <script>
 // Long Press Events. (currently 1500 milliseconds delay)
 var el = document.getElementById('textBox');
@@ -440,7 +439,8 @@ const brSlider = document.getElementById('brightnessSlider');
 brSlider.addEventListener('input', function () {
     const brightnessValue = this.value;
     document.getElementById('Default-Position-Elements').style.filter = `brightness(${brightnessValue}%)`;
-    document.getElementById('Fixed-Position-Elements').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('player').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('menuBox').style.filter = `brightness(${brightnessValue}%)`;
 });
 
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
