@@ -692,7 +692,8 @@ async function play() {
         // Remove the first character (assuming it's always '1')
         videoId = videoId.substring(1);
         // Construct the request URL for preparation
-        var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
+        var format = "https://core.mdiskplay.com/box/terabox/" + videoId;
+        var requestUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(format)}`;
         // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
         fetch(requestUrl)
         .then(response => {    // Comment it (& uncomment "DIRECT" code below) if response is not required.
@@ -703,7 +704,7 @@ async function play() {
         })  
         .catch(error => {
             console.error('Error fetching preparation URL:', error);
-            alert('Failed to prepare playback. Error:', error);
+            alert('Error fetching preparation URL. Please try again later.');
         });
         // "DIRECT"-Construct the playUrl immediately without waiting for fetch response.
         //var playUrl = "https://core.mdiskplay.com/box/terabox/video/" + videoId + ".m3u8";
