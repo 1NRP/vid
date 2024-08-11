@@ -377,8 +377,6 @@
   }
 </style>
 </head>
-<div id="All-Elements"> <!-- 'div' is for brightness adjustment purpose. -->
-<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" tabindex="0" loop="loop" src="" width="100%" muted></video> 
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
     <button class="menuButtons" onclick="getLink()">🔗</button>
@@ -390,6 +388,8 @@
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
+<div id="All-Elements"> <!-- 'div' is for brightness adjustment purpose. -->
+<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" tabindex="0" loop="loop" src="" width="100%" muted></video> 
 <center>
     <div id="post-container"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
@@ -410,8 +410,8 @@
   <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
   <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 <textarea id="textBox" readonly></textarea>
-</div>
 <input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
+</div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <script>
 // Long Press Events. (currently 1500 milliseconds delay)
