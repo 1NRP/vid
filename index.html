@@ -262,9 +262,9 @@
       text-align: center;
     }
     #brightnessSlider {
-      height: 80%;
-      margin: 0% 30%;
-      display: flex;
+      width: 80%;
+      margin: 0% 10%;
+      display: none;
     }
     .secondRow {
       display: none;
@@ -325,15 +325,15 @@
     /* Animations */
     @keyframes save {
       from {font-size: 5px; top: 0dvh} /* transform: rotate(30deg)} */
-      to {font-size: 25px; top: 10dvh}  /* transform: rotate(0deg)} */
+      to {font-size: 20px; top: 10dvh}  /* transform: rotate(0deg)} */
     }
     @keyframes delete {
       from {font-size: 5px; top: 0dvh}
-      to {font-size: 25px; top: 10dvh}
+      to {font-size: 20px; top: 10dvh}
     }
     @keyframes notFound {
       from {font-size: 5px; top: 0dvh}
-      to {font-size: 25px; top: 10dvh}
+      to {font-size: 20px; top: 10dvh}
     }
     @keyframes menu {
       from {opacity: 0; top: 10dvh}
@@ -376,19 +376,19 @@
   }
 </style>
 </head>
+<div id="All-Elements"> <!-- 'div' is for brightness adjustment purpose. -->
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" tabindex="0" loop="loop" src="" width="100%" muted></video> 
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
     <button class="menuButtons" onclick="getLink()">🔗</button>
     <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
-    <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'inline' ? 'none' : 'inline')">☀️</button>
+    <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">☀️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
-<div id="defaultPositionElements">
 <center>
     <div id="post-container"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
@@ -408,9 +408,8 @@
   <button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
   <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
   <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
-</div>
 <textarea id="textBox" readonly></textarea>
-<input id="brightnessSlider" type="range" min="50" max="150" value="100" class="slider">
+<input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
 </div>
 <!--
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
@@ -434,16 +433,14 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('player');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
-  document.getElementById('player').style.maxHeight='200px';
+  document.getElementById('player').style.maxHeight='195px';
 });
 
 // Brightness Control Functionality.
 const brSlider = document.getElementById('brightnessSlider');
 brSlider.addEventListener('input', function () {
     const brightnessValue = this.value;
-    document.getElementById('defaultPositionElements').style.filter = `brightness(${brightnessValue}%)`;
-    document.getElementById('player').style.filter = `brightness(${brightnessValue}%)`;
-    document.getElementById('menuBo').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('All-Elements').style.filter = `brightness(${brightnessValue}%)`;
 });
 
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
