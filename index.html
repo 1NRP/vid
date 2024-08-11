@@ -700,7 +700,7 @@ async function play() {
         //var allOrigins = `https://api.allorigins.win/get?url=${encodeURIComponent(requestUrl)}`;  // Proxy for CORS.
         // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
         fetch(requestUrl)
-        /*.then(response => {    // Comment both [.then(response =>] and [.catch(error =>] code blocks (& uncomment "DIRECT" below) if response is not required.
+        .then(response => {    // Comment both [.then(response =>] and [.catch(error =>] code blocks (& uncomment "DIRECT" below) if response is not required.
             var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById('player').style.maxHeight='85dvh';
@@ -709,12 +709,13 @@ async function play() {
         .catch(error => {
             console.error('Error fetching preparation URL:', error);
             alert('Error fetching preparation URL. Please try again later.');
-        });  */
+        });  
         // "DIRECT" - Construct the 'playUrl' without waiting for response.
-        var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
+    /*  var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById('player').style.maxHeight='85dvh';
             document.getElementById("player").play(); // Autoplay the video.
+    */
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = qry;
