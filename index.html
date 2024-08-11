@@ -377,19 +377,7 @@
   }
 </style>
 </head>
-<div id="menuBox">
-    <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
-    <button class="menuButtons" onclick="getLink()">🔗</button>
-    <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
-    <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">☀️</button>
-    <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-</div>
-<div id="All-Elements"> <!-- 'div' is for brightness adjustment purpose. -->
-<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" tabindex="0" loop="loop" src="" width="100%" muted></video> 
+<div id="Default-Position-Elements"> <!-- Separation between Fixed position and Non-Fixed position elements is for brightness adjustment purpose. The 'brightnessSlider' distorts the positioning of Fixed elements. -->
 <center>
     <div id="post-container"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
@@ -400,17 +388,31 @@
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
 <button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(90deg)' ? 'rotate(0deg)' : 'rotate(90deg)');">☰</button>
-  <select id="channelName" class="secondRow">
+<select id="channelName" class="secondRow">
     <option value="desi_bhabhi_shila_terabox">1st</option>
     <option value="desi_bhabhi_nisha_mdisk">2nd</option>
-     <!-- Add more channel options here if needed. -->
-  </select>
-  <input id="messageID" class="secondRow">
-  <button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
-  <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
-  <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
+    <!-- Add more channel options here if needed. -->
+</select>
+<input id="messageID" class="secondRow">
+<button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
+<button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
+<button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 <textarea id="textBox" readonly></textarea>
 <input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
+</div>
+<div id="Fixed-Position-Elements">
+    <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" tabindex="0" loop="loop" src="" width="100%" muted></video> 
+    <div id="menuBox">
+        <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
+        <button class="menuButtons" onclick="getLink()">🔗</button>
+        <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
+        <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">☀️</button>
+        <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
+        <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+        <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+        <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+        <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    </div>
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <script>
@@ -437,9 +439,8 @@ el.addEventListener('long-press', function(e) {
 const brSlider = document.getElementById('brightnessSlider');
 brSlider.addEventListener('input', function () {
     const brightnessValue = this.value;
-    document.getElementById('All-Elements').style.filter = `brightness(${brightnessValue}%)`;
-    document.getElementById('player').style.filter = `brightness(${brightnessValue}%)`;
-    document.getElementById('menuBox').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('Default-Position-Elements').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('Fixed-Position-Elements').style.filter = `brightness(${brightnessValue}%)`;
 });
 
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
