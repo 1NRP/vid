@@ -55,12 +55,12 @@
       margin: 2px;
     }
     #player {
-    /*  position: fixed;
+      position: fixed;
       top: 0px;
       left: 0vw;
       z-index: 30;
       border: 2px solid #333;
-      border-radius: 6px; */
+      border-radius: 6px;
       background-color: #02121b;
       max-width: 98.5dvw; /* dvw = dynamic viewport width */
       max-height: 85dvh; /* dvh = dynamic viewport height */
@@ -380,7 +380,7 @@
 </head>
 <center>
     <div id="post-container"></div>
-    <video id="player" controls controlsList="nofullscreen" tabindex="0" loop="loop" src="" width="100%" muted></video>  <!-- poster="images/my_name_logo_1.2.1.jpg" --> 
+    <video id="player" controls controlsList="nofullscreen" poster="images/my_name_logo_1.2.1.jpp" tabindex="0" loop="loop" src="" width="100%" muted></video> 
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()" ondblclick="fetchPosts()">PLAY</button>
@@ -404,7 +404,7 @@
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
     <button class="menuButtons" onclick="getLink()">🔗</button>
     <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
-    <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'block' ? 'none' : 'block')">☀️</button>
+    <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'inline' ? 'none' : 'inline')">☀️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
