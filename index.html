@@ -16,12 +16,12 @@
     }
     #post-container {
       width: 99%;
-      height: 380px;
+      height: 360px;
       border-radius: 8px;
       border: 2px solid #333;
       overflow-y: scroll;
       background-color: #02121b;
-      margin: 190px 0px 4px 0px;
+      margin: 205px 0px 4px 0px;
     }
     .post-details {
       display: flex;
@@ -433,7 +433,7 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('player');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
-  document.getElementById('player').style.maxHeight='200px';
+  document.getElementById('player').style.maxHeight='195px';
 });
 
 // Brightness Control Functionality.
@@ -601,7 +601,7 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-
+/*
 // (Vercel Serverless Function Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -662,8 +662,8 @@ async function play() {
         document.getElementById("player").play();
     }
 }
+*/
 
-/*
 // (MDP Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -724,7 +724,7 @@ async function play() {
         document.getElementById("player").play(); // Autoplay the video
     }
 }
-*/
+
 
 // Telegram Post fetching function.
 function fetchSinglePost() {
