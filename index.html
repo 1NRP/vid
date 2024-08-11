@@ -443,7 +443,10 @@ brSlider.addEventListener('input', function () {
     document.getElementById('Default-Position-Elements').style.filter = `brightness(${brightnessValue}%)`;
     document.getElementById('player').style.filter = `brightness(${brightnessValue}%)`;
     document.getElementById('menuBox').style.filter = `brightness(${brightnessValue}%)`;
-    document.getElementsByClassName('thumbnail').style.filter = `brightness(${brightnessValue}%)`;
+    const thumbnails = document.getElementsByClassName('thumbnailContainer');
+    for (let i = 0; i < thumbnails.length; i++) {
+        thumbnails[i].style.filter = `brightness(${brightnessValue}%)`;
+    }
 });
 
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
