@@ -6,7 +6,7 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0d2136">
   <link rel="icon" sizes="192x192" href="images/green-512.png">
-  <script src="long-press-brief-code.js"></script>
+  <script src="https://1nrp.github.io/vid/long-press-brief-code.js"></script>
   <!--  <link rel="stylesheet" href="style.css">  -->
   <title>Nihar's Video Player</title>
 <style>
@@ -55,12 +55,12 @@
       margin: 2px;
     }
     #player {
-      position: fixed;
+    /*  position: fixed;
       top: 0px;
       left: 0vw;
       z-index: 30;
       border: 2px solid #333;
-      border-radius: 6px;
+      border-radius: 6px; */
       background-color: #02121b;
       max-width: 98.5dvw; /* dvw = dynamic viewport width */
       max-height: 85dvh; /* dvh = dynamic viewport height */
@@ -380,7 +380,7 @@
 </head>
 <center>
     <div id="post-container"></div>
-    <video id="player" controls controlsList="nofullscreen" tabindex="0" poster="images/my_name_logo_1.2.1.jpg" loop="loop" src="" width="100%" muted></video>
+    <video id="player" controls controlsList="nofullscreen" tabindex="0" loop="loop" src="" width="100%" muted></video>  <!-- poster="images/my_name_logo_1.2.1.jpg" --> 
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()" ondblclick="fetchPosts()">PLAY</button>
