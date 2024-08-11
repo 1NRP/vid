@@ -377,7 +377,6 @@
   }
 </style>
 </head>
-<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" tabindex="0" loop="loop" src="" width="100%" muted></video> 
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
     <button class="menuButtons" onclick="getLink()">🔗</button>
@@ -390,6 +389,7 @@
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
 <div id="All-Elements"> <!-- 'div' is for brightness adjustment purpose. -->
+<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" tabindex="0" loop="loop" src="" width="100%" muted></video> 
 <center>
     <div id="post-container"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
@@ -438,7 +438,7 @@ const brSlider = document.getElementById('brightnessSlider');
 brSlider.addEventListener('input', function () {
     const brightnessValue = this.value;
     document.getElementById('All-Elements').style.filter = `brightness(${brightnessValue}%)`;
-    document.getElementById('player').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('playe').style.filter = `brightness(${brightnessValue}%)`;
     document.getElementById('menuBox').style.filter = `brightness(${brightnessValue}%)`;
 });
 
