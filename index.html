@@ -16,12 +16,12 @@
     }
     #post-container {
       width: 99%;
-      height: 380px;
+      height: 370px;
       border-radius: 8px;
       border: 2px solid #333;
       overflow-y: scroll;
       background-color: #02121b;
-      margin: 200px 0px 4px 0px;
+      margin: 210px 0px 4px 0px;
     }
     .post-details {
       display: flex;
@@ -58,6 +58,7 @@
       position: fixed;
       top: 0px;
       left: 0vw;
+      height: 200px;
       z-index: 30;
       border: 2px solid #333;
       border-radius: 6px;
@@ -409,13 +410,9 @@
   <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
   <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 <textarea id="textBox" readonly></textarea>
-<input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
 </div>
-<!--
-    <h1>⭐ Nihar Ranjan's Player ⭐</h1>
-    <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
-    <script src="script.js"></script>  
--->
+<input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
+<!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <script>
 // Long Press Events. (currently 1500 milliseconds delay)
 var el = document.getElementById('textBox');
@@ -433,7 +430,7 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('player');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
-  document.getElementById('player').style.maxHeight='195px';
+  document.getElementById('player').style.maxHeight='200px';
 });
 
 // Brightness Control Functionality.
