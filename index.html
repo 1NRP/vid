@@ -16,12 +16,12 @@
     }
     #post-container {
       width: 99%;
-      height: 350px;
+      height: 370px;
       border-radius: 8px;
       border: 2px solid #333;
       overflow-y: scroll;
       background-color: #02121b;
-      margin: 215px 0px 4px 0px;
+      margin: 200px 0px 4px 0px;
     }
     .post-details {
       display: flex;
@@ -263,7 +263,10 @@
     #brightnessSlider {
       height: 40vh;
       display: flex;
-      
+      position: fixed;
+      top: 50dvh;
+      left: 60dvw;
+      transform: rotate(270deg);
     }
     .secondRow {
       display: none;
@@ -375,14 +378,26 @@
   }
 </style>
 </head>
+<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" tabindex="0" loop="loop" src="" width="100%" muted></video> 
+<div id="menuBox">
+    <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
+    <button class="menuButtons" onclick="getLink()">🔗</button>
+    <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
+    <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'inline' ? 'none' : 'inline')">☀️</button>
+    <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+</div>
+<div id="defaultPositionElements">
 <center>
     <div id="post-container"></div>
-    <video id="player" controls controlsList="nofullscreen" poster="images/my_name_logo_1.2.1.jpp" tabindex="0" loop="loop" src="" width="100%" muted></video> 
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()" ondblclick="fetchPosts()">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''">✖️</button>
-   </center>
+</center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
 <button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(90deg)' ? 'rotate(0deg)' : 'rotate(90deg)');">☰</button>
@@ -397,18 +412,8 @@
   <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 </div>
 <textarea id="textBox" readonly></textarea>
-<div id="menuBox">
-    <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
-    <button class="menuButtons" onclick="getLink()">🔗</button>
-    <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
-    <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'inline' ? 'none' : 'inline')">☀️</button>
-    <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-</div>
 <input id="brightnessSlider" type="range" min="50" max="150" value="100" class="slider">
+</div>
 <!--
     <h1>⭐ Nihar Ranjan's Player ⭐</h1>
     <h5> Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"
@@ -438,7 +443,7 @@ el.addEventListener('long-press', function(e) {
 const brSlider = document.getElementById('brightnessSlider');
 brSlider.addEventListener('input', function () {
     const brightnessValue = this.value;
-    document.body.style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('defaultPositionElements').style.filter = `brightness(${brightnessValue}%)`;
 });
 
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
