@@ -438,6 +438,8 @@ const brSlider = document.getElementById('brightnessSlider');
 brSlider.addEventListener('input', function () {
     const brightnessValue = this.value;
     document.getElementById('All-Elements').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('player').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('menuBox').style.filter = `brightness(${brightnessValue}%)`;
 });
 
 // Show "Last Link Saved" alert when "OK" response (200) is received from the server.
