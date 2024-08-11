@@ -403,7 +403,7 @@
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="500" tabindex="0" loop="loop" src="" width="100%" muted></video> 
+<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="300" tabindex="0" loop="loop" src="" width="100%" muted></video> 
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
     <button class="menuButtons" onclick="getLink()">🔗</button>
@@ -416,7 +416,7 @@
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
 <script>
-// Long Press Events. (currently 1500 milliseconds delay)
+// Long Press Events. (currently 1500 milliseconds delay except for Video Player(300 ms)).
 var el = document.getElementById('textBox');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
@@ -429,6 +429,7 @@ el.addEventListener('long-press', function(e) {
   var elements = document.getElementsByClassName('secondRow'); for (var i = 0; i < elements.length; i++) { elements[i].style.display = (elements[i].style.display === 'none' || elements[i].style.display === '') ? 'inline' : 'none'; };
 });
 
+// This event has 300 ms delay for long press.
 var el = document.getElementById('player');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
@@ -600,7 +601,7 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-/*
+
 // (Vercel Serverless Function Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -661,8 +662,8 @@ async function play() {
         document.getElementById("player").play();
     }
 }
-*/
 
+/*
 // (MDP Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -711,11 +712,11 @@ async function play() {
             alert('Error fetching preparation URL. Please try again later.');
         });  
         // "DIRECT" - Construct the 'playUrl' without waiting for response.
-    /*  var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
-            document.getElementById("player").src = playUrl;
-            document.getElementById('player').style.maxHeight='85dvh';
-            document.getElementById("player").play(); // Autoplay the video.
-    */
+        //var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
+            //document.getElementById("player").src = playUrl;
+            //document.getElementById('player').style.maxHeight='85dvh';
+            //document.getElementById("player").play(); // Autoplay the video.
+    
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = qry;
@@ -723,7 +724,7 @@ async function play() {
         document.getElementById("player").play(); // Autoplay the video
     }
 }
-
+*/
 
 // Telegram Post fetching function.
 function fetchSinglePost() {
