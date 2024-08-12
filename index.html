@@ -94,7 +94,7 @@
       background-color: #000;
       width: 17%;
       color: #b4b4b4;
-      font-weight: 600;
+      font-weight: 1000;
       max-width: 100px;
       padding: 6px;
       border: 2px solid #555;
@@ -381,7 +381,7 @@
 </head>
 <div id="Default-Position-Elements"> <!-- Separation between Fixed position and Non-Fixed position elements is for brightness adjustment purpose. The 'brightnessSlider' distorts the positioning of Fixed elements. -->
 <center>
-    <div id="post-container"></div>
+    <div id="post-container" data-long-press-delay="400"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="play()" ondblclick="fetchPosts()">PLAY</button>
@@ -417,7 +417,7 @@
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
 <script>
-// Long Press Events. (currently 1500 milliseconds delay except for Video Player(300 ms)).
+// Long Press Events. (currently 1500 milliseconds delay except for Video Player(400 ms)).
 var el = document.getElementById('textBox');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
@@ -430,11 +430,18 @@ el.addEventListener('long-press', function(e) {
   var elements = document.getElementsByClassName('secondRow'); for (var i = 0; i < elements.length; i++) { elements[i].style.display = (elements[i].style.display === 'none' || elements[i].style.display === '') ? 'inline' : 'none'; };
 });
 
-// This event has 300 ms delay for long press.
+// This event has 400 ms delay for long press.
 var el = document.getElementById('player');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
   document.getElementById('player').style.maxHeight='195px';
+});
+
+// This event has 400 ms delay for long press.
+var el = document.getElementById('post-container');
+el.addEventListener('long-press', function(e) {
+  e.preventDefault()
+  fetchPosts();
 });
 
 // Brightness Control Functionality.
@@ -602,7 +609,7 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-/*
+
 // (Vercel Serverless Function Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -663,8 +670,8 @@ async function play() {
         document.getElementById("player").play();
     }
 }
-*/
 
+/*
 // (MDP Method) Paste link and PLAY button function.
 async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -725,7 +732,7 @@ async function play() {
         document.getElementById("player").play(); // Autoplay the video
     }
 }
-
+*/
 
 // Telegram Post fetching function.
 function fetchSinglePost() {
