@@ -384,7 +384,7 @@
     <div id="post-container" data-long-press-delay="400"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" onclick="play()" ondblclick="fetchPosts()">PLAY</button>
+    <button id="button-play" onclick="play()" ondblclick="fetchPosts()" data-long-press-delay="400">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
@@ -422,6 +422,12 @@ var el = document.getElementById('textBox');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
   getLink();
+});
+
+var el = document.getElementById('button-play');
+el.addEventListener('long-press', function(e) {
+  e.preventDefault()
+  VercelPlay();
 });
 
 var el = document.getElementById('clearBtn');
@@ -609,9 +615,9 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-/*
+
 // (Vercel Serverless Function Method) Paste link and PLAY button function.
-async function play() {
+async function VercelPlay() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
     if (qry === "") {
         // Check if the clipboard API is supported
@@ -670,7 +676,7 @@ async function play() {
         document.getElementById("player").play();
     }
 }
-*/
+
 
 // (Mdiskplay Method) Paste link and PLAY button function.
 async function play() {
