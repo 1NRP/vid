@@ -282,61 +282,25 @@
     #clearBtn:hover {
       background-color: #cf7309;
       color: #000;
-    }
-    .saveAlert {
-      position: fixed;
-   /* top: 5dvh; */
-      left: 30dvw;
-      z-index: 40;
-      background-color: #1bd13d;
-      color: #000;
-      font-weight: 1000;
-      padding: 5px;
-      border: none;
-      border-radius: 5px;
-      animation-name: save;
-      animation-duration: 1s;
-    }
-    .deleteAlert {
-      position: fixed;
-   /* top: 5dvh; */
-      left: 30dvw;
-      z-index: 40;
-      background-color: #f2074e;
-      color: #000;
-      font-weight: 1000;
-      padding: 5px;
-      border: none;
-      border-radius: 5px;
-      animation-name: delete;
-      animation-duration: 1s;
-    }
-    .notFoundAlert {
+  }
+  .Alerts {
       position: fixed;
    /* top: 5dvh; */
       left: 20dvw;
       z-index: 40;
-      background-color: #e8af05;
+      background-color: #fff;
       color: #000;
       font-weight: 1000;
       padding: 5px;
       border: none;
       border-radius: 5px;
-      animation-name: notFound;
+      animation-name: Alert;
       animation-duration: 1s;
     }
     /* Animations */
-    @keyframes save {
+    @keyframes Alert {
       from {font-size: 5px; top: 0dvh} /* transform: rotate(30deg)} */
       to {font-size: 20px; top: 10dvh}  /* transform: rotate(0deg)} */
-    }
-    @keyframes delete {
-      from {font-size: 5px; top: 0dvh}
-      to {font-size: 20px; top: 10dvh}
-    }
-    @keyframes notFound {
-      from {font-size: 5px; top: 0dvh}
-      to {font-size: 20px; top: 10dvh}
     }
     @keyframes menu {
       from {opacity: 0; top: 10dvh}
@@ -463,38 +427,17 @@ brSlider.addEventListener('input', function () {
     }
 });
 
-// Show "Last Link Saved" alert when "OK" response (200) is received from the server.
-function showAlert() {
-   const alertBox = document.createElement('div');
-   alertBox.className = 'saveAlert';
-   alertBox.textContent = '✔ Link Saved';
-   document.body.appendChild(alertBox);
-   setTimeout(() => {
-   alertBox.remove();
-   }, 1000);
-}
-
-// Show "Link Deleted" alert if response result is positive {result: (list_count)}.
-function showDeleteAlert() {
-   const alertBox = document.createElement('div');
-   alertBox.className = 'deleteAlert';
-   alertBox.textContent = '✖ Link Deleted';
-   document.body.appendChild(alertBox);
-   setTimeout(() => {
-   alertBox.remove();
-   }, 1000);
-}
-
-// Show "Link Doesn't Exist" alert if response result is zero {result: 0}.
-function notFoundAlert() {
-   const alertBox = document.createElement('div');
-   alertBox.className = 'notFoundAlert';
-   alertBox.textContent = "⚠ Link Doesn't Exist";
-   document.body.appendChild(alertBox);
-   setTimeout(() => {
-   alertBox.remove();
-   }, 1000);
-}
+// Show Alerts depending upon the response received.
+function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
+    var alertBox = document.createElement('div');
+    alertBox.className = 'Alerts';
+    alertBox.style.backgroundColor = BgColor;
+    alertBox.textContent = Text;
+    document.body.appendChild(alertBox);
+    setTimeout(() => { 
+        alertBox.remove(); 
+    }, 1000);
+  }
   
 // Save the Link in KV Cloud storage.
     async function saveLink() {
@@ -512,7 +455,8 @@ function notFoundAlert() {
 
                 if (response.ok) {
                     console.log('Link sent to Vercel KV.');
-                    showAlert();
+                    // Show "Link Saved" alert when "OK" response (200) is received from the server.
+                    showAlert({ BgColor: '#1bd13d', Text: '✔ Link Saved'});
                 } else {
                     const errorData = await response.json();
                     console.error('Error from server:', errorData.error);
@@ -542,10 +486,13 @@ function notFoundAlert() {
                 const data = await response.json(); // Wait for the JSON response
                 if (data.result !== 0) {
                     console.log('Link deleted in Vercel KV.');
-                    showDeleteAlert();
+                    // Show "Link(s) Deleted" alert if response result is positive {result: (list_count)}. 'list_count' is the number of deleted values.
+                    const listCount = data.result;
+                    showAlert({ BgColor: '#f2074e', Text: `${listCount} ✖ Link Deleted`});
                 } else {
                     console.log('This Link does not exist in Vercel KV.');
-                    notFoundAlert();
+                    // Show "Link Doesn't Exist" alert if response result is zero {result: 0}.
+                    showAlert({ BgColor: '#e8af05', Text: "⚠ Link Doesn't Exist"});
                 }
             } else {
                 const errorData = await response.json(); // Wait for the JSON error response
