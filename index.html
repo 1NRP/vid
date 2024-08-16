@@ -572,7 +572,7 @@ async function VercelPlay() {
         try {
             const text = await navigator.clipboard.readText();
             if (text.trim() === "") {
-                alert("Please Enter URL First!");
+                alert("Please Enter URL First");
                 return;
             }
             document.getElementById('vid').value = text.trim(); // Update the input field
@@ -589,16 +589,10 @@ async function VercelPlay() {
     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
         // Extract the video ID from the URL
         var fullVideoId = qry.split('/').slice(-1)[0];
-        // Remove the first character (assuming it's always '1')
-        videoId = fullVideoId.substring(1);
         try {
-            // Make a request to the preparation URL
-            const response = await fetch('https://1nrp.vercel.app/api/Play/getM3U8', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ shortURL: fullVideoId }),
+            // Make a request to the API endpoint.
+            const response = await fetch(`https://1nrp.vercel.app/api/Play/getM3U8?shortURL=${fullVideoId}`, {
+                method: 'GET',
             });
             if (!response.ok) {
                 throw new Error('Failed to fetch M3U8 URL');
@@ -610,7 +604,7 @@ async function VercelPlay() {
             document.getElementById("player").play();
         } catch (error) {
             console.error('Error fetching or processing:', error);
-            alert('Failed to prepare playback. Please try again later.');
+            alert('Failed to fetch M3U8 File. Please try again later.');
         }
     } else {
         // Not a terabox URL, play as usual
