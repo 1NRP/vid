@@ -371,7 +371,7 @@
     <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
     <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="document.getElementById('button-play').removeAttribute('onclick'); document.getElementById('button-play').setAttribute('onclick', 'VercelPlay()')">🇻</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
@@ -543,7 +543,7 @@ document.addEventListener("keydown", function(event) {
         if (event.key === "ArrowUp") {
             saveLink();
         } else if (event.key === "ArrowDown") {
-            play();
+            document.getElementById('button-play').click();
         } else if (event.key === "ArrowLeft") {
             fetchPosts()
         } else if (event.key === "End") {
@@ -593,7 +593,7 @@ async function VercelPlay() {
         videoId = fullVideoId.substring(1);
         try {
             // Make a request to the preparation URL
-            const response = await fetch('https://1nrp.vercel.app/api/Play/get-M3U8', {
+            const response = await fetch('https://1nrp.vercel.app/api/Play/getM3U8', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -832,7 +832,7 @@ async function getIframeLink(script) {
         });
         if (found) {
             document.getElementById('vid').value = TBoxLink;
-            play();
+            document.getElementById('button-play').click();
         } else {
             alert("No TB Link was found.");
         }
@@ -992,7 +992,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
         clickTimeout = null;
         var lineText = getLineText(event);
         document.getElementById('vid').value = lineText;
-        play();
+        document.getElementById('button-play').click();
     } else {
         clickTimeout = setTimeout(function () {
             clickTimeout = null;
@@ -1005,7 +1005,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
 // Function to handle clicking on the Thumbnail.
 function handleThumbnailClick(lineText, thumbnailContainer) {
     document.getElementById('vid').value = lineText;
-    play();
+    document.getElementById('button-play').click();
     document.body.removeChild(thumbnailContainer);
 }
 // Function to load posts from the server
@@ -1045,7 +1045,7 @@ function fetchPosts() {
 // Function to handle clicking on the Poster.
 function handlePosterClick(link) {
     document.getElementById('vid').value = link;
-    play();
+    document.getElementById('button-play').click();
   }
 
 // Show or Hide Hamburger menu box.
