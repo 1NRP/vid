@@ -653,7 +653,7 @@ async function mdiskPlay() {
         // Extract the video ID from the URL
         var preVideoId = qry.split('/').slice(-1)[0];
         let videoId;
-        if (preVideoID === 'SAVED-M3U8') {
+        if (preVideoId === 'SAVED-M3U8') {
             videoId = qry.split('/').slice(-2)[0];
         } else {
             videoId = preVideoId;
