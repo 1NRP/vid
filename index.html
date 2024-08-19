@@ -651,7 +651,13 @@ async function mdiskPlay() {
     // Check if the URL contains 'Terabox'.
     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
         // Extract the video ID from the URL
-        var videoId = qry.split('/').slice(-2)[0];
+        var preVideoID = qry.split('/').slice(-1)[0];
+        let videoID;
+        if (preVideoID === 'SAVED-M3U8') {
+            videoID = qry.split('/').slice(-2)[0];
+        } else {
+            videoID = preVideoID;
+        }
         // Remove the first character (assuming it's always '1')
         videoId = videoId.substring(1);
         // Construct the request URL for preparation
@@ -660,7 +666,7 @@ async function mdiskPlay() {
         // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
         fetch(requestUrl)
         .then(response => {    // Comment both [.then(response =>] and [.catch(error =>] code blocks (& uncomment "DIRECT" below) if response is not required.
-            var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
+            var playUrl = "https://streams.mdiskplay.com/parts/" + videoID + "/" + videoID + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById('player').style.maxHeight='85dvh';
             document.getElementById("player").play(); // Autoplay the video.
@@ -821,7 +827,7 @@ async function getIframeLink(script) {
         const doc = parser.parseFromString(htmlText, 'text/html');
         const anchors = doc.querySelectorAll('a');
         // Filter anchor tags containing TB Links.
-        const keywords = ['teraboxapp', 'teraboxlink', '1024terabox', 'freeterabox'];
+        const keywords = ['teraboxapp', 'teraboxlink', '1024terabox', 'freeterabox', 'teraboxshare'];
         let found = false;
         let TBoxLink = '';
         anchors.forEach(anchor => {
