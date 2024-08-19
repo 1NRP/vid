@@ -1012,7 +1012,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
 
 // Function to handle clicking on the Thumbnail.
 function handleThumbnailClick(lineText, thumbnailContainer) {
-    document.getElementById('vid').value = lineText;
+    document.getElementById('vid').value = lineText + "/SAVED-M3U8";
     document.getElementById('button-play').click();
     document.body.removeChild(thumbnailContainer);
 }
