@@ -587,18 +587,25 @@ async function VercelPlay() {
     }
     // Check if the URL contains 'Terabox'
     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
-        // Extract the video ID from the URL
-        var fullVideoId = qry.split('/').slice(-1)[0];
+        // Extract the video ID from the URL.
+        var folder = qry.split('/').slice(-1)[0];
+        var fullVideoId = qry.split('/').slice(-2)[0];
         try {
+            let folderName;
+            if (!folder === 'SAVED-M3U8') {
+                folderName = 'M3U8-HTML';
+            } else {
+                folderName = 'SAVED-M3U8';
+            }
             // Make a request to the API endpoint.
-            const response = await fetch(`https://1nrp.vercel.app/api/Play/getM3U8?shortURL=${fullVideoId}`, {
+            const response = await fetch(`https://1nrp.vercel.app/api/Play/getM3U8?shortURL=${fullVideoId}&BlobFolder=${folderName}`, {
                 method: 'GET',
             });
             if (!response.ok) {
                 throw new Error('Failed to fetch M3U8 URL');
             }
             const responseData = await response.json();
-            const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + fullVideoId + ".m3u8";
+            const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/" + folderName + "/" + fullVideoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById('player').style.maxHeight='85dvh';
             document.getElementById("player").play();
@@ -985,7 +992,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
         var lineText = getLineText(event);
-        document.getElementById('vid').value = lineText;
+        document.getElementById('vid').value = lineText + "/SAVED-M3U8";
         document.getElementById('button-play').click();
     } else {
         clickTimeout = setTimeout(function () {
