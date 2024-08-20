@@ -344,7 +344,7 @@
     <div id="post-container" data-long-press-delay="400"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" onclick="mdiskPlay()" data-long-press-delay="400">PLAY</button>
+    <button id="button-play" onclick="play()" data-long-press-delay="400">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('vid').value=''">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
@@ -587,25 +587,18 @@ async function VercelPlay() {
     }
     // Check if the URL contains 'Terabox'
     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
-        // Extract the video ID from the URL.
+        // Extract the video ID from the URL
+        var fullVideoId = qry.split('/').slice(-1)[0];
         try {
-            let folderName, fullVideoId;
-            if (qry.split('/').slice(-1)[0] === 'SAVED-M3U8') {
-                folderName = 'SAVED-M3U8';
-                fullVideoId = qry.split('/').slice(-2)[0];
-            } else {
-                folderName = 'M3U8-HTML';
-                fullVideoId = qry.split('/').slice(-1)[0];
-            }
             // Make a request to the API endpoint.
-            const response = await fetch(`https://1nrp.vercel.app/api/Play/getM3U8?shortURL=${fullVideoId}&BlobFolder=${folderName}`, {
+            const response = await fetch(`https://1nrp.vercel.app/api/Play/getM3U8?shortURL=${fullVideoId}`, {
                 method: 'GET',
             });
             if (!response.ok) {
                 throw new Error('Failed to fetch M3U8 URL');
             }
             const responseData = await response.json();
-            const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/" + folderName + "/" + fullVideoId + ".m3u8";
+            const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + fullVideoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById('player').style.maxHeight='85dvh';
             document.getElementById("player").play();
@@ -623,7 +616,7 @@ async function VercelPlay() {
 
 
 // (Mdiskplay Method) Paste link and PLAY button function.
-async function mdiskPlay() {
+async function play() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
     if (qry === "") {
         // Check if the clipboard API is supported
@@ -651,22 +644,15 @@ async function mdiskPlay() {
     // Check if the URL contains 'Terabox'.
     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
         // Extract the video ID from the URL
-        var preVideoId = qry.split('/').slice(-1)[0];
-        let videoId;
-        if (preVideoId === 'SAVED-M3U8') {
-            videoId = qry.split('/').slice(-2)[0];
-        } else {
-            videoId = preVideoId;
-        }
+        var videoId = qry.split('/').slice(-1)[0];
         // Remove the first character (assuming it's always '1')
         videoId = videoId.substring(1);
         // Construct the request URL for preparation
-        var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId + "?aka=baka";
+        var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
         //var allOrigins = `https://api.allorigins.win/get?url=${encodeURIComponent(requestUrl)}`;  // Proxy for CORS.
         // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
         fetch(requestUrl)
         .then(response => {    // Comment both [.then(response =>] and [.catch(error =>] code blocks (& uncomment "DIRECT" below) if response is not required.
-            //var playUrl = "https://streams.mdiskplay.com/parts/" + videoId + "/" + videoId + ".m3u8";
             var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById('player').style.maxHeight='85dvh';
@@ -828,7 +814,7 @@ async function getIframeLink(script) {
         const doc = parser.parseFromString(htmlText, 'text/html');
         const anchors = doc.querySelectorAll('a');
         // Filter anchor tags containing TB Links.
-        const keywords = ['teraboxapp', 'teraboxlink', '1024terabox', 'freeterabox', 'teraboxshare'];
+        const keywords = ['teraboxapp', 'teraboxlink', '1024terabox', 'freeterabox'];
         let found = false;
         let TBoxLink = '';
         anchors.forEach(anchor => {
@@ -999,7 +985,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
         var lineText = getLineText(event);
-        document.getElementById('vid').value = lineText + "/SAVED-M3U8";
+        document.getElementById('vid').value = lineText;
         document.getElementById('button-play').click();
     } else {
         clickTimeout = setTimeout(function () {
@@ -1012,7 +998,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
 
 // Function to handle clicking on the Thumbnail.
 function handleThumbnailClick(lineText, thumbnailContainer) {
-    document.getElementById('vid').value = lineText + "/SAVED-M3U8";
+    document.getElementById('vid').value = lineText;
     document.getElementById('button-play').click();
     document.body.removeChild(thumbnailContainer);
 }
