@@ -375,8 +375,8 @@
     <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
     <button class="menuButtons" style="padding: 6px 9px 8px 9px" onclick="document.getElementById('button-play').removeAttribute('onclick'); document.getElementById('button-play').setAttribute('onclick', 'VercelPlay()')">⛰</button>
-    <button class="menuButtons" id="btn11">11</button>
-    <button class="menuButtons" id="btn22">22</button>
+    <button class="menuButtons" onclick="copySrc()">📡</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
 <script>
@@ -413,27 +413,12 @@ el.addEventListener('long-press', function(e) {
   fetchPosts();
 });
 
-document.getElementById('btn11').addEventListener('click', function() {
-    var video = document.getElementById('player');
-      var videoSource = video.src;
-      var tempTextarea = document.createElement('textarea');
-      tempTextarea.value = videoSource;
-      document.body.appendChild(tempTextarea);
-      tempTextarea.select();
-        document.execCommand('copy');
-      document.body.removeChild(tempTextarea);
-  });
-
-document.getElementById('btn22').addEventListener('click', function() {
-    var video = document.getElementById('player');
-    var videoSource = video.src;
-
-    navigator.clipboard.writeText(videoSource).then(function() {
-        console.log('Video source copied to clipboard');
-    }).catch(function(err) {
-        console.error('Failed to copy: ', err);
-    });
-});
+// Copy the 'Source URL' (src) of the currently playing Video to clipboard.
+function copySrc() {
+    var videoPlayer = document.getElementById('player').src;
+   // var videoSource = videoPlayer.src;
+    navigator.clipboard.writeText(videoPlayer);
+}
 
 // Brightness Control Functionality.
 const brSlider = document.getElementById('brightnessSlider');
