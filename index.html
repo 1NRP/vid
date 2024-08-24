@@ -375,7 +375,7 @@
     <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
     <button class="menuButtons" style="padding: 6px 9px 8px 9px" onclick="document.getElementById('button-play').removeAttribute('onclick'); document.getElementById('button-play').setAttribute('onclick', 'VercelPlay()')">⛰</button>
-    <button class="menuButtons" onclick="var videoSource = document.getElementById('player').src; navigator.clipboard.writeText(videoSource); showAlert({ BgColor: '#b4b4b4', Text: 'Video Source Copied'});">📡</button>
+    <button class="menuButtons" onclick="var videoSource = document.getElementById('player').src; navigator.clipboard.writeText(videoSource);">📡</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
