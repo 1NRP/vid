@@ -657,10 +657,10 @@ async function MdiskPlay() {
         fetch(allOrigins)
         .then(response => {    // Comment both [.then(response =>] and [.catch(error =>] code blocks (& uncomment "DIRECT" below) if response is not required.
             var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
+            window.open(playUrl, '_blank');  //  Opening in new tab due to CORS.
             //document.getElementById("player").src = playUrl;
-            document.getElementById("player").src = `https://api.allorigins.win/get?url=${encodeURIComponent(playUrl)}`;  // Proxy for CORS.
-            document.getElementById('player').style.maxHeight='85dvh';
-            document.getElementById("player").play(); // Autoplay the video.
+            //document.getElementById('player').style.maxHeight='85dvh';
+            //document.getElementById("player").play(); // Autoplay the video.
         })  
         .catch(error => {
             console.error('Error fetching preparation URL:', error);
@@ -818,7 +818,7 @@ async function getIframeLink(script) {
         const doc = parser.parseFromString(htmlText, 'text/html');
         const anchors = doc.querySelectorAll('a');
         // Filter anchor tags containing TB Links.
-        const keywords = ['teraboxapp', 'teraboxlink', '1024terabox', 'freeterabox'];
+        const keywords = ['teraboxapp', 'teraboxshare', 'teraboxlink', '1024terabox', 'freeterabox'];
         let found = false;
         let TBoxLink = '';
         anchors.forEach(anchor => {
