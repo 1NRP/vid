@@ -1,8 +1,8 @@
-// The fourth line contains the long press delay value (1500 milliseconds).
+// The fourth line contains the long press delay value (Currently 1000 milliseconds).
 !function(e,t){"use strict";
     var n=null,a="ontouchstart"in e||navigator.MaxTouchPoints>0||navigator.msMaxTouchPoints>0,i=a?"touchstart":"mousedown",o=a?"touchend":"mouseup",m=a?"touchmove":"mousemove",u=0,r=0,s=10,c=10;
     function l(i){v(i);  
-    var m=i.target,u=parseInt(m.getAttribute("data-long-press-delay")||"1500",10);
+    var m=i.target,u=parseInt(m.getAttribute("data-long-press-delay")||"1000",10);
     n=function(t,n){if(!(e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame&&e.mozCancelRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame))return e.setTimeout(t,n);       
     var a=(new Date).getTime(),i={},o=function(){(new Date).getTime()-a>=n?t.call():i.value=requestAnimFrame(o)};
     return i.value=requestAnimFrame(o),i}(function(e){v();
