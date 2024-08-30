@@ -658,7 +658,7 @@ async function newTabPlay() {
         var { fs_id } = params.list[0];
         //var { fs_id, size, server_filename, thumbs: { url2 } } = params.list[0];
         var playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
-        window.open(playUrl, '_blank');  // Opening stream URL in new tab.
+        window.open(playUrl, '_blank', 'noopener,noreferrer');  // Opening stream URL in new tab.
       } catch (error) {
             alert('Failed to fetch data from Terabox API. Please try again later.');
       };
@@ -742,7 +742,7 @@ function loadNextPosts() {
     // Update current channel name
     currentChannelName = channelName;
     // Update message ID input field with the last calculated message ID.
-    document.getElementById('messageID').value = `${interval}/${lastMessageID + (20 * interval)}`;
+    document.getElementById('messageID').value = `${interval}/${lastMessageID + (10 * interval)}`;
 }
 
 // Event listener to get the Last Message's ID of the selected Telegram Channel.
@@ -751,7 +751,7 @@ function loadNextPosts() {
 document.getElementById('channelName').addEventListener('change', async function() {
     async function getMessageID() {
         const channelName = document.getElementById('channelName').value;
-        const TgChannel = 'https://t.me/s/' + encodeURIComponent(channelName); // Telegram Channel URL to fetch and parse.
+        const TgChannel = 'https://t.me/s/' + channelName; // Telegram Channel URL to fetch and parse.
         try {
             const proxyUrl = 'https://api.allorigins.win/get?url=';
             const response = await fetch(proxyUrl + encodeURIComponent(TgChannel));
