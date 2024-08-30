@@ -237,7 +237,7 @@
       height: 350px;
       border-radius: 5px;
       padding: 2px;
-      border: 2px solid #0a8030;
+      border: 2px solid #083070;
       background-color: #000;
       display: flex;
       justify-content: center;
@@ -345,7 +345,7 @@
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="MdiskPlay()" data-long-press-delay="400">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''">✖️</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''" ondblclick="document.getElementById('player').src=''">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
