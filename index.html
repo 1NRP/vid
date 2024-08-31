@@ -654,7 +654,8 @@ async function newTabPlay() {
     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
       try {
         var shortURL = qry.split('/').slice(-1)[0];
-        var teraBoxAPI = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`)}`;
+        //var teraBoxAPI = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`)}`;
+        var teraBoxAPI = `https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`
         var response = await fetch(teraBoxAPI);
         if (!response.ok) {
         throw new Error('Failed to fetch data from Terabox API.');
