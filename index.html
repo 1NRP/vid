@@ -61,9 +61,9 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      width: 98.5vw;
+      width: 98.5dvw;
       display: none;
-      height: 85vh;
+      height: 85dvh;
     }
     #player {
       position: fixed;
@@ -112,6 +112,7 @@
       position: relative;
       max-width: 50px;
       padding: 6px;
+      z-index: 10;
       border: 2px solid #555;
       border-radius: 4px;
     }
@@ -321,6 +322,7 @@
     .poster-image,
     .thumbnailContainer,
     .TG-post-container,
+    #embedVideo,
     #player {
         filter: brightness(60%);
     }
@@ -355,7 +357,7 @@
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="iFramePlay()" data-long-press-delay="400">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''">✖️</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''; document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
@@ -377,7 +379,7 @@
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<iframe id="embedVideo" name="videoFrame" data-long-press-delay="400"></iframe>
+<iframe id="embedVideo" name="videoFrame"></iframe>
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
@@ -404,12 +406,6 @@ el.addEventListener('long-press', function(e) {
   VercelPlay();
 });
 
-var el = document.getElementById('embedVideo');
-el.addEventListener('click', function(e) {
-  e.preventDefault()
-  document.getElementById('embedVideo').style.height='195px';
-});
-
 var el = document.getElementById('clearBtn');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
@@ -434,6 +430,7 @@ brSlider.addEventListener('input', function () {
     const brightnessValue = this.value;
     document.getElementById('Default-Position-Elements').style.filter = `brightness(${brightnessValue}%)`;
     document.getElementById('player').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('embedVideo').style.filter = `brightness(${brightnessValue}%)`;
     document.getElementById('menuBox').style.filter = `brightness(${brightnessValue}%)`;
     const thumbnails = document.getElementsByClassName('thumbnailContainer');
     for (let i = 0; i < thumbnails.length; i++) {
