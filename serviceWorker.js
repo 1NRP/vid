@@ -48,7 +48,7 @@ self.addEventListener("fetch", function (event) {
 
       // Modify the headers of the response
       const newHeaders = new Headers(modifiedResponse.headers);
-      newHeaders.set('Access-Control-Allow-Origin', '*');
+      newHeaders.set('Access-Control-Allow-Origin', 'https://1nrp.github.io');
 
       // Return a new response with the modified headers
       return new Response(modifiedResponse.body, {
