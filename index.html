@@ -63,7 +63,7 @@
       background-color: #02121b;
       width: 98.5dvw;
       display: none;
-      height: 60dvh;
+      height: 85dvh;
     }
     #player {
       position: fixed;
@@ -677,7 +677,7 @@ async function iFramePlay() {
         var { fs_id } = params.list[0];
         //var { fs_id, size, server_filename, thumbs: { url2 } } = params.list[0];
         var playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
-        document.getElementById('embedVideo').style.height='85vh';
+        document.getElementById('embedVideo').style.height='85dvh';
         document.getElementById('embedVideo').style.display='block';
         document.getElementById('player').style.display='none';
         window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
