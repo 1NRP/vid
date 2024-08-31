@@ -388,7 +388,7 @@
     <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
     <button class="menuButtons" style="padding: 6px 9px 8px 9px" onclick="document.getElementById('button-play').removeAttribute('onclick'); document.getElementById('button-play').setAttribute('onclick', 'VercelPlay()')">⛰</button>
-    <button class="menuButtons" onclick="var videoSource = document.getElementById('player').src; navigator.clipboard.writeText(videoSource);">📡</button>
+    <button class="menuButtons" onclick="copyVideoSrc()">📡</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
@@ -423,6 +423,18 @@ el.addEventListener('long-press', function(e) {
   e.preventDefault()
   fetchPosts();
 });
+
+// Copy the source of the currently playing video.
+function copyVideoSrc() {
+  var iframeDisplay = document.getElementById('embedVideo').style.display;
+  if (iframeDisplay === 'block') {
+     var videoSource = document.getElementById('embedVideo').src; 
+     navigator.clipboard.writeText(videoSource);
+  } else {
+     var videoSource = document.getElementById('player').src;
+     navigator.clipboard.writeText(videoSource);
+  }
+}
 
 // Brightness Control Functionality.
 const brSlider = document.getElementById('brightnessSlider');
