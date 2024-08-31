@@ -283,7 +283,7 @@
       position: fixed;
    /* top: 5dvh; */
       left: 20dvw;
-      z-index: 40;
+      z-index: 70;
       background-color: #fff;
       color: #000;
       font-weight: 1000;
@@ -367,7 +367,7 @@
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<iframe name="videoFrame" style="position: fixed; top: 0px; left: 0vw; z-index: 70; border: 2px solid #333; border-radius: 6px; background-color: #02121b; width: 100vw; max-height: 85dvh; margin: 0px;"></iframe>
+<iframe id="embedVideo" name="videoFrame" style="position: fixed; top: 0px; left: 0vw; z-index: 40; border: 2px solid #333; border-radius: 6px; background-color: #02121b; width: 98vw; height: auto; margin: 0px;" data-long-press-delay="400"></iframe>
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
@@ -392,6 +392,12 @@ var el = document.getElementById('button-play');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
   VercelPlay();
+});
+
+var el = document.getElementById('embedVideo');
+el.addEventListener('long-press', function(e) {
+  e.preventDefault()
+  document.getElementById('embedVideo').style.height='200px';
 });
 
 var el = document.getElementById('clearBtn');
@@ -799,8 +805,9 @@ async function getIframeLink(script) {
     }
     const src = iframe.src;
     try {
-        const proxyUrl = 'https://api.allorigins.win/get?url=';
-        const response = await fetch(proxyUrl + encodeURIComponent(src));
+        //const proxyUrl = 'https://api.allorigins.win/get?url=';
+        //const response = await fetch(proxyUrl + encodeURIComponent(src));
+        const response = await fetch(src);
         const data = await response.json();
         const htmlText = data.contents;
         // Parse the HTML and extract anchor tags.
