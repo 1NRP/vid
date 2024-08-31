@@ -54,11 +54,21 @@
       border-radius: 4px;
       margin: 2px;
     }
+    #embedVideo {
+      position: fixed;
+      top: 0px;
+      left: 0vw;
+      border: 2px solid #333;
+      border-radius: 6px;
+      background-color: #02121b;
+      width: 98.5dvw;
+      height: auto;
+      max-height: 85dvh;
+    }
     #player {
       position: fixed;
       top: 0px;
       left: 0vw;
-      z-index: 30;
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
@@ -232,7 +242,7 @@
       position: fixed;
       top: 2dvh;
       left: 5dvw;
-      z-index: 35;
+      z-index: 40;
       width: 88%;
       height: 350px;
       border-radius: 5px;
@@ -283,7 +293,7 @@
       position: fixed;
    /* top: 5dvh; */
       left: 20dvw;
-      z-index: 70;
+      z-index: 50;
       background-color: #fff;
       color: #000;
       font-weight: 1000;
@@ -344,8 +354,8 @@
     <div id="post-container" data-long-press-delay="400"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" onclick="newTabPlay()" data-long-press-delay="400">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('vid').value=''" ondblclick="document.getElementById('player').src=''">✖️</button>
+    <button id="button-play" onclick="iFramePlay()" data-long-press-delay="400">PLAY</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value=''" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
@@ -367,7 +377,7 @@
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<iframe id="embedVideo" name="videoFrame" style="position: fixed; top: 0px; left: 0vw; z-index: 40; border: 2px solid #333; border-radius: 6px; background-color: #02121b; width: 98.5dvw; margin: 0px;" data-long-press-delay="400"></iframe>
+<iframe id="embedVideo" name="videoFrame" data-long-press-delay="400"></iframe>
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
@@ -397,7 +407,7 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('embedVideo');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
-  document.getElementById('embedVideo').style.height='195px';
+  document.getElementById('embedVideo').style.height='195';
 });
 
 var el = document.getElementById('clearBtn');
@@ -406,14 +416,12 @@ el.addEventListener('long-press', function(e) {
   var elements = document.getElementsByClassName('secondRow'); for (var i = 0; i < elements.length; i++) { elements[i].style.display = (elements[i].style.display === 'none' || elements[i].style.display === '') ? 'inline' : 'none'; };
 });
 
-// This event has 400 ms delay for long press.
 var el = document.getElementById('player');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
   document.getElementById('player').style.maxHeight='195px';
 });
-  
-// This event has 400 ms delay for long press.
+
 var el = document.getElementById('post-container');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
@@ -608,10 +616,10 @@ async function VercelPlay() {
                 throw new Error('Failed to fetch M3U8 URL');
             }
             const responseData = await response.json();
-            const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + VideoId + ".m3u8";
+            const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + videoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById('player').style.maxHeight='85dvh';
-            document.getElementById('player').style.zIndex = 50;
+            document.getElementById('embedVideo').style.display='none';
             document.getElementById("player").play();
         } catch (error) {
             console.error('Error fetching or processing:', error);
@@ -621,7 +629,7 @@ async function VercelPlay() {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = qry;
         document.getElementById('player').style.maxHeight='85dvh';
-        document.getElementById('player').style.zIndex = 50;
+        document.getElementById('embedVideo').style.display='none';
         document.getElementById("player").play();
     }
 }
@@ -668,7 +676,9 @@ async function newTabPlay() {
         var { fs_id } = params.list[0];
         //var { fs_id, size, server_filename, thumbs: { url2 } } = params.list[0];
         var playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
-        document.getElementById('embedVideo').style.height='85dvh';
+        document.getElementById('embedVideo').style.maxHeight='85dvh';
+        document.getElementById('embedVideo').style.display='block';
+        document.getElementById('player').style.display='none';
         window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
       } catch (error) {
             alert('Failed to fetch data from Terabox API. Please try again later.');
@@ -677,7 +687,7 @@ async function newTabPlay() {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = qry;
         document.getElementById('player').style.maxHeight='85dvh';
-        document.getElementById('player').style.zIndex = 50;
+        document.getElementById('embedVideo').style.display='none';
         document.getElementById("player").play();
     }
 }
