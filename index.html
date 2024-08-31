@@ -367,7 +367,7 @@
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<iframe name="videoFrame" style="position: fixed; top: 0px; left: 0vw; z-index: 70; border: 2px solid #333; border-radius: 6px; background-color: #02121b; max-width: 100vw; max-height: 85dvh; margin: 0px;"></iframe>
+<iframe name="videoFrame" style="position: fixed; top: 0px; left: 0vw; z-index: 70; border: 2px solid #333; border-radius: 6px; background-color: #02121b; width: 100vw; max-height: 85dvh; margin: 0px;"></iframe>
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
@@ -602,7 +602,7 @@ async function VercelPlay() {
                 throw new Error('Failed to fetch M3U8 URL');
             }
             const responseData = await response.json();
-            const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + fullVideoId + ".m3u8";
+            const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + VideoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             document.getElementById('player').style.maxHeight='85dvh';
             document.getElementById("player").play();
