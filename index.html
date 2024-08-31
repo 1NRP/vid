@@ -635,7 +635,7 @@ async function VercelPlay() {
 }
 
 // (Play Video In A New Tab) Paste link and PLAY button function.
-async function newTabPlay() {
+async function iFramePlay() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
     if (qry === "") {
         // Check if the clipboard API is supported
