@@ -389,10 +389,18 @@
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
     <button class="menuButtons" style="padding: 6px 9px 8px 9px" onclick="document.getElementById('button-play').removeAttribute('onclick'); document.getElementById('button-play').setAttribute('onclick', 'VercelPlay()')">⛰</button>
     <button class="menuButtons" onclick="copyVideoSrc()">📡</button>
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="corsTest()">📻</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
 <script>
+async function corsTest() {
+  const url = 'https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=1wNygaimaEEky7K_dbNQE_g&root=1';
+  const response = await fetch(url);
+  const data = await response.json();
+  const { uk, shareid } = data;
+  document.getElementById('vid').value = uk;
+}
+
 // Long Press Events.
 var el = document.getElementById('textBox');
 el.addEventListener('long-press', function(e) {
