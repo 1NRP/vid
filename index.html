@@ -367,7 +367,7 @@
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<iframe id="embedVideo" name="videoFrame" style="position: fixed; top: 0px; left: 0vw; z-index: 40; border: 2px solid #333; border-radius: 6px; background-color: #02121b; width: 98vw; height: auto; margin: 0px;" data-long-press-delay="400"></iframe>
+<iframe id="embedVideo" name="videoFrame" style="position: fixed; top: 0px; left: 0vw; z-index: 40; border: 2px solid #333; border-radius: 6px; background-color: #02121b; width: 98.5dvw; height: auto; margin: 0px;" data-long-press-delay="400"></iframe>
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
@@ -654,8 +654,8 @@ async function newTabPlay() {
     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
       try {
         var shortURL = qry.split('/').slice(-1)[0];
-        //var teraBoxAPI = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`)}`;
-        var teraBoxAPI = `https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`
+        var teraBoxAPI = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`)}`;
+        //var teraBoxAPI = `https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`
         var response = await fetch(teraBoxAPI);
         if (!response.ok) {
         throw new Error('Failed to fetch data from Terabox API.');
@@ -806,9 +806,9 @@ async function getIframeLink(script) {
     }
     const src = iframe.src;
     try {
-        //const proxyUrl = 'https://api.allorigins.win/get?url=';
-        //const response = await fetch(proxyUrl + encodeURIComponent(src));
-        const response = await fetch(src);
+        const proxyUrl = 'https://api.allorigins.win/get?url=';
+        const response = await fetch(proxyUrl + encodeURIComponent(src));
+        //const response = await fetch(src);
         const data = await response.json();
         const htmlText = data.contents;
         // Parse the HTML and extract anchor tags.
