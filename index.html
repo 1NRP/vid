@@ -61,9 +61,10 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      width: 98.5dvw;
+      width: 98.5vw;
       height: auto;
-      max-height: 85dvh;
+      max-height: 85vh;
+      margin: 0px;
     }
     #player {
       position: fixed;
@@ -72,8 +73,8 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      max-width: 98.5dvw; /* dvw = dynamic viewport width */
-      max-height: 85dvh; /* dvh = dynamic viewport height */
+      max-width: 98.5dvw;       /* dvw = dynamic viewport width */
+      max-height: 85dvh;        /* dvh = dynamic viewport height */
       margin: 0px 0px 0px 0px;  /* Top, Right, Bottom, Left */
     }
     #saveDeleteBtn {
@@ -407,7 +408,7 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('embedVideo');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
-  document.getElementById('embedVideo').style.height='195';
+  document.getElementById('embedVideo').style.maxHeight='195px';
 });
 
 var el = document.getElementById('clearBtn');
@@ -618,9 +619,7 @@ async function VercelPlay() {
             const responseData = await response.json();
             const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + videoId + ".m3u8";
             document.getElementById("player").src = playUrl;
-            document.getElementById('player').style.maxHeight='85dvh';
-            document.getElementById('embedVideo').style.display='none';
-            document.getElementById("player").play();
+            adjustStyles();
         } catch (error) {
             console.error('Error fetching or processing:', error);
             alert('Failed to fetch M3U8 File. Please try again later.');
@@ -628,15 +627,21 @@ async function VercelPlay() {
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = qry;
-        document.getElementById('player').style.maxHeight='85dvh';
-        document.getElementById('embedVideo').style.display='none';
-        document.getElementById("player").play();
+        adjustStyles();
     }
 }
 
-// (Play Video In A New Tab) Paste link and PLAY button function.
+// Repetitive code for height and display adjustment in 'PLAY' functions.
+  function adjustStyles() {
+    document.getElementById('player').style.display='block';
+    document.getElementById('player').style.maxHeight='85dvh';
+    document.getElementById('embedVideo').style.display='none';
+    document.getElementById('player').play();
+  }
+  
+// (Play Video In An Iframe-[Playing directly in HTML5 Player encounters Error due to presence of 'Referrer' URL]). Paste link and PLAY button function.
 async function iFramePlay() {
-    var qry = document.getElementById("vid").value.trim(); // Trim whitespace
+    var qry = document.getElementById("vid").value.trim(); // Trim whitespaces
     if (qry === "") {
         // Check if the clipboard API is supported
         if (!navigator.clipboard) {
@@ -676,19 +681,17 @@ async function iFramePlay() {
         var { fs_id } = params.list[0];
         //var { fs_id, size, server_filename, thumbs: { url2 } } = params.list[0];
         var playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
-        document.getElementById('embedVideo').style.maxHeight='85dvh';
+        document.getElementById('embedVideo').style.maxHeight='85vh';
         document.getElementById('embedVideo').style.display='block';
         document.getElementById('player').style.display='none';
         window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
       } catch (error) {
             alert('Failed to fetch data from Terabox API. Please try again later.');
-      };
-    } else {
-        // Not a terabox URL, play as usual
-        document.getElementById("player").src = qry;
-        document.getElementById('player').style.maxHeight='85dvh';
-        document.getElementById('embedVideo').style.display='none';
-        document.getElementById("player").play();
+      }
+  } else {
+      // Not a terabox URL, play as usual
+      document.getElementById("player").src = qry;
+      adjustStyles();
     }
 }
 
