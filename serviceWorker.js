@@ -1,6 +1,9 @@
+var staticCacheName = "NRP_PWA";
 self.addEventListener("install", function (e) {
   e.waitUntil(
-    // Define task to perform during installation if needed.
+    caches.open(staticCacheName).then(function (cache) {
+      return cache.addAll(["/vid"]);
+    })
   );
 });
 
