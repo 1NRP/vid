@@ -56,19 +56,18 @@
     }
     #embedVideo {
       position: fixed;
-      top: 0px;
+      top: 0vh;
       left: 0vw;
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
       width: 98.5vw;
-      height: auto;
-      max-height: 85vh;
-      margin: 0px;
+      display: none;
+      height: 85vh;
     }
     #player {
       position: fixed;
-      top: 0px;
+      top: 0vh;
       left: 0vw;
       border: 2px solid #333;
       border-radius: 6px;
@@ -392,7 +391,7 @@
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
 <script>
-// Long Press Events. (currently 1500 milliseconds delay except for Video Player(400 ms)).
+// Long Press Events.
 var el = document.getElementById('textBox');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
@@ -406,9 +405,9 @@ el.addEventListener('long-press', function(e) {
 });
 
 var el = document.getElementById('embedVideo');
-el.addEventListener('long-press', function(e) {
+el.addEventListener('click', function(e) {
   e.preventDefault()
-  document.getElementById('embedVideo').style.maxHeight='195px';
+  document.getElementById('embedVideo').style.height='195px';
 });
 
 var el = document.getElementById('clearBtn');
@@ -577,7 +576,6 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-
 // (Vercel Serverless Function Method) Paste link and PLAY button function.
 async function VercelPlay() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespace
@@ -633,9 +631,10 @@ async function VercelPlay() {
 
 // Repetitive code for height and display adjustment in 'PLAY' functions.
   function adjustStyles() {
+    document.getElementById('embedVideo').src='';
+    document.getElementById('embedVideo').style.display='none';
     document.getElementById('player').style.display='block';
     document.getElementById('player').style.maxHeight='85dvh';
-    document.getElementById('embedVideo').style.display='none';
     document.getElementById('player').play();
   }
   
@@ -681,7 +680,7 @@ async function iFramePlay() {
         var { fs_id } = params.list[0];
         //var { fs_id, size, server_filename, thumbs: { url2 } } = params.list[0];
         var playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
-        document.getElementById('embedVideo').style.maxHeight='85vh';
+        document.getElementById('embedVideo').style.height='85vh';
         document.getElementById('embedVideo').style.display='block';
         document.getElementById('player').style.display='none';
         window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
