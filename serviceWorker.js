@@ -30,7 +30,8 @@ self.addEventListener("fetch", function (event) {
 */
 
 var staticCacheName = "NRP-PWA";
- 
+
+// Cache the app shell during the install phase
 self.addEventListener("install", function (e) {
   e.waitUntil(
     caches.open(staticCacheName).then(function (cache) {
@@ -38,7 +39,8 @@ self.addEventListener("install", function (e) {
     })
   );
 });
- 
+
+// Intercept and handle fetch requests
 self.addEventListener("fetch", function (event) {
   console.log(event.request.url);
   event.respondWith(
@@ -49,6 +51,7 @@ self.addEventListener("fetch", function (event) {
       // Modify the headers of the response
       const newHeaders = new Headers(modifiedResponse.headers);
       newHeaders.set('Access-Control-Allow-Origin', 'https://1nrp.github.io');
+      newHeaders.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, HEAD, DELETE');
 
       // Return a new response with the modified headers
       return new Response(modifiedResponse.body, {
@@ -56,6 +59,9 @@ self.addEventListener("fetch", function (event) {
         statusText: modifiedResponse.statusText,
         headers: newHeaders
       });
+    }).catch(function() {
+      // Fallback to cache if the network request fails
+      return caches.match(event.request);
     })
   );
 });
