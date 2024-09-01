@@ -1,3 +1,9 @@
+/*
+ * Pure JavaScript long-press-event.
+ * https://github.com/john-doherty/long-press-event
+ * @license MIT
+*/
+
 // The fourth line contains the long press delay value (Currently 1000 milliseconds).
 !function(e,t){"use strict";
     var n=null,a="ontouchstart"in e||navigator.MaxTouchPoints>0||navigator.msMaxTouchPoints>0,i=a?"touchstart":"mousedown",o=a?"touchend":"mouseup",m=a?"touchmove":"mousemove",u=0,r=0,s=10,c=10;
