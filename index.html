@@ -434,13 +434,10 @@ el.addEventListener('long-press', function(e) {
 
 // Copy the source of the currently playing video.
 function copyVideoSrc() {
-  var iframeDisplay = document.getElementById('embedVideo').style.display;
-  if (iframeDisplay === 'block') {
-     var playUrl = iFramePlay(); // It grabs the return value(playUrl) from 'iframePlay' function.
-     navigator.clipboard.writeText(playUrl);
+  if (document.getElementById('embedVideo').style.display === 'block') {
+    iFramePlay().then(playUrl => navigator.clipboard.writeText(playUrl));
   } else {
-     var videoSource = document.getElementById('player').src;
-     navigator.clipboard.writeText(videoSource);
+    navigator.clipboard.writeText(document.getElementById('player').src);
   }
 }
 
@@ -708,7 +705,7 @@ async function iFramePlay() {
       // Not a terabox URL, play as usual
       document.getElementById("player").src = qry;
       adjustStyles();
-    }
+  }
   return playUrl;
 }
 
@@ -1104,15 +1101,14 @@ window.addEventListener('load', () => {
 async function registerSW() {
   if ('serviceWorker' in navigator) {
     try {
-      await navigator
-            .serviceWorker
-            .register('serviceWorker.js');
-    }
-    catch (e) {
-      console.log('Service Worker registration failed.');
+      const registration = await navigator.serviceWorker.register('serviceWorker.js');
+      console.log('Service Worker registration successful with scope: ', registration.scope);
+    } catch (e) {
+      console.log('Service Worker registration failed:', e);
     }
   }
 }
+
 </script>
 </body>
 </html>
