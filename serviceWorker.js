@@ -1,68 +1,29 @@
-/*
-var staticCacheName = "NRP_PWA";
+// Import required libraries
+importScripts("lib/config.js");
+importScripts("lib/chrome.js");
+importScripts("lib/runtime.js");
+importScripts("lib/webrequest.js");
+importScripts("lib/netrequest.js");
+importScripts("lib/common.js");
+
+var staticCacheName = "pwa";
+
+// Install event - cache the application shell
 self.addEventListener("install", function (e) {
   e.waitUntil(
     caches.open(staticCacheName).then(function (cache) {
-      return cache.addAll(["/vid"]);
+      return cache.addAll(["/"]); // Cache the root of the site
     })
   );
 });
 
-self.addEventListener("fetch", function (event) {
-  event.respondWith(
-    fetch(event.request).then(function (networkResponse) {
-      // Clone the response to modify headers
-      let modifiedResponse = networkResponse.clone();
-
-      // Modify the headers of the response
-      const newHeaders = new Headers(modifiedResponse.headers);
-      newHeaders.set('Access-Control-Allow-Origin', '*');
-
-      // Return a new response with the modified headers
-      return new Response(modifiedResponse.body, {
-        status: modifiedResponse.status,
-        statusText: modifiedResponse.statusText,
-        headers: newHeaders
-      });
-    })
-  );
-});
-*/
-
-var staticCacheName = "NRP-PWA";
-
-// Cache the app shell during the install phase
-self.addEventListener("install", function (e) {
-  e.waitUntil(
-    caches.open(staticCacheName).then(function (cache) {
-      return cache.addAll(["/vid"]);
-    })
-  );
-});
-
-// Intercept and handle fetch requests
+// Fetch event - serve cached content if available
 self.addEventListener("fetch", function (event) {
   console.log(event.request.url);
+
   event.respondWith(
-    fetch(event.request).then(function (networkResponse) {
-      // Clone the response to modify headers
-      let modifiedResponse = networkResponse.clone();
-
-      // Modify the headers of the response
-      const newHeaders = new Headers(modifiedResponse.headers);
-      newHeaders.set('Access-Control-Allow-Origin', 'https://1nrp.github.io');
-      newHeaders.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, HEAD, DELETE');
-
-      // Return a new response with the modified headers
-      return new Response(modifiedResponse.body, {
-        status: modifiedResponse.status,
-        statusText: modifiedResponse.statusText,
-        headers: newHeaders
-      });
-    }).catch(function() {
-      // Fallback to cache if the network request fails
-      return caches.match(event.request);
+    caches.match(event.request).then(function (response) {
+      return response || fetch(event.request); // Serve from cache or fetch from network
     })
   );
 });
-
