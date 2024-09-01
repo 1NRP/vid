@@ -1,1 +1,0 @@
-!function(){"use strict";let t=null;try{t=JSON.parse(document.currentScript.dataset.params)}catch(t){}if(t){const c="__REQUESTLY__";window[c]=window[c]||{},Object.entries(t).forEach((([t,n])=>{window[c][t]=n}))}}();
