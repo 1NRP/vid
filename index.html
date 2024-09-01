@@ -436,8 +436,8 @@ el.addEventListener('long-press', function(e) {
 function copyVideoSrc() {
   var iframeDisplay = document.getElementById('embedVideo').style.display;
   if (iframeDisplay === 'block') {
-     var videoSource = document.getElementById('embedVideo').src; 
-     navigator.clipboard.writeText(videoSource);
+     var playUrl = iFramePlay(); // It grabs the return value(playUrl) from 'iframePlay' function.
+     navigator.clipboard.writeText(playUrl);
   } else {
      var videoSource = document.getElementById('player').src;
      navigator.clipboard.writeText(videoSource);
@@ -709,6 +709,7 @@ async function iFramePlay() {
       document.getElementById("player").src = qry;
       adjustStyles();
     }
+  return playUrl;
 }
 
 // Telegram Post fetching function.
