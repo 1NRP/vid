@@ -35,24 +35,17 @@
     }
     .size {
       color: #b4b4b4;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, Cursive, Palatino, Courier, sans-serif;
       font-size: 15px;
       font-weight: 600;
       margin: 0px 40px 1px 0px;
     }
     .duration {
       color: #b4b4b4;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, Cursive, Palatino, Courier, sans-serif;
       font-size: 15px;
       font-weight: 600;
       margin: 0px 20px 1px 35vw;
-    }
-    #copyLink {
-      background-color: #000;
-      padding: 6px;
-      border: 2px solid #555;
-      border-radius: 4px;
-      margin: 2px;
     }
     #embedVideo {
       position: fixed;
@@ -63,7 +56,7 @@
       background-color: #02121b;
       width: 98.5dvw;
       display: none;
-      height: 85dvh;
+      height: 80dvh;
     }
     #player {
       position: fixed;
@@ -259,15 +252,6 @@
       height: 100%;
       object-fit: contain;
     }
-    h1 {
-      color: DodgerBlue;
-      font-family: Helvetica, Cursive, Palatino, Courier, sans-serif;
-      font-size: 26px;
-      font-weight: 600;
-      line-height: 50px;
-      margin: 0 0 4px;
-      text-align: center;
-    }
     #brightnessSlider {
       width: 80%;
       margin: 0% 10%;
@@ -393,14 +377,6 @@
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
 <script>
-async function corsTest() {
-  const url = 'https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=1wNygaimaEEky7K_dbNQE_g&root=1';
-  const response = await fetch(url);
-  const data = await response.json();
-  const { uk, shareid } = data;
-  document.getElementById('vid').value = uk;
-}
-
 // Long Press Events.
 var el = document.getElementById('textBox');
 el.addEventListener('long-press', function(e) {
@@ -682,19 +658,17 @@ async function iFramePlay() {
     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
       try {
         var shortURL = qry.split('/').slice(-1)[0];
-        var teraBoxAPI = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`)}`;
-        //var teraBoxAPI = `https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`
+        var teraBoxAPI = `https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`;
         var response = await fetch(teraBoxAPI);
         if (!response.ok) {
         throw new Error('Failed to fetch data from Terabox API.');
         }
-        var infoData = await response.json();
-        var params = JSON.parse(infoData.contents);
+        var params = await response.json();
         var { shareid, uk } = params;
         var { fs_id } = params.list[0];
         //var { fs_id, size, server_filename, thumbs: { url2 } } = params.list[0];
         var playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
-        document.getElementById('embedVideo').style.height='85dvh';
+        document.getElementById('embedVideo').style.height='80dvh';
         document.getElementById('embedVideo').style.display='block';
         document.getElementById('player').style.display='none';
         window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
@@ -785,7 +759,6 @@ function loadNextPosts() {
 }
 
 // Event listener to get the Last Message's ID of the selected Telegram Channel.
-// Takes some time for the Message ID to reflect in the box given the large amount of code in a Telegram Channel's website.
 // Approximately 100 posts are present before the last post in these Telegram Channels.
 document.getElementById('channelName').addEventListener('change', async function() {
     async function getMessageID() {
@@ -962,7 +935,6 @@ function handleThumbnailClick(lineText, thumbnailContainer) {
 function fetchPosts() {
     const postsContainer = document.getElementById('post-container');
     postsContainer.innerHTML = ''; // Clear previous posts
-
     fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=2')
     .then(response => response.json())
     .then(data => {
@@ -980,7 +952,6 @@ function fetchPosts() {
                     <div class="post-details">
                         <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
                         <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-                        <!-- <p><button id="copyLink" onclick="handlePosterClick('${link}')">🔗</button></p> -->
                     </div>
                 </div>
             `;
@@ -991,7 +962,6 @@ function fetchPosts() {
         console.error('Error:', error);
     });
 }
-// fetchPosts();    // Uncomment "fetchPosts();" to load photos at page loading.
 // Function to handle clicking on the Poster.
 function handlePosterClick(link) {
     document.getElementById('vid').value = link;
@@ -1016,21 +986,6 @@ document.addEventListener('click', function(event) {
         }, 300);
     }
 });
-  
-// Progressive Web App Service Worker Script.
-window.addEventListener('load', () => {
-  registerSW();
-});
-async function registerSW() {
-  if ('serviceWorker' in navigator) {
-    try {
-      const registration = await navigator.serviceWorker.register('serviceWorker.js');
-      console.log('Service Worker registration successful with scope: ', registration.scope);
-    } catch (e) {
-      console.log('Service Worker registration failed:', e);
-    }
-  }
-}
 
 </script>
 </body>
