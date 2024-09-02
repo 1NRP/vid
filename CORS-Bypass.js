@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         CORS Bypass
-// @description  CORS Via Tampermonkey
+// @description  CORS Bypass Via Tampermonkey.
 // @version      2.0
 // @author       Nihar Ranjan Pradhan
 // @match        https://1nrp.github.io/vid/cors
@@ -11,94 +11,69 @@
 // @icon         https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://mybrowseraddon.com/access-control-allow-origin.html&size=64
 // ==/UserScript==
 
-const CORSViaGM = document.body.appendChild(Object.assign(document.createElement('div'), { id: 'CORSViaGM' }));
 
-addEventListener('fetchViaGM', e => {
-    const { url } = e.detail.forwardingFetch;
-    if (shouldUseGM(url)) {
-        GM_fetch(e.detail.forwardingFetch);
-    } else {
-        defaultFetch(e.detail.forwardingFetch);
-    }
-});
+
+const CORSViaGM = document.body.appendChild(Object.assign(document.createElement('div'), { id: 'CORSViaGM' }));
 
 CORSViaGM.init = function (window = unsafeWindow) {
     if (!window) throw new Error('The window parameter must be passed in!');
-    window.fetch = window.fetchViaGM = fetchViaGM.bind(window);
 
-    // Support for service worker
-    window.forwardingFetch = new BroadcastChannel('forwardingFetch');
-    window.forwardingFetch.onmessage = async e => {
-        const req = e.data;
-        const { url } = req;
-        try {
-            const res = await fetchViaGM(url, req);
-            const response = await res.blob();
-            window.forwardingFetch.postMessage({ type: 'fetchResponse', url, response });
-        } catch (error) {
-            console.error('Error in forwardingFetch onmessage:', error);
+    // Define the native fetch method for non-CORS sites.
+    const nativeFetch = window.fetch.bind(window);
+
+    // Override fetch method selectively
+    window.fetch = function (url, init) {
+        if (shouldUseGM(url)) {
+            return fetchViaGM(url, init);
+        } else {
+            // Use the native fetch for other domains
+            return nativeFetch(url, init);
         }
     };
-
-    window._CORSViaGM && window._CORSViaGM.inited && window._CORSViaGM.inited.done();
 
     const info = '🐒 CORS-Via-GM Initiated.';
     alert('🐵 CORS-BYPASS Activated.');
     console.info(info);
     return info;
 };
-
+// Add sites here to bypass CORS.
 function shouldUseGM(url) {
     const domains = ['https://www.terabox.com', 'https://t.me', 'https://example.com'];
     return domains.some(domain => url.startsWith(domain));
 }
 
-function GM_fetch(p) {
-    GM_xmlhttpRequest({
-        ...p.init,
-        url: p.url,
-        method: p.init.method || 'GET',
-        data: p.body,
-        responseType: 'blob',
-        onload: responseDetails => p.res(new Response(
-            responseDetails.response,
-            {
-                status: responseDetails.status,
-                statusText: responseDetails.statusText,
-                headers: shouldUseGM(p.url) ? modifyHeaders(responseDetails.responseHeaders) : responseDetails.responseHeaders
-            }
-        )),
-        onerror: error => {
-            console.error('GM_xmlhttpRequest failed:', error);
-        }
-    });
-}
-
-function defaultFetch(p) {
-    window.fetch(p.url, p.init).then(response => {
-        p.res(response);
-    }).catch(error => {
-        console.error('Default fetch failed:', error);
-    });
-}
-
 function fetchViaGM(url, init) {
-    let res;
-    const p = new Promise(r => res = r);
-    p.res = res;
-    p.url = url;
-    p.init = init || {};
-    dispatchEvent(new CustomEvent('fetchViaGM', { detail: { forwardingFetch: p } }));
-    return p;
+    return new Promise((resolve, reject) => {
+        GM_xmlhttpRequest({
+            ...init,
+            url: url,
+            method: init?.method || 'GET',
+            data: init?.body,
+            responseType: 'blob', // Adjust this based on your needs
+            onload: responseDetails => {
+                const headers = modifyHeaders(responseDetails.responseHeaders);
+                resolve(new Response(responseDetails.response, {
+                    status: responseDetails.status,
+                    statusText: responseDetails.statusText,
+                    headers
+                }));
+            },
+            onerror: error => {
+                console.error('GM_xmlhttpRequest error:', error);
+                reject(error);
+            }
+        });
+    });
 }
 
-function modifyHeaders(responseHeaders) {
-    const headers = new Headers(responseHeaders);
-
-    // Add the 'Access-Control-Allow-Origin' and 'Access-Control-Allow-Methods' headers.
-    headers.set('Access-Control-Allow-Origin', '*');
-    headers.set('Access-Control-Allow-Methods', 'GET, POST, HEAD, OPTIONS');
-
+function modifyHeaders(headerString) {
+    const headers = new Headers();
+    headerString.trim().split(/[\r\n]+/).forEach(line => {
+        const parts = line.split(': ');
+        const key = parts.shift();
+        const value = parts.join(': ');
+        headers.append(key, value);
+    });
     return headers;
 }
 
