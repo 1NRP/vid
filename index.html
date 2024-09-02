@@ -3,7 +3,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
-  <link rel="manifest" href="manifest.json">
+  <!--  <link rel="manifest" href="manifest.json">  -->
   <meta name="theme-color" content="#02121b">
   <link rel="icon" sizes="192x192" href="images/green-512.png">
   <script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
@@ -393,9 +393,6 @@
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
 <script>
-// Initialize 'CORS Via GM' UserScript.
-CORSViaGM.init();
-
 async function corsTest() {
   const url = 'https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=1wNygaimaEEky7K_dbNQE_g&root=1';
   const response = await fetch(url);
@@ -1108,7 +1105,8 @@ document.addEventListener('click', function(event) {
     }
 });
   
-// Progressive Web App Service Worker Script.
+/*
+// Progressive Web App Service Worker Registration.
 window.addEventListener('load', () => {
   registerSW();
 });
@@ -1122,6 +1120,7 @@ async function registerSW() {
     }
   }
 }
+*/
 
 </script>
 </body>
