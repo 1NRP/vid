@@ -671,7 +671,7 @@ async function iFramePlay() {
         document.getElementById('embedVideo').style.height='80dvh';
         document.getElementById('embedVideo').style.display='block';
         document.getElementById('player').style.display='none';
-        window.open(playUrl, 'videoFrame');
+        window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
       } catch (error) {
             alert('Failed to fetch data from Terabox API. Please try again later.');
       }
