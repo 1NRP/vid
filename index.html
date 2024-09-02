@@ -61,9 +61,9 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      width: 98.5dvw;
+      max-width: 98.5dvw;
       display: none;
-      height: 85dvh;
+      max-height: 85dvh;
     }
     #player {
       position: fixed;
@@ -379,7 +379,7 @@
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<iframe id="embedVideo" name="videoFrame"></iframe>
+<iframe id="embedVideo" name="videoFrame" referrerpolicy="no-referrer"></iframe>
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
@@ -694,10 +694,11 @@ async function iFramePlay() {
         var { fs_id } = params.list[0];
         //var { fs_id, size, server_filename, thumbs: { url2 } } = params.list[0];
         var playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
-        document.getElementById('embedVideo').style.height='85dvh';
         document.getElementById('embedVideo').style.display='block';
+        document.getElementById('embedVideo').src=playUrl;
+        resizeIframe();
         document.getElementById('player').style.display='none';
-        window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
+        //window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
       } catch (error) {
             alert('Failed to fetch data from Terabox API. Please try again later.');
       }
@@ -708,7 +709,17 @@ async function iFramePlay() {
   }
   return playUrl;
 }
-
+// Resize the Iframe dimensions based on video dimensions.
+function resizeIframe() {
+  const iframe = document.getElementById('embedVideo');
+  const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+  const video = iframeDoc.querySelector('video');
+  video.addEventListener('loadedmetadata', function() {
+    iframe.style.width = `${video.videoWidth}px`;
+    iframe.style.height = `${video.videoHeight}px`;
+  });
+}
+  
 // Telegram Post fetching function.
 function fetchSinglePost() {
     const container = document.getElementById('boxContainer');
