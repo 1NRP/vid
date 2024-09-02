@@ -363,7 +363,7 @@
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<iframe id="embedVideo" name="videoFrame"></iframe>
+<iframe id="embedVideo" referrerpolicy="no-referrer" name="videoFrame"></iframe>
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
@@ -671,7 +671,7 @@ async function iFramePlay() {
         document.getElementById('embedVideo').style.height='80dvh';
         document.getElementById('embedVideo').style.display='block';
         document.getElementById('player').style.display='none';
-        window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
+        window.open(playUrl, 'videoFrame');
       } catch (error) {
             alert('Failed to fetch data from Terabox API. Please try again later.');
       }
