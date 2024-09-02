@@ -3,11 +3,11 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
-  <!--  <link rel="manifest" href="manifest.json">  -->
+  <!--  <link rel="manifest" href="PWA/manifest.json">  -->
   <meta name="theme-color" content="#02121b">
   <link rel="icon" sizes="192x192" href="images/green-512.png">
   <script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
-  <!--  <link rel="stylesheet" href="style.css">  -->
+  <!--  <link rel="stylesheet" href="CSS-JS/style.css">  -->
   <title>Nihar's Video Player</title>
 <style>
       body {
@@ -35,14 +35,14 @@
     }
     .size {
       color: #b4b4b4;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, Cursive, Palatino, Courier, sans-serif;
       font-size: 15px;
       font-weight: 600;
       margin: 0px 40px 1px 0px;
     }
     .duration {
       color: #b4b4b4;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, Cursive, Palatino, Courier, sans-serif;
       font-size: 15px;
       font-weight: 600;
       margin: 0px 20px 1px 35vw;
@@ -56,7 +56,7 @@
       background-color: #02121b;
       width: 98.5dvw;
       display: none;
-      max-height: 85dvh;
+      height: 80dvh;
     }
     #player {
       position: fixed;
@@ -380,20 +380,12 @@
     <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
     <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
-    <button class="menuButtons" style="padding: 6px 9px 8px 9px" onclick="document.getElementById('button-play').removeAttribute('onclick'); document.getElementById('button-play').setAttribute('onclick', 'VercelPlay()')">⛰</button>
     <button class="menuButtons" onclick="copyVideoSrc()">📡</button>
-    <button class="menuButtons" onclick="corsTest()">📻</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
 <script>
-async function corsTest() {
-  const url = 'https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=1wNygaimaEEky7K_dbNQE_g&root=1';
-  const response = await fetch(url);
-  const data = await response.json();
-  const { uk, shareid } = data;
-  document.getElementById('vid').value = uk;
-}
-
 // Long Press Events.
 var el = document.getElementById('textBox');
 el.addEventListener('long-press', function(e) {
@@ -549,7 +541,7 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
             console.error('Error fetching or parsing data:', error);
         });
 }
-// getLink();
+//getLink();  // Executes on page load.
 
 // Night-Mode toggle function.
 function nightModeFunction() {
@@ -645,7 +637,7 @@ async function VercelPlay() {
     document.getElementById('player').play();
   }
   
-// (Play Video In An Iframe-[Playing directly in HTML5 Player encounters Error due to presence of 'Referrer' URL]). Paste link and PLAY button function.
+// (Play Video In An Iframe-[Playing directly in HTML5 Player encounters Error.]). Paste link and PLAY button function.
 async function iFramePlay() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespaces
     if (qry === "") {
@@ -676,7 +668,6 @@ async function iFramePlay() {
       try {
         var shortURL = qry.split('/').slice(-1)[0];
         var teraBoxAPI = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`)}`;
-        //var teraBoxAPI = `https://www.terabox.com/api/shorturlinfo?app_id=250528&web=1&channel=dubox&clienttype=0&jsToken=1&dp-logid=1&shorturl=${shortURL}&root=1`
         var response = await fetch(teraBoxAPI);
         if (!response.ok) {
         throw new Error('Failed to fetch data from Terabox API.');
@@ -688,10 +679,9 @@ async function iFramePlay() {
         //var { fs_id, size, server_filename, thumbs: { url2 } } = params.list[0];
         var playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
         document.getElementById('embedVideo').style.display='block';
-        document.getElementById('embedVideo').src = playUrl;
-        resizeIframe();
+        document.getElementById('embedVideo').style.height = '80dvh';
         document.getElementById('player').style.display='none';
-        //window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
+        window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
       } catch (error) {
             alert('Failed to fetch data from Terabox API. Please try again later.');
       }
@@ -701,23 +691,8 @@ async function iFramePlay() {
       adjustStyles();
   }
   return playUrl;
-}
-// Resize the Iframe dimensions based on video dimensions.
-function resizeIframe() {
-  const iframe = document.getElementById('embedVideo');
-  const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-  const video = iframeDoc.querySelector('video');
-  video.addEventListener('loadedmetadata', function() {
-      const computedStyle = window.getComputedStyle(iframe);
-      const maxHeight = parseInt(computedStyle.maxHeight, 10);
-      const videoHeight = video.videoHeight;
-      let newHeight = videoHeight;
-      if (maxHeight && newHeight > maxHeight) {
-      newHeight = maxHeight;
-      iframe.style.height = `${newHeight}px`;
-      }
-   });
-}
+  }
+
 // Telegram Post fetching function.
 function fetchSinglePost() {
     const container = document.getElementById('boxContainer');
@@ -799,7 +774,7 @@ function loadNextPosts() {
 document.getElementById('channelName').addEventListener('change', async function() {
     async function getMessageID() {
         const channelName = document.getElementById('channelName').value;
-        const TgChannel = 'https://t.me/s/' + channelName; // Telegram Channel URL to fetch and parse.
+        const TgChannel = 'https://t.me/s/' + channelName;  // Telegram Channel URL to fetch and parse.
         try {
             const proxyUrl = 'https://api.allorigins.win/get?url=';
             const response = await fetch(proxyUrl + encodeURIComponent(TgChannel));
@@ -848,7 +823,6 @@ async function getIframeLink(script) {
     try {
         const proxyUrl = 'https://api.allorigins.win/get?url=';
         const response = await fetch(proxyUrl + encodeURIComponent(src));
-        //const response = await fetch(src);
         const data = await response.json();
         const htmlText = data.contents;
         // Parse the HTML and extract anchor tags.
@@ -881,7 +855,7 @@ async function getIframeLink(script) {
 /*
 // Old Telegram Post fetching method. Only fetches the Posts.
 // This method does not add a button (PLAY) to paste the TB Link into the video input field.
-// It can't paste the link because Javascript can not be executed on embedded elements which are not from 'same-origin'.
+// It can't extract and paste the TB link because Javascript can not be executed on embedded elements which are not from 'same-origin'.
 function loadNextPosts() {
     const container = document.getElementById('boxContainer');
     const channelName = document.getElementById('channelName').value;
@@ -933,12 +907,12 @@ function loadNextPosts() {
     var selectedValue = this.value;
 
     // Latest message ID for different channels.
-    if (selectedValue === 'desi_bhabhi_shila_terabox') {
-        document.getElementById('messageID').value = '14000';
-    } else if (selectedValue === 'desi_bhabhi_nisha_mdisk') {
+    if (selectedValue === 'Telegram-Channel-1') {
+        document.getElementById('messageID').value = '10000';
+    } else if (selectedValue === 'Telegram-Channel-2') {
         document.getElementById('messageID').value = '20000';
     } else if (selectedValue === 'Example-Channel') {
-        document.getElementById('messageID').value = '100';
+        document.getElementById('messageID').value = '500';
         // Set message ID box value for another option.
     }
   });
@@ -1037,18 +1011,17 @@ document.getElementById('textBox').addEventListener('click', function (event) {
         }, clickDelay);
     }
 });
-
 // Function to handle clicking on the Thumbnail.
 function handleThumbnailClick(lineText, thumbnailContainer) {
     document.getElementById('vid').value = lineText;
     document.getElementById('button-play').click();
     document.body.removeChild(thumbnailContainer);
 }
+
 // Function to load posts from the server
 function fetchPosts() {
     const postsContainer = document.getElementById('post-container');
-    postsContainer.innerHTML = ''; // Clear previous posts
-
+    postsContainer.innerHTML = ''; // Clear previous posts.
     fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=2')
     .then(response => response.json())
     .then(data => {
@@ -1066,7 +1039,6 @@ function fetchPosts() {
                     <div class="post-details">
                         <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
                         <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-                        <!-- <p><button id="copyLink" onclick="handlePosterClick('${link}')">🔗</button></p> -->
                     </div>
                 </div>
             `;
@@ -1077,7 +1049,7 @@ function fetchPosts() {
         console.error('Error:', error);
     });
 }
-// fetchPosts();    // Uncomment "fetchPosts();" to load photos at page loading.
+// fetchPosts();    // Uncomment to load photos at page loading.
 // Function to handle clicking on the Poster.
 function handlePosterClick(link) {
     document.getElementById('vid').value = link;
