@@ -9,9 +9,8 @@ self.addEventListener("install", function (e) {
   );
 });
 
-// Fetch event - serve cached content if available
+// Fetch event - serve cached content if available.
 self.addEventListener("fetch", function (event) {
-  console.log(event.request.url);
   event.respondWith(
     caches.match(event.request).then(function (response) {
       return response || fetch(event.request); // Serve from cache or fetch from network
