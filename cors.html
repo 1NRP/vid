@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#02121b">
   <link rel="icon" sizes="192x192" href="images/green-512.png">
   <script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
-  <!--  <link rel="stylesheet" href="style.css">  -->
+  <!--  <link rel="stylesheet" href="CSS-JS/style.css">  -->
   <title>Nihar's Video Player</title>
 <style>
       body {
@@ -371,9 +371,9 @@
     <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
     <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
-    <button class="menuButtons" style="padding: 6px 9px 8px 9px" onclick="document.getElementById('button-play').removeAttribute('onclick'); document.getElementById('button-play').setAttribute('onclick', 'VercelPlay()')">⛰</button>
     <button class="menuButtons" onclick="copyVideoSrc()">📡</button>
-    <button class="menuButtons" onclick="corsTest()">📻</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
 </div>
 <script>
@@ -671,7 +671,7 @@ async function iFramePlay() {
         document.getElementById('embedVideo').style.height='80dvh';
         document.getElementById('embedVideo').style.display='block';
         document.getElementById('player').style.display='none';
-        window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
+        window.open(playUrl, 'videoFrame', 'noopener');
       } catch (error) {
             alert('Failed to fetch data from Terabox API. Please try again later.');
       }
@@ -681,7 +681,7 @@ async function iFramePlay() {
       adjustStyles();
   }
   return playUrl;
-}
+  }
 
 // Telegram Post fetching function.
 function fetchSinglePost() {
@@ -763,7 +763,7 @@ function loadNextPosts() {
 document.getElementById('channelName').addEventListener('change', async function() {
     async function getMessageID() {
         const channelName = document.getElementById('channelName').value;
-        const TgChannel = 'https://t.me/s/' + channelName; // Telegram Channel URL to fetch and parse.
+        const TgChannel = 'https://t.me/s/' + channelName;  // Telegram Channel URL to fetch and parse.
         try {
             const response = await fetch(TgChannel);
             const htmlText = await response.text();
@@ -924,14 +924,14 @@ document.getElementById('textBox').addEventListener('click', function (event) {
         }, clickDelay);
     }
 });
-
 // Function to handle clicking on the Thumbnail.
 function handleThumbnailClick(lineText, thumbnailContainer) {
     document.getElementById('vid').value = lineText;
     document.getElementById('button-play').click();
     document.body.removeChild(thumbnailContainer);
 }
-// Function to load posts from the server
+
+// Function to load posts from the server.
 function fetchPosts() {
     const postsContainer = document.getElementById('post-container');
     postsContainer.innerHTML = ''; // Clear previous posts
