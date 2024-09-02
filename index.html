@@ -47,13 +47,6 @@
       font-weight: 600;
       margin: 0px 20px 1px 35vw;
     }
-    #copyLink {
-      background-color: #000;
-      padding: 6px;
-      border: 2px solid #555;
-      border-radius: 4px;
-      margin: 2px;
-    }
     #embedVideo {
       position: fixed;
       top: 0vh;
@@ -61,7 +54,7 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      max-width: 98.5dvw;
+      width: 98.5dvw;
       display: none;
       max-height: 85dvh;
     }
@@ -380,7 +373,7 @@
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
 <iframe id="embedVideo" name="videoFrame" referrerpolicy="no-referrer"></iframe>
-<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
+<video id="player" controls controlsList="nofullscreen" referrerpolicy="no-referrer" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
     <button class="menuButtons" onclick="getLink()">🔗</button>
@@ -695,7 +688,7 @@ async function iFramePlay() {
         //var { fs_id, size, server_filename, thumbs: { url2 } } = params.list[0];
         var playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
         document.getElementById('embedVideo').style.display='block';
-        document.getElementById('embedVideo').src=playUrl;
+        document.getElementById('embedVideo').src = playUrl;
         resizeIframe();
         document.getElementById('player').style.display='none';
         //window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
@@ -715,11 +708,16 @@ function resizeIframe() {
   const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
   const video = iframeDoc.querySelector('video');
   video.addEventListener('loadedmetadata', function() {
-    iframe.style.width = `${video.videoWidth}px`;
-    iframe.style.height = `${video.videoHeight}px`;
-  });
+      const computedStyle = window.getComputedStyle(iframe);
+      const maxHeight = parseInt(computedStyle.maxHeight, 10);
+      const videoHeight = video.videoHeight;
+      let newHeight = videoHeight;
+      if (maxHeight && newHeight > maxHeight) {
+      newHeight = maxHeight;
+      iframe.style.height = `${newHeight}px`;
+      }
+   });
 }
-  
 // Telegram Post fetching function.
 function fetchSinglePost() {
     const container = document.getElementById('boxContainer');
