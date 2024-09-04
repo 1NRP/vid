@@ -629,7 +629,7 @@ async function VercelPlay() {
   }
 
 // iFrame Play with 3 retries for unsuccessful TB API requests.
-function iFramePlay() {
+async function iFramePlay() {
     var qry = document.getElementById("vid").value.trim(); // Trim whitespaces
     if (qry === "") {
         // Check if the clipboard API is supported
