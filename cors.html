@@ -4,10 +4,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
   <meta name="theme-color" content="#02121b">
-  <link rel="icon" sizes="192x192" href="images/green-512.png">
+  <link rel="icon" sizes="64x64" href="images/green-512.png">
   <script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
   <!--  <link rel="stylesheet" href="CSS-JS/style.css">  -->
-  <title>Nihar's Video Player</title>
+  <title>Nihar's Video Player (CORS)</title>
 <style>
       body {
       background-color: #0d2136;  
@@ -231,7 +231,7 @@
       margin: 2px 0px;
       margin-left: 0px;
     }
-    .thumbnailContainer {
+    #thumbnailContainer {
       position: fixed;
       top: 2dvh;
       left: 5dvw;
@@ -240,7 +240,7 @@
       height: 350px;
       border-radius: 5px;
       padding: 2px;
-      border: 2px solid #083070;
+      border: 2px solid #0d2136;
       background-color: #000;
       display: flex;
       justify-content: center;
@@ -621,9 +621,9 @@ async function iFramePlay() {
 async function VercelPlay() {
     const query = await checkClipboard();
     // Check if the URL contains 'Terabox'
-    if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
+    if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
         // Extract the video ID from the URL
-        var videoId = qry.split('/').slice(-1)[0];
+        var videoId = query.split('/').slice(-1)[0];
         try {
             // Make a request to the API endpoint.
             const response = await fetch(`https://1nrp.vercel.app/api/Play/getM3U8?shortURL=${videoId}`, {
@@ -896,14 +896,13 @@ async function showThumbnail(lineText) {
     const shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
     const jsonData = await getTboxAPI(shortURL);
     const imageUrl = jsonData.list[0].thumbs.url2;
-    const thumbnailContainer = document.createElement('div');
-    thumbnailContainer.className = 'thumbnailContainer';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}', this.parentNode)" alt="Thumbnail Image">`;
-    document.body.appendChild(thumbnailContainer);
+    const thumbnailContainer = document.getElementById('thumbnailContainer');
+    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image">`;
+    document.getElementById('thumbnailContainer').style.display='block';
     // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
         if (!thumbnailContainer.contains(event.target)) {
-            document.body.removeChild(thumbnailContainer);
+            document.getElementById(thumbnailContainer').style.display='none';
             document.removeEventListener('click', handleClickOutside);
         }
     });
@@ -926,10 +925,10 @@ document.getElementById('textBox').addEventListener('click', function (event) {
     }
 });
 // Function to handle clicking on the Thumbnail.
-function handleThumbnailClick(lineText, thumbnailContainer) {
+function handleThumbnailClick(lineText) {
     document.getElementById('vid').value = lineText;
     document.getElementById('button-play').click();
-    document.body.removeChild(thumbnailContainer);
+    document.getElementById('thumbnailContainer').style.display='none';
 }
 
 // Function to load posts from the server.
