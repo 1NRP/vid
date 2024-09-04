@@ -656,7 +656,7 @@ async function iFramePlay() {
     }
     // Check if the URL contains 'Terabox'.
     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
-        const shortURL = qry.split.('/').slice(-1)[0];
+        const shortURL = qry.split('/').slice(-1)[0];
         getTboxAPI(shortURL).then(jsonData => {
             const { shareid, uk } = jsonData;
             const { fs_id } = jsonData.list[0];
