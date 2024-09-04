@@ -304,7 +304,7 @@
         color: #b4b4b4;
     }
     .poster-image,
-    .thumbnailContainer,
+    #thumbnailContainer,
     .TG-post-container,
     #embedVideo,
     #player {
@@ -365,6 +365,7 @@
 <!--  Fixed Position Elements. -->
 <iframe id="embedVideo" referrerpolicy="no-referrer" name="videoFrame"></iframe>
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
+<div id="thumbnailContainer"></div>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
     <button class="menuButtons" onclick="getLink()">🔗</button>
@@ -425,10 +426,7 @@ brSlider.addEventListener('input', function () {
     document.getElementById('player').style.filter = `brightness(${brightnessValue}%)`;
     document.getElementById('embedVideo').style.filter = `brightness(${brightnessValue}%)`;
     document.getElementById('menuBox').style.filter = `brightness(${brightnessValue}%)`;
-    const thumbnails = document.getElementsByClassName('thumbnailContainer');
-    for (let i = 0; i < thumbnails.length; i++) {
-        thumbnails[i].style.filter = `brightness(${brightnessValue}%)`;
-    }
+    document.getElementById('thumbnailContainer').style.filter = `brightness(${brightnessValue}%)`;
 });
 
 // Show Alerts depending upon the response received.
