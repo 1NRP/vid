@@ -235,6 +235,7 @@
       position: fixed;
       top: 2dvh;
       left: 5dvw;
+      display: none;
       z-index: 40;
       width: 88%;
       height: 350px;
@@ -457,9 +458,10 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
                 });
 
                 if (response.ok) {
-                    console.log('Link sent to Vercel KV.');
+                    const data = await response.json(); // Wait for the JSON response
+                    const listCount = data.result;
                     // Show "Link Saved" alert when "OK" response (200) is received from the server.
-                    showAlert({ BgColor: '#1bd13d', Text: '✔ Link Saved'});
+                    showAlert({ BgColor: '#1bd13d', Text: `${listCount} ✔ Link Saved`});
                 } else {
                     const errorData = await response.json();
                     console.error('Error from server:', errorData.error);
@@ -902,7 +904,7 @@ async function showThumbnail(lineText) {
     // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
         if (!thumbnailContainer.contains(event.target)) {
-            document.getElementById(thumbnailContainer').style.display='none';
+            document.getElementById('thumbnailContainer').style.display='none';
             document.removeEventListener('click', handleClickOutside);
         }
     });
