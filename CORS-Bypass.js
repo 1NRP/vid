@@ -31,14 +31,14 @@ CORSViaGM.init = function (window = unsafeWindow) {
         }
     };
 
-    const info = '🐒 CORS-Via-GM Initiated.';
-    alert('🐵 CORS-BYPASS Activated.');
+    const info = '🐵🐒🐵 CORS-Via-GM Initiated.';
+    alert('🔵 CORS 🔵 Bypass Activated.');
     console.info(info);
     return info;
 };
 // Add sites here to bypass CORS.
 function shouldUseGM(url) {
-    const domains = ['https://www.terabox.com', 'https://t.me', 'https://example.com'];
+    const domains = ['https://www.terabox.app', 'https://t.me', 'https://example.com'];
     return domains.some(domain => url.startsWith(domain));
 }
 
