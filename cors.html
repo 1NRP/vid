@@ -565,10 +565,10 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-// (Vercel Serverless Function Method) Paste link and PLAY button function.
-async function VercelPlay() {
-    var qry = document.getElementById("vid").value.trim(); // Trim whitespace
-    if (qry === "") {
+// Try to read clipboard on clicking 'PLAY' button if no URL is given.
+async function checkClipboard() {
+    var query = document.getElementById("vid").value.trim(); // Trim whitespaces
+    if (query === "") {
         // Check if the clipboard API is supported
         if (!navigator.clipboard) {
             console.error('Clipboard API not supported');
@@ -582,7 +582,8 @@ async function VercelPlay() {
                 return;
             }
             document.getElementById('vid').value = text.trim(); // Update the input field
-            qry = text.trim(); // Update qry after pasting
+            query = text.trim();
+            return query;
         } catch (err) {
             console.error('Failed to read clipboard contents:', err);
             if (err.name === 'NotAllowedError') {
@@ -590,7 +591,35 @@ async function VercelPlay() {
             }
             return;
         }
+    } else {
+      return query;
     }
+}
+// (Iframe Play Method - Used because HTML5 player can't play an URL without extension.) PLAY Video Function.
+async function iFramePlay() {
+    const query = await checkClipboard();
+    // Check if the URL contains 'Terabox'.
+    if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+        const shortURL = query.split('/').slice(-1)[0];
+        const jsonData = await getTboxAPI(shortURL);
+            const { shareid, uk } = jsonData;
+            const { fs_id } = jsonData.list[0];
+            const playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
+            window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
+            document.getElementById('player').style.display = 'none';
+            document.getElementById('embedVideo').style.height = '80dvh';
+            document.getElementById('embedVideo').style.display = 'block';
+            return playUrl;
+    } else {
+        // Not a terabox URL, play as usual
+        document.getElementById("player").src = query;
+        adjustStyles();
+    }
+}
+
+// (Vercel Serverless Function Method) PLAY Video Function.
+async function VercelPlay() {
+    const query = await checkClipboard();
     // Check if the URL contains 'Terabox'
     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
         // Extract the video ID from the URL
@@ -613,7 +642,7 @@ async function VercelPlay() {
         }
     } else {
         // Not a terabox URL, play as usual
-        document.getElementById("player").src = qry;
+        document.getElementById("player").src = query;
         adjustStyles();
     }
 }
@@ -627,55 +656,9 @@ async function VercelPlay() {
     document.getElementById('player').play();
   }
 
-// iFrame Play with 3 retries for unsuccessful TB API requests.
-async function iFramePlay() {
-    var qry = document.getElementById("vid").value.trim(); // Trim whitespaces
-    if (qry === "") {
-        // Check if the clipboard API is supported
-        if (!navigator.clipboard) {
-            console.error('Clipboard API not supported');
-            return;
-        }
-        // Try to read text from clipboard
-        try {
-            const text = await navigator.clipboard.readText();
-            if (text.trim() === "") {
-                alert("Please Enter URL First!");
-                return;
-            }
-            document.getElementById('vid').value = text.trim(); // Update the input field
-            qry = text.trim();
-        } catch (err) {
-            console.error('Failed to read clipboard contents:', err);
-            if (err.name === 'NotAllowedError') {
-                console.error('Permission to read clipboard denied');
-            }
-            return;
-        }
-    }
-    // Check if the URL contains 'Terabox'.
-    if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
-        const shortURL = qry.split('/').slice(-1)[0];
-        const jsonData = await getTboxAPI(shortURL);
-            const { shareid, uk } = jsonData;
-            const { fs_id } = jsonData.list[0];
-            const playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
-            window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
-            document.getElementById('player').style.display = 'none';
-            document.getElementById('embedVideo').style.height = '80dvh';
-            document.getElementById('embedVideo').style.display = 'block';
-            return playUrl;
-        });
-    } else {
-        // Not a terabox URL, play as usual
-        document.getElementById("player").src = qry;
-        adjustStyles();
-    }
-}
-
 // Function for fetching Terabox API with 3 retries if initial requests fail.
 async function getTboxAPI(shortURL) {
-  const maxAttempts = 3;
+  const maxAttempts = 3;  // Max retries
         let attempts = 0;
         let params;
         while (attempts < maxAttempts) {
@@ -690,7 +673,7 @@ async function getTboxAPI(shortURL) {
                throw new Error('Failed to fetch data from Terabox API.');
                }
                const jsonData = await response.json();
-               return jsonData;  // Exit the loop and return jsonData if fetch is successful
+               return jsonData;  // Exit the loop and return jsonData to the functions that passed the shortURL to this function, if fetch is successful.
            } catch (error) {
                 clearTimeout(timeoutId); // Clear the timeout if there's an error
                 attempts++;
