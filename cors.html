@@ -389,6 +389,12 @@ el.addEventListener('long-press', function(e) {
   VercelPlay();
 });
 
+var el = document.getElementById('embedVideo');
+el.addEventListener('long-press', function(e) {
+  e.preventDefault()
+  document.getElementById('embedVideo').style.height='195px';
+});
+
 var el = document.getElementById('clearBtn');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
