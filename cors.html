@@ -892,7 +892,7 @@ function getLineText(event) {
     return text.substring(startOfLine, endOfLine);
 }
 // Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
-function showThumbnail(lineText) {
+async function showThumbnail(lineText) {
     const shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
     const jsonData = await getTboxAPI(shortURL);
     const imageUrl = jsonData.list[0].thumbs.url2;
