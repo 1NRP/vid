@@ -3,7 +3,6 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
-  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#02121b">
   <link rel="icon" sizes="192x192" href="images/green-512.png">
   <script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
@@ -657,7 +656,7 @@ async function iFramePlay() {
     // Check if the URL contains 'Terabox'.
     if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(qry.toLowerCase())) {
         const shortURL = qry.split('/').slice(-1)[0];
-        getTboxAPI(shortURL).then(jsonData => {
+        const jsonData = await getTboxAPI(shortURL);
             const { shareid, uk } = jsonData;
             const { fs_id } = jsonData.list[0];
             const playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
@@ -665,13 +664,13 @@ async function iFramePlay() {
             document.getElementById('player').style.display = 'none';
             document.getElementById('embedVideo').style.height = '80dvh';
             document.getElementById('embedVideo').style.display = 'block';
+            return playUrl;
         });
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = qry;
         adjustStyles();
-}
-return playUrl;
+    }
 }
 
 // Function for fetching Terabox API with 3 retries if initial requests fail.
@@ -691,7 +690,7 @@ async function getTboxAPI(shortURL) {
                throw new Error('Failed to fetch data from Terabox API.');
                }
                const jsonData = await response.json();
-               break; // Exit the loop if fetch is successful
+               return jsonData;  // Exit the loop and return jsonData if fetch is successful
            } catch (error) {
                 clearTimeout(timeoutId); // Clear the timeout if there's an error
                 attempts++;
@@ -701,7 +700,6 @@ async function getTboxAPI(shortURL) {
                 }
            }
       }
-   return jsonData; // Return the fetched API json data to the functions that passed the shortURL to this function.
 }
   
 // Telegram Post fetching function.
@@ -913,9 +911,8 @@ function getLineText(event) {
 // Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
 function showThumbnail(lineText) {
     const shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
-    getTboxAPI(shortURL).then(jsonData => {
+    const jsonData = await getTboxAPI(shortURL);
     const imageUrl = jsonData.list[0].thumbs.url2;
-    });
     const thumbnailContainer = document.createElement('div');
     thumbnailContainer.className = 'thumbnailContainer';
     thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}', this.parentNode)" alt="Thumbnail Image">`;
