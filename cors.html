@@ -338,7 +338,7 @@
     <div id="post-container" data-long-press-delay="400"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" long-press="alert('btn')" onclick="iFramePlay()" data-long-press-delay="400">PLAY</button>
+    <button id="button-play" onclick="iFramePlay()" data-long-press-delay="400">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
@@ -362,7 +362,7 @@
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
 <iframe id="embedVideo" referrerpolicy="no-referrer" name="videoFrame"></iframe>
-<video id="player" onlong-press="alert('player')" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
+<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
 <div id="thumbnailContainer"></div>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
@@ -385,7 +385,7 @@ el.addEventListener('long-press', function(e) {
 
 var el = document.getElementById('button-play');
 el.addEventListener('long-press', function(e) {
-  e.preventDefault()
+  e.preventDefault();
   VercelPlay();
 });
 
