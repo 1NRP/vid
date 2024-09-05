@@ -338,7 +338,7 @@
     <div id="post-container" data-long-press-delay="400"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" onclick="iFramePlay()" data-long-press-delay="400">PLAY</button>
+    <button id="button-play" long-press="alert('btn')" onclick="iFramePlay()" data-long-press-delay="400">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
@@ -357,12 +357,12 @@
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 <textarea id="textBox" readonly></textarea>
-<input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
+<input id="brightnessSlider" type="range" value="00" min="50" max="150" class="slider">
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<iframe id="embedVideo" referrerpolicy="no-referrer" name="videoFrame" ondblclick="style.height='195px'"></iframe>
-<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
+<iframe id="embedVideo" referrerpolicy="no-referrer" name="videoFrame"></iframe>
+<video id="player" onlong-press="alert('player')" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
 <div id="thumbnailContainer"></div>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
@@ -379,7 +379,7 @@
 // Long Press Events.
 var el = document.getElementById('textBox');
 el.addEventListener('long-press', function(e) {
-  e.preventDefault()
+  e.preventDefault();
   getLink();
 });
 
@@ -389,17 +389,9 @@ el.addEventListener('long-press', function(e) {
   VercelPlay();
 });
 
-var el = document.getElementById('embedVideo');
-el.addEventListener('long-press', function(e) {
-  e.preventDefault()
-  alert('Long');
-  document.getElementById('embedVideo').style.height='195px';
-});
-
 var el = document.getElementById('clearBtn');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
-  alert('clbtn');
   document.getElementById('vid').value='';
   var elements = document.getElementsByClassName('secondRow'); for (var i = 0; i < elements.length; i++) { elements[i].style.display = (elements[i].style.display === 'none' || elements[i].style.display === '') ? 'inline' : 'none'; };
 });
@@ -434,7 +426,6 @@ brSlider.addEventListener('input', function () {
     document.getElementById('embedVideo').style.filter = `brightness(${brightnessValue}%)`;
     document.getElementById('menuBox').style.filter = `brightness(${brightnessValue}%)`;
     document.getElementById('thumbnailContainer').style.filter = `brightness(${brightnessValue}%)`;
-    document.getElementById('clearBtn').style.zIndex = 10;
 });
 
 // Show Alerts depending upon the response received.
