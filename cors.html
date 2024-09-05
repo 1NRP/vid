@@ -361,7 +361,7 @@
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<iframe id="embedVideo" referrerpolicy="no-referrer" name="videoFrame"></iframe>
+<iframe id="embedVideo" referrerpolicy="no-referrer" name="videoFrame" ondblclick="style.height='195px'"></iframe>
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
 <div id="thumbnailContainer"></div>
 <div id="menuBox">
@@ -392,6 +392,7 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('embedVideo');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
+  alert('Long press on iframe');
   document.getElementById('embedVideo').style.height='195px';
 });
 
@@ -432,6 +433,7 @@ brSlider.addEventListener('input', function () {
     document.getElementById('embedVideo').style.filter = `brightness(${brightnessValue}%)`;
     document.getElementById('menuBox').style.filter = `brightness(${brightnessValue}%)`;
     document.getElementById('thumbnailContainer').style.filter = `brightness(${brightnessValue}%)`;
+    document.getElementById('clearBtn').style.zIndex='10';
 });
 
 // Show Alerts depending upon the response received.
