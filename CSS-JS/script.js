@@ -389,8 +389,9 @@ document.getElementById('channelName').addEventListener('change', async function
         const channelName = document.getElementById('channelName').value;
         const TgChannel = 'https://t.me/s/' + channelName;  // Telegram Channel URL to fetch and parse.
         try {
-            const response = await fetch(TgChannel);
-            const htmlText = await response.text();
+            const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(TgChannel));
+            const data = await response.json();
+            const htmlText = data.contents;
             // Parse the HTML content
             const parser = new DOMParser();
             const doc = parser.parseFromString(htmlText, 'text/html');
