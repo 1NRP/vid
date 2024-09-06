@@ -609,6 +609,7 @@ document.addEventListener('click', function(event) {
     }
 });
 
+/*
 // Progressive Web App Service Worker Registration.
 window.addEventListener('load', () => {
   registerSW();
@@ -623,3 +624,4 @@ async function registerSW() {
     }
   }
 }
+*/
