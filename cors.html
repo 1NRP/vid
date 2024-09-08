@@ -849,41 +849,54 @@ document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonC
 // Function to show Thumbnail and Paste LineText in link input field.
 // Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
 function getLineText(event) {
-    // Assume linkBox is a div or similar element with HTML content
     var linkBox = document.getElementById('linkBox');
-    var text = linkBox.innerHTML; // Use innerHTML to get HTML content
+    var text = linkBox.innerHTML; // Get HTML content from the div
+
+    // Get the click position relative to the div
+    var clickX = event.clientX - linkBox.getBoundingClientRect().left;
+    var clickY = event.clientY - linkBox.getBoundingClientRect().top;
     
-    // Get cursor position from selection
+    // Create a temporary element to determine where the click falls
+    var tempElement = document.createElement('div');
+    tempElement.innerHTML = text;
+    tempElement.style.position = 'absolute';
+    tempElement.style.left = '-9999px'; // Move off-screen
+    document.body.appendChild(tempElement);
+
+    // Calculate the position of the click relative to the div
+    var range = document.createRange();
     var selection = window.getSelection();
-    var cursorPosition = selection.focusOffset; // Position within the text
-    
-    // Find start and end of the line
-    var startOfLine = text.lastIndexOf('<br>', cursorPosition - 1); // Find the start of the line
-    var endOfLine = text.indexOf('<', cursorPosition); // Find the end of the line
-    
-    if (startOfLine === -1) {
-        startOfLine = 0;
+    var lineElement = null;
+
+    // Iterate through all child nodes to find the line
+    function findLine(element) {
+        for (let child of element.childNodes) {
+            if (child.nodeType === Node.ELEMENT_NODE) {
+                if (child.tagName === 'BR') continue; // Skip <br> tags
+                if (child.tagName === 'TB-LINK') {
+                    if (child.contains(document.elementFromPoint(clickX, clickY))) {
+                        lineElement = child;
+                        return true;
+                    }
+                }
+                if (findLine(child)) return true;
+            }
+        }
+        return false;
+    }
+
+    findLine(tempElement);
+    document.body.removeChild(tempElement);
+
+    // Extract the URL from the found <tb-link> element
+    if (lineElement) {
+        var tbLinkElement = lineElement.querySelector('tb-link');
+        return tbLinkElement ? tbLinkElement.textContent.trim() : '';
     } else {
-        startOfLine += 4; // Move past the <br> tag
+        return '';
     }
-    
-    if (endOfLine === -1) {
-        endOfLine = text.length;
-    }
-    
-    // Extract the line from the HTML
-    var lineHTML = text.substring(startOfLine, endOfLine);
-    
-    // Create a temporary div to parse the HTML
-    var tempDiv = document.createElement('div');
-    tempDiv.innerHTML = lineHTML;
-    
-    // Find the <tb-link> element within the line
-    var tbLinkElement = tempDiv.querySelector('tb-link');
-    
-    // Extract and return the URL
-    return tbLinkElement ? tbLinkElement.textContent.trim() : '';
 }
+
 
 async function showThumbnail(lineText) {
     const shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
