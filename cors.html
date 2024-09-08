@@ -53,7 +53,7 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      width: 99dvw;
+      width: 99.5dvw;
       display: none;
       height: 80dvh;
     }
@@ -64,7 +64,7 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      max-width: 99dvw;       /* dvw = dynamic viewport width */
+      max-width: 99.5dvw;       /* dvw = dynamic viewport width */
       max-height: 85dvh;        /* dvh = dynamic viewport height */
       margin: 0px 0px 0px 0px;  /* Top, Right, Bottom, Left */
     }
@@ -169,7 +169,7 @@
     }
     #channelName {
       width: 80px;
-      padding: 4px 2px 4px 20px;
+      padding: 4px 2px 4px 15px;
     }
     #messageID {
       width: 60px;
@@ -198,15 +198,14 @@
       padding: 10px 5px;
       color: #b4b4b4;
       font-weight: 800;
-      font-size: 11px;
+      font-size: 10px;
       resize: none;
       background-color: #02121b;
       border: 2px solid #333;
       border-radius: 8px;
-      margin: 2px 0px;
-      margin-left: 0px;
+      margin: 2px 0px 4px 0px;
     }
-    tb-link {
+    tb-link {  /* 'tb-link' is a custom HTML tag. */
       display: block; /* Ensure custom tags are block-level elements to make them separate. Or add '\n\n' to result => 'const result = lines.join('\n\n');' */
     }
     tb-link:hover {
@@ -490,17 +489,16 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
         .then(response => response.json())
         .then(data => {
             let lines = [];
-            data.result.forEach((jsonString) => {
+            data.result.forEach((jsonString, index) => {
                 let parsedObject = JSON.parse(jsonString);
                 for (const key in parsedObject) {
                     if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`<tb-link>${parsedObject[key]}</tb-link>`);
+                        lines.push(`${index}▸ <tb-link>${parsedObject[key]}</tb-link>`);
                     }
                 }
             });
             const result = lines.join('\n');
-            const textbox = document.getElementById('linkBox');
-            textbox.value = result;
+            document.getElementById('linkBox').innerHTML=result;
         })
         .catch(error => {
             console.error('Error fetching or parsing data:', error);
@@ -852,8 +850,8 @@ function getLineText(event) {
     var linkBox = document.getElementById('linkBox');
     var text = linkBox.value;
     var cursorPosition = linkBox.selectionStart; // Get cursor position
-    var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
-    var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
+    var startOfLine = text.lastIndexOf('\n', cursorPosition - 1); // Find the start of the line
+    var endOfLine = text.indexOf('\n', cursorPosition); // Find the end of the line
     // If no line break is found before the cursor position.
     if (startOfLine === -1) {
         startOfLine = 0;
@@ -864,7 +862,8 @@ function getLineText(event) {
     if (endOfLine === -1) {
         endOfLine = text.length;
     }
-    return text.substring(startOfLine, endOfLine);
+    var numberedLine = text.substring(startOfLine, endOfLine);
+    return numberedLine.split('▸').slice(1)[0];
 }
 // Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
 async function showThumbnail(lineText) {
