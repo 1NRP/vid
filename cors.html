@@ -226,6 +226,16 @@
       height: 100%;
       object-fit: contain;
     }
+    .linkNumber {
+      background-color: #572067;
+      color: #fff;
+      padding: 5px;
+      font-weight: 600;
+      font-size: 12px;
+      border: none;
+      margin: 0px 0px 0px 5px;
+      border-radius: 20px;
+    }
     #brightnessSlider {
       width: 80%;
       margin: 0% 10%;
@@ -874,7 +884,7 @@ async function showThumbnail(lineText, linkNumber) {
     const imageUrl = jsonData.list[0].thumbs.url2;
     const thumbnailContainer = document.getElementById('thumbnailContainer');
     document.getElementById('thumbnailContainer').style.display='block';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image"><p>${linkNumber}</p>`;
+    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image"><p><span class="linkNumber">${linkNumber}</span></p>`;
     // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
         if (!thumbnailContainer.contains(event.target)) {
