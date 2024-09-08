@@ -494,7 +494,7 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
                 let parsedObject = JSON.parse(jsonString);
                 for (const key in parsedObject) {
                     if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`(${index} + 1)▸&nbsp;<tb-link>${parsedObject[key]}</tb-link>`);
+                        lines.push(`(${index + 1})▸&nbsp;<tb-link>${parsedObject[key]}</tb-link>`);
                     }
                 }
             });
