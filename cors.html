@@ -199,10 +199,12 @@
       font-weight: 800;
       font-size: 11px;
       resize: none;
+      white-space: pre;
       background-color: #02121b;
       border: 2px solid #333;
       border-radius: 8px;
-      overflow: scroll;
+      overflow-y: scroll;
+      overflow-x: hidden;
       margin: 2px 0px;
     }
     #thumbnailContainer {
@@ -490,7 +492,7 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
                 let parsedObject = JSON.parse(jsonString);
                 for (const key in parsedObject) {
                     if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`${index + 1}●${parsedObject[key]}`);
+                        lines.push(`${index + 1} ● ${parsedObject[key]}`);
                     }
                 }
             });
@@ -861,16 +863,18 @@ function getLineText(event) {
         endOfLine = texts.length;
     }
     var numText = texts.substring(startOfLine, endOfLine);
-    return numText.split('●').slice(1)[0];
+    var lineText = numText.split('●').slice(1)[0];
+    var linkNumber = numText.split('●').slice(0)[0];
+    return lineText, linkNumber;
 }
 // Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
-async function showThumbnail(lineText) {
+async function showThumbnail(lineText, linkNumber) {
     const shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
     const jsonData = await getTboxAPI(shortURL);
     const imageUrl = jsonData.list[0].thumbs.url2;
     const thumbnailContainer = document.getElementById('thumbnailContainer');
     document.getElementById('thumbnailContainer').style.display='block';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image">`;
+    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image"><p>${linkNumber}</p>`;
     // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
         if (!thumbnailContainer.contains(event.target)) {
@@ -892,7 +896,8 @@ document.getElementById('textBox').addEventListener('click', function (event) {
         clickTimeout = setTimeout(function () {
             clickTimeout = null;
             var lineText = getLineText(event);
-            showThumbnail(lineText);
+            var linkNumber = getLineText(event);
+            showThumbnail(lineText, linkNumber);
         }, clickDelay);
     }
 });
