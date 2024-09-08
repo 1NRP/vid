@@ -53,7 +53,7 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      width: 99dvw;
+      width: 98.5dvw;
       display: none;
       height: 80dvh;
     }
@@ -64,7 +64,7 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      max-width: 99dvw;       /* dvw = dynamic viewport width */
+      max-width: 98.5dvw;       /* dvw = dynamic viewport width */
       max-height: 85dvh;        /* dvh = dynamic viewport height */
       margin: 0px 0px 0px 0px;  /* Top, Right, Bottom, Left */
     }
@@ -193,28 +193,17 @@
       background-color: #02121b;
     }
     #textBox {
-      width: 96%;
+      width: 98%;
       height: 150px;
-      padding: 2px;
       color: #b4b4b4;
       font-weight: 800;
-      font-size: 10px;
+      font-size: 11px;
       resize: none;
       background-color: #02121b;
       border: 2px solid #333;
       border-radius: 8px;
       overflow: scroll;
       margin: 2px 0px;
-    }
-    #textBoxHighlighter {
-      position: absolute; /* Ensure it's positioned relative to its container. */
-      margin: 0px 1%;
-      width: 98%;
-      height: 12px;
-      background-color: #d6247d70;
-      display: none;
-      border: none;
-      border-radius: 20px;
     }
     #thumbnailContainer {
       position: fixed;
@@ -501,7 +490,7 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
                 let parsedObject = JSON.parse(jsonString);
                 for (const key in parsedObject) {
                     if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`${index + 1} ● ${parsedObject[key]}`);
+                        lines.push(`${index + 1}●${parsedObject[key]}`);
                     }
                 }
             });
@@ -872,7 +861,7 @@ function getLineText(event) {
         endOfLine = texts.length;
     }
     var numText = texts.substring(startOfLine, endOfLine);
-    return numText.split('●').slice(1)[0].trim();
+    return numText.split('●').slice(1)[0];
 }
 // Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
 async function showThumbnail(lineText) {
@@ -913,15 +902,6 @@ function handleThumbnailClick(lineText) {
     document.getElementById('button-play').click();
     document.getElementById('thumbnailContainer').style.display='none';
 }
-// Highlight the clicked TB link in the 'textBox'.
-document.getElementById('textBox').addEventListener('click', function(event) {
-    const textarea = event.target;
-    const rect = textarea.getBoundingClientRect();
-    const line = document.getElementById('textBoxHighlighter'); 
-    const lineY = event.clientY - rect.top + window.scrollY;
-    line.style.top = `${lineY}px`;
-    line.style.display = 'block';
-});
 
 // Function to load posts from the server.
 function fetchPosts() {
