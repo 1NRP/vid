@@ -326,8 +326,8 @@
 <button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
-<div id="textBox" contenteditable="false"></div>
-<div id="textBoxHighlighter" style="position: absolute; display: none; height: 12px; backgroundColor: #e0429242; width: 100%;  pointer-events: none; border: none; border-radius: 20px;"></div>
+<textarea id="textBox" readonly></textarea>
+<div id="textBoxHighlighter" style="position: absolute; display: none; height: 12px; background-color: #d6247d70; width: 100%;  pointer-events: none; border: none; border-radius: 20px;"></div>
 <input id="brightnessSlider" type="range" value="00" min="50" max="150" class="slider">
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
@@ -495,7 +495,7 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
             });
             const result = lines.join('\n\n');
             const textbox = document.getElementById('textBox');
-            textbox.innerText = result;
+            textbox.value = result;
         })
         .catch(error => {
             console.error('Error fetching or parsing data:', error);
@@ -845,7 +845,7 @@ document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonC
 // Function to show Thumbnail and Paste LineText in link input field.
 function getLineText(event) {
     var textBox = document.getElementById('textBox');
-    var texts = textBox.innerText;
+    var texts = textBox.value;
     var cursorPosition = textBox.selectionStart; // Get cursor position
     var startOfLine = texts.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
     var endOfLine = texts.indexOf('\n\n', cursorPosition); // Find the end of the line
