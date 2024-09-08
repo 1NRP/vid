@@ -195,16 +195,26 @@
     #textBox {
       width: 96%;
       height: 150px;
-      padding: 5px;
+      padding: 2px;
       color: #b4b4b4;
       font-weight: 800;
-      font-size: 11px;
+      font-size: 10px;
       resize: none;
       background-color: #02121b;
       border: 2px solid #333;
       border-radius: 8px;
       overflow: scroll;
-      margin: 2px 0px 4px 0px;
+      margin: 2px 0px;
+    }
+    #textBoxHighlighter {
+      position: absolute; /* Ensure it's positioned relative to its container. */
+      margin: 0px 1%;
+      width: 98%;
+      height: 12px;
+      background-color: #d6247d70;
+      display: none;
+      border: none;
+      border-radius: 20px;
     }
     #thumbnailContainer {
       position: fixed;
@@ -326,8 +336,10 @@
 <button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
-<textarea id="textBox" readonly></textarea>
-<div id="textBoxHighlighter" style="position: absolute; display: none; height: 12px; background-color: #d6247d70; width: 100%;  pointer-events: none; border: none; border-radius: 20px;"></div>
+<div>
+  <textarea id="textBox" readonly></textarea>
+  <div id="textBoxHighlighter"></div>
+</div>
 <input id="brightnessSlider" type="range" value="00" min="50" max="150" class="slider">
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
