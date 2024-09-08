@@ -326,8 +326,8 @@
 <button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
-<div id="textBox" readonly></div>
-<div id="textBoxHighlighter" style="position: absolute; display: none; height: 12px; backgroundColor: #e0429242; width: 100%;  pointer-events: none; border: none; border-radius: 20px;">
+<div id="textBox" contenteditable="false"></div>
+<div id="textBoxHighlighter" style="position: absolute; display: none; height: 12px; backgroundColor: #e0429242; width: 100%;  pointer-events: none; border: none; border-radius: 20px;"></div>
 <input id="brightnessSlider" type="range" value="00" min="50" max="150" class="slider">
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
@@ -845,7 +845,7 @@ document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonC
 // Function to show Thumbnail and Paste LineText in link input field.
 function getLineText(event) {
     var textBox = document.getElementById('textBox');
-    var text = textBox.innerText;
+    var texts = textBox.innerText;
     var cursorPosition = textBox.selectionStart; // Get cursor position
     var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
     var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
@@ -859,7 +859,7 @@ function getLineText(event) {
     if (endOfLine === -1) {
         endOfLine = text.length;
     }
-    var numText text.substring(startOfLine, endOfLine);
+    var numText = texts.substring(startOfLine, endOfLine);
     return numText.split('●').slice(1)[0].trim();
 }
 // Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
