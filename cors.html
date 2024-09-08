@@ -53,7 +53,7 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      width: 99.5dvw;
+      width: 99dvw;
       display: none;
       height: 80dvh;
     }
@@ -64,7 +64,7 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      max-width: 99.5dvw;       /* dvw = dynamic viewport width */
+      max-width: 99dvw;       /* dvw = dynamic viewport width */
       max-height: 85dvh;        /* dvh = dynamic viewport height */
       margin: 0px 0px 0px 0px;  /* Top, Right, Bottom, Left */
     }
@@ -169,7 +169,7 @@
     }
     #channelName {
       width: 80px;
-      padding: 4px 2px 4px 15px;
+      padding: 4px 2px 4px 20px;
     }
     #messageID {
       width: 60px;
@@ -192,25 +192,19 @@
       border-radius: 10px;
       background-color: #02121b;
     }
-    #linkBox {
+    #textBox {
       width: 96%;
       height: 150px;
       padding: 10px 5px;
       color: #b4b4b4;
       font-weight: 800;
-      font-size: 12px;
+      font-size: 10px;
       resize: none;
       background-color: #02121b;
       border: 2px solid #333;
       border-radius: 8px;
-      overflow: scroll;
-      margin: 2px 0px 4px 0px;
-    }
-    tb-link {  /* 'tb-link' is a custom HTML tag. */
-      display: inline; /* Ensure custom tags are block-level elements to make them separate. Or add '\n\n' to result => 'const result = lines.join('\n\n');' */
-    }
-    tb-link:hover {
-      color: #fff444;
+      margin: 2px 0px;
+      margin-left: 0px;
     }
     #thumbnailContainer {
       position: fixed;
@@ -261,7 +255,7 @@
     }
     /* Animations */
     @keyframes Alert {
-      from {font-size: 5px; top: 0dvh}  /* transform: rotate(30deg)} */
+      from {font-size: 5px; top: 0dvh} /* transform: rotate(30deg)} */
       to {font-size: 20px; top: 10dvh}  /* transform: rotate(0deg)} */
     }
     @keyframes menu {
@@ -297,7 +291,7 @@
         border: 2px solid #555;
     }
     #vid,
-    #linkBox,
+    #textBox,
     #button-play,
     .size,
     .duration {
@@ -332,7 +326,8 @@
 <button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
-<div id="linkBox" contenteditable="false"></div>
+<div id="textBox" readonly></div>
+<div id="textBoxHighlighter" style="position: absolute; display: none; height: 12px; backgroundColor: #e0429242; width: 100%;  pointer-events: none; border: none; border-radius: 20px;">
 <input id="brightnessSlider" type="range" value="00" min="50" max="150" class="slider">
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
@@ -353,7 +348,7 @@
 </div>
 <script>
 // Long Press Events.
-var el = document.getElementById('linkBox');
+var el = document.getElementById('textBox');
 el.addEventListener('long-press', function(e) {
   e.preventDefault();
   getLink();
@@ -494,12 +489,13 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
                 let parsedObject = JSON.parse(jsonString);
                 for (const key in parsedObject) {
                     if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`${index + 1}&nbsp▸&nbsp;<tb-link>${parsedObject[key]}</tb-link><br>`);
+                        lines.push(`${index + 1} ● ${parsedObject[key]}`);
                     }
                 }
             });
             const result = lines.join('\n\n');
-            document.getElementById('linkBox').innerHTML=result;
+            const textbox = document.getElementById('textBox');
+            textbox.innerText = result;
         })
         .catch(error => {
             console.error('Error fetching or parsing data:', error);
@@ -814,7 +810,7 @@ async function getIframeLink(script) {
 }
 
 // Logic for toggling the mode between 'storing' and 'deleting' Link.
-const linkBox = document.getElementById('linkBox');
+const textBox = document.getElementById('textBox');
 const placeholder = document.getElementById('vid');
 let clickCount = 0;
 let clickTimer;
@@ -847,57 +843,26 @@ function toggleMode() {
 document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonClick);
 
 // Function to show Thumbnail and Paste LineText in link input field.
-// Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
 function getLineText(event) {
-    var linkBox = document.getElementById('linkBox');
-    var text = linkBox.innerHTML; // Get HTML content from the div
-
-    // Get the click position relative to the div
-    var clickX = event.clientX - linkBox.getBoundingClientRect().left;
-    var clickY = event.clientY - linkBox.getBoundingClientRect().top;
-    
-    // Create a temporary element to determine where the click falls
-    var tempElement = document.createElement('div');
-    tempElement.innerHTML = text;
-    tempElement.style.position = 'absolute';
-    tempElement.style.left = '-9999px'; // Move off-screen
-    document.body.appendChild(tempElement);
-
-    // Calculate the position of the click relative to the div
-    var range = document.createRange();
-    var selection = window.getSelection();
-    var lineElement = null;
-
-    // Iterate through all child nodes to find the line
-    function findLine(element) {
-        for (let child of element.childNodes) {
-            if (child.nodeType === Node.ELEMENT_NODE) {
-                if (child.tagName === 'BR') continue; // Skip <br> tags
-                if (child.tagName === 'TB-LINK') {
-                    if (child.contains(document.elementFromPoint(clickX, clickY))) {
-                        lineElement = child;
-                        return true;
-                    }
-                }
-                if (findLine(child)) return true;
-            }
-        }
-        return false;
-    }
-
-    findLine(tempElement);
-    document.body.removeChild(tempElement);
-
-    // Extract the URL from the found <tb-link> element
-    if (lineElement) {
-        var tbLinkElement = lineElement.querySelector('tb-link');
-        return tbLinkElement ? tbLinkElement.textContent.trim() : '';
+    var textBox = document.getElementById('textBox');
+    var text = textBox.innerText;
+    var cursorPosition = textBox.selectionStart; // Get cursor position
+    var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
+    var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
+    // If no line break is found before the cursor position.
+    if (startOfLine === -1) {
+        startOfLine = 0;
     } else {
-        return '';
+        startOfLine += 2; // Move past the line break
     }
+    // If no line break is found after the cursor position, end of the text
+    if (endOfLine === -1) {
+        endOfLine = text.length;
+    }
+    var numText text.substring(startOfLine, endOfLine);
+    return numText.split('●').slice(1)[0].trim();
 }
-
-
+// Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
 async function showThumbnail(lineText) {
     const shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
     const jsonData = await getTboxAPI(shortURL);
@@ -915,7 +880,7 @@ async function showThumbnail(lineText) {
 }
 let clickTimeout;
 const clickDelay = 200;
-document.getElementById('linkBox').addEventListener('click', function (event) {
+document.getElementById('textBox').addEventListener('click', function (event) {
     if (clickTimeout) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
@@ -936,6 +901,15 @@ function handleThumbnailClick(lineText) {
     document.getElementById('button-play').click();
     document.getElementById('thumbnailContainer').style.display='none';
 }
+// Highlight the clicked TB link in the 'textBox'.
+document.getElementById('textBox').addEventListener('click', function(event) {
+    const textarea = event.target;
+    const rect = textarea.getBoundingClientRect();
+    const line = document.getElementById('textBoxHighlighter'); 
+    const lineY = event.clientY - rect.top + window.scrollY;
+    line.style.top = `${lineY}px`;
+    line.style.display = 'block';
+});
 
 // Function to load posts from the server.
 function fetchPosts() {
