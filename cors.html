@@ -198,7 +198,7 @@
       padding: 10px 5px;
       color: #b4b4b4;
       font-weight: 800;
-      font-size: 11px;
+      font-size: 12px;
       resize: none;
       background-color: #02121b;
       border: 2px solid #333;
@@ -207,7 +207,7 @@
       margin: 2px 0px 4px 0px;
     }
     tb-link {  /* 'tb-link' is a custom HTML tag. */
-      display: block; /* Ensure custom tags are block-level elements to make them separate. Or add '\n\n' to result => 'const result = lines.join('\n\n');' */
+      display: inline; /* Ensure custom tags are block-level elements to make them separate. Or add '\n\n' to result => 'const result = lines.join('\n\n');' */
     }
     tb-link:hover {
       color: #fff444;
@@ -494,7 +494,7 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
                 let parsedObject = JSON.parse(jsonString);
                 for (const key in parsedObject) {
                     if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`${index}<span>▸&nbsp</span><tb-link>${parsedObject[key]}</tb-link>`);
+                        lines.push(`(${index} + 1)▸&nbsp;<tb-link>${parsedObject[key]}</tb-link>`);
                     }
                 }
             });
