@@ -203,6 +203,7 @@
       background-color: #02121b;
       border: 2px solid #333;
       border-radius: 8px;
+      overflow: scroll;
       margin: 2px 0px 4px 0px;
     }
     tb-link {  /* 'tb-link' is a custom HTML tag. */
@@ -493,7 +494,7 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
                 let parsedObject = JSON.parse(jsonString);
                 for (const key in parsedObject) {
                     if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`${index}▸&nbsp<tb-link>${parsedObject[key]}</tb-link>`);
+                        lines.push(`${index}<span>▸&nbsp</span><tb-link>${parsedObject[key]}</tb-link>`);
                     }
                 }
             });
