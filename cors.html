@@ -230,10 +230,9 @@
       background-color: #572067;
       color: #fff;
       padding: 5px;
-      font-weight: 600;
+      font-weight: 800;
       font-size: 12px;
       border: none;
-      margin: -8px 0px 0px 4px;
       border-radius: 20px;
     }
     #brightnessSlider {
@@ -899,7 +898,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
     if (clickTimeout) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
-        var lineText = getLineText(event);
+        var { lineText } = getLineText(event);
         document.getElementById('vid').value = lineText;
         document.getElementById('button-play').click();
     } else {
