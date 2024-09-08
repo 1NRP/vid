@@ -494,11 +494,11 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
                 let parsedObject = JSON.parse(jsonString);
                 for (const key in parsedObject) {
                     if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`(${index + 1})▸&nbsp;<tb-link>${parsedObject[key]}</tb-link>`);
+                        lines.push(`${index + 1}▸&nbsp;<tb-link>${parsedObject[key]}</tb-link>`);
                     }
                 }
             });
-            const result = lines.join('\n');
+            const result = lines.join('\n\n');
             document.getElementById('linkBox').innerHTML=result;
         })
         .catch(error => {
@@ -851,8 +851,8 @@ function getLineText(event) {
     var linkBox = document.getElementById('linkBox');
     var text = linkBox.innerHTML;
     var cursorPosition = linkBox.selectionStart; // Get cursor position
-    var startOfLine = text.lastIndexOf('\n', cursorPosition - 1); // Find the start of the line
-    var endOfLine = text.indexOf('\n', cursorPosition); // Find the end of the line
+    var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
+    var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
     // If no line break is found before the cursor position.
     if (startOfLine === -1) {
         startOfLine = 0;
@@ -864,7 +864,7 @@ function getLineText(event) {
         endOfLine = text.length;
     }
     var numberedLine = text.substring(startOfLine, endOfLine);
-    return numberedLine.split('▸').slice(1)[0];
+    return numberedLine.querySelector('tb-link').textContent.trim();
 }
 // Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
 async function showThumbnail(lineText) {
