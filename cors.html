@@ -356,9 +356,29 @@
     <button class="menuButtons" onclick="copyVideoSrc()">📡</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="getmdp()">🔵</button>
 </div>
 <script>
+// (Temporary) MdiskPlay search results in json format.
+function getmdp() {
+    var url = document.getElementById('vid').value;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let lines = [];
+            data.result.forEach((item, index) => {
+                const teraId = item.id;
+                lines.push(`${index} ● https://teraboxapp.com/s/1${teraId}`);
+            });
+            const result = lines.join('\n\n');
+            const textbox = document.getElementById('textBox');
+            textbox.value = result;
+        })
+        .catch(error => {
+            alert('Error fetching or parsing MdiskPlay json data.');
+        });
+}
+
 // Long Press Events.
 var el = document.getElementById('textBox');
 el.addEventListener('long-press', function(e) {
