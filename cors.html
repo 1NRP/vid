@@ -865,7 +865,7 @@ function getLineText(event) {
     var numText = texts.substring(startOfLine, endOfLine);
     var lineText = numText.split('●').slice(1)[0];
     var linkNumber = numText.split('●').slice(0)[0];
-    return lineText, linkNumber;
+    return { lineText, linkNumber };
 }
 // Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
 async function showThumbnail(lineText, linkNumber) {
@@ -895,8 +895,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
     } else {
         clickTimeout = setTimeout(function () {
             clickTimeout = null;
-            var lineText = getLineText(event);
-            var linkNumber = getLineText(event);
+            var { lineText, linkNumber } = getLineText(event);
             showThumbnail(lineText, linkNumber);
         }, clickDelay);
     }
