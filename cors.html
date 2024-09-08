@@ -857,7 +857,7 @@ function getLineText(event) {
     }
     // If no line break is found after the cursor position, end of the text
     if (endOfLine === -1) {
-        endOfLine = text.length;
+        endOfLine = texts.length;
     }
     var numText = texts.substring(startOfLine, endOfLine);
     return numText.split('●').slice(1)[0].trim();
