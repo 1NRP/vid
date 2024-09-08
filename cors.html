@@ -192,7 +192,7 @@
       border-radius: 10px;
       background-color: #02121b;
     }
-    #textBox {
+    #linkBox {
       width: 96%;
       height: 150px;
       padding: 10px 5px;
@@ -205,6 +205,12 @@
       border-radius: 8px;
       margin: 2px 0px;
       margin-left: 0px;
+    }
+    tb-link {
+      display: block; /* Ensure custom tags are block-level elements to make them separate. Or add '\n\n' to result => 'const result = lines.join('\n\n');' */
+    }
+    tb-link:hover {
+      color: #fff444;
     }
     #thumbnailContainer {
       position: fixed;
@@ -255,7 +261,7 @@
     }
     /* Animations */
     @keyframes Alert {
-      from {font-size: 5px; top: 0dvh} /* transform: rotate(30deg)} */
+      from {font-size: 5px; top: 0dvh}  /* transform: rotate(30deg)} */
       to {font-size: 20px; top: 10dvh}  /* transform: rotate(0deg)} */
     }
     @keyframes menu {
@@ -291,7 +297,7 @@
         border: 2px solid #555;
     }
     #vid,
-    #textBox,
+    #linkBox,
     #button-play,
     .size,
     .duration {
@@ -326,7 +332,7 @@
 <button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
-<textarea id="textBox" readonly></textarea>
+<div id="linkBox" contenteditable="false"></div>
 <input id="brightnessSlider" type="range" value="00" min="50" max="150" class="slider">
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
@@ -347,7 +353,7 @@
 </div>
 <script>
 // Long Press Events.
-var el = document.getElementById('textBox');
+var el = document.getElementById('linkBox');
 el.addEventListener('long-press', function(e) {
   e.preventDefault();
   getLink();
@@ -488,12 +494,12 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
                 let parsedObject = JSON.parse(jsonString);
                 for (const key in parsedObject) {
                     if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`${parsedObject[key]}`);
+                        lines.push(`<tb-link>${parsedObject[key]}</tb-link>`);
                     }
                 }
             });
-            const result = lines.join('\n\n');
-            const textbox = document.getElementById('textBox');
+            const result = lines.join('\n');
+            const textbox = document.getElementById('linkBox');
             textbox.value = result;
         })
         .catch(error => {
@@ -809,7 +815,7 @@ async function getIframeLink(script) {
 }
 
 // Logic for toggling the mode between 'storing' and 'deleting' Link.
-const textBox = document.getElementById('textBox');
+const linkBox = document.getElementById('linkBox');
 const placeholder = document.getElementById('vid');
 let clickCount = 0;
 let clickTimer;
@@ -843,9 +849,9 @@ document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonC
 
 // Function to show Thumbnail and Paste LineText in link input field.
 function getLineText(event) {
-    var textBox = document.getElementById('textBox');
-    var text = textBox.value;
-    var cursorPosition = textBox.selectionStart; // Get cursor position
+    var linkBox = document.getElementById('linkBox');
+    var text = linkBox.value;
+    var cursorPosition = linkBox.selectionStart; // Get cursor position
     var startOfLine = text.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
     var endOfLine = text.indexOf('\n\n', cursorPosition); // Find the end of the line
     // If no line break is found before the cursor position.
@@ -878,7 +884,7 @@ async function showThumbnail(lineText) {
 }
 let clickTimeout;
 const clickDelay = 200;
-document.getElementById('textBox').addEventListener('click', function (event) {
+document.getElementById('linkBox').addEventListener('click', function (event) {
     if (clickTimeout) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
