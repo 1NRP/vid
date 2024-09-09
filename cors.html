@@ -9,9 +9,17 @@
   <!--  <link rel="stylesheet" href="CSS-JS/style.css">  -->
   <title>Nihar's Video Player (CORS)</title>
 <style>
-      body {
+    body {
       background-color: #0d2136;  
       color: #fff;
+    }
+    ::-webkit-scrollbar {
+      display: none;  /* Hide Scroll-Bar of entire page. */
+    }
+    input:focus,  /* Remove Focused element's border outline. */
+    select:focus,
+    textarea:focus {
+      outline:0
     }
     #post-container {
       width: 99%;
@@ -903,7 +911,7 @@ async function showThumbnail(lineText, linkNumber) {
     const imageUrl = jsonData.list[0].thumbs.url2;
     const thumbnailContainer = document.getElementById('thumbnailContainer');
     document.getElementById('thumbnailContainer').style.display='block';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image"><p><span class="linkNumber">${linkNumber}</span></p>`;
+    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
     // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
         if (!thumbnailContainer.contains(event.target)) {
