@@ -4,7 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
   <meta name="theme-color" content="#02121b">
-  <link rel="icon" sizes="64x64" href="images/green-512.png">
+  <!--  <link rel="manifest" href="PWA/manifest.json">  -->
+  <link rel="icon" sizes="192x192" href="images/green-512.png">
   <script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
   <!--  <link rel="stylesheet" href="CSS-JS/style.css">  -->
   <title>Nihar's Video Player (CORS)</title>
@@ -12,9 +13,6 @@
     body {
       background-color: #0d2136;  
       color: #fff;
-    }
-    body::-webkit-scrollbar {
-      display: none;  /* Hide Scroll-Bar of entire page. */
     }
     input:focus,  /* Remove Focused element's border outline. */
     select:focus,
@@ -215,6 +213,14 @@
       overflow-x: hidden;
       margin: 2px 0px;
     }
+    .highlightBar {
+      width: 75vw;
+      height: 10px;
+      left: 20vw;
+      position: absolute;
+      background-color: #b346ad60;
+      pointer-events: none;
+    }
     #thumbnailContainer {
       position: fixed;
       top: 2dvh;
@@ -363,9 +369,9 @@
     <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
     <button class="menuButtons" onclick="copyVideoSrc()">📡</button>
+    <button class="menuButtons" onclick="getmdp()">📥</button>
     <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
-    <button class="menuButtons" onclick="getmdp()">🔵</button>
+    <button class="menuButtons" onclick="vConsole()">🛠️</button>
 </div>
 <script>
 // (Temporary) MdiskPlay search results in json format.
@@ -427,6 +433,39 @@ function copyVideoSrc() {
   } else {
     navigator.clipboard.writeText(document.getElementById('player').src);
   }
+}
+
+// Add a highlighter to the clicked link in the 'textBox'.
+let currentBar = null;
+function addHighlightBar(x, y) {
+    // Remove the existing bar if there is one.
+    if (currentBar) { currentBar.remove(); }
+    const bar = document.createElement('div');
+    bar.className = 'highlightBar';
+    document.body.appendChild(bar);
+    bar.style.top = `${y + window.scrollY}px`;  // Adjust for the scrolled height.
+    currentBar = bar;
+}
+document.getElementById('textBox').addEventListener('click', (event) => {
+addHighlightBar(event.clientX, event.clientY);
+});
+
+// Function to load the vConsole debug tool.
+function vConsole() {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/vconsole@latest/dist/vconsole.min.js';
+    script.onload = () => {
+        if (window.VConsole) {
+            new VConsole();
+        } else {
+            alert('Failed To Load V-Console Library.');
+            console.error('Error Loading vConsole library.');
+        }
+    };
+    script.onerror = () => {
+        console.error('Failed to load VConsole.');
+    };
+    document.head.appendChild(script);
 }
 
 // Brightness Control Functionality.
@@ -1000,6 +1039,24 @@ document.addEventListener('click', function(event) {
         }, 300);
     }
 });
+
+/*
+// Progressive Web App Service Worker Registration.
+window.addEventListener('load', () => {
+  registerSW();
+});
+async function registerSW() {
+  if ('serviceWorker' in navigator) {
+    try {
+      const registration = await navigator.serviceWorker.register('PWA/serviceWorker.js');
+      console.log('Service Worker registration successful with scope: ', registration.scope);
+    } catch (e) {
+      console.log('Service Worker registration failed:', e);
+    }
+  }
+}
+*/
+
 
 </script>
 </body>
