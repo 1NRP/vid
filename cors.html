@@ -455,7 +455,7 @@ function vConsole() {
     script.src = 'vConsole-3.15.1.js';
     script.onload = () => {
         if (window.VConsole) {
-            new VConsole();
+            new VConsole({ theme: 'dark' });
         } else {
             alert('Failed To Load V-Console Library.');
             console.error('Error Loading vConsole library.');
