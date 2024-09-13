@@ -448,6 +448,8 @@ function addHighlightBar(x, y) {
 document.getElementById('textBox').addEventListener('click', (event) => {
 addHighlightBar(event.clientX, event.clientY);
 });
+document.getElementById('textBox').addEventListener('scroll', () => {
+    if (currentBar) { currentBar.remove(); currentBar = null; } });
 
 // Function to load the vConsole debug tool.
 function vConsole() {
