@@ -833,7 +833,7 @@ document.getElementById('channelName').addEventListener('change', async function
             const doc = parser.parseFromString(htmlText, 'text/html');
             // Extract all anchor/link tags
             const anchors = doc.querySelectorAll('a');
-            const
+            const keywords = ['https://t.me/TERABOXBOTVIDE/', 'https://t.me/TERABOXBOTLINK/', 'https://t.me/xvideosgreen/', 'https://t.me/Pure_terabox_Videos/', 'https://t.me/TERABOXLINKU/', 'https://t.me/Terabox_chudai_videos_hd/', 'https://t.me/bhabhi_hot_desi_web/', 'https://t.me/terabox_kavita_xnx_video_in_hin/'];
             let lastMessage = ''; // Variable to store the last matching link
             // Iterate over anchor tags to find the last matching link
             anchors.forEach(anchor => {
@@ -880,7 +880,7 @@ async function getIframeLink(script) {
         const doc = parser.parseFromString(htmlText, 'text/html');
         const anchors = doc.querySelectorAll('a');
         // Filter anchor tags containing TB Links.
-        const keywords = ['teraboxapp', 'teraboxshare', 'teraboxlink', '1024terabox', 'freeterabox'];
+        const keywords = ['teraboxapp', 'teraboxshare', 'terafileshare', 'teraboxlink', '1024terabox', 'freeterabox'];
         let found = false;
         let TBoxLink = '';
         anchors.forEach(anchor => {
