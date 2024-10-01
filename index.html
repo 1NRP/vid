@@ -8,7 +8,7 @@
   <link rel="icon" sizes="192x192" href="images/green-512.png">
   <script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
   <!--  <link rel="stylesheet" href="CSS-JS/style.css">  -->
-  <title>Nihar's Video Player (CORS)</title>
+  <title>Nihar's Video Player</title>
 <style>
     body {
       background-color: #0d2136;  
@@ -297,7 +297,7 @@
     .TG-post-container,
     #embedVideo,
     #player {
-        filter: brightness(60%);
+        filter: brightness(70%);
     }
     #channelName,
     #messageID,
@@ -329,7 +329,7 @@
     <div id="post-container" data-long-press-delay="400"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" onclick="iFramePlay()" data-long-press-delay="400">PLAY</button>
+    <button id="button-play" onclick="apiPlay()" data-long-press-delay="400">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''; document.getElementById('vid').value=''">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
@@ -538,15 +538,15 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
 
             if (response.ok) {
                 const data = await response.json(); // Wait for the JSON response
-                if (data.result !== 0) {
-                    console.log('Link deleted in Vercel KV.');
-                    // Show "Link(s) Deleted" alert if response result is positive {result: (list_count)}. 'list_count' is the number of deleted values.
-                    const listCount = data.result;
-                    showAlert({ BgColor: '#f2074e', Text: `${listCount} ✖ Link Deleted`});
-                } else {
+                if (data.result == 0) {
                     console.log('This Link does not exist in Vercel KV.');
                     // Show "Link Doesn't Exist" alert if response result is zero {result: 0}.
                     showAlert({ BgColor: '#e8af05', Text: "⚠ Link Doesn't Exist"});
+                } else {
+                    console.log('Link deleted in Vercel KV.');
+                    // Show "Link(s) Deleted" alert if response result is more than zero {result: (list_count)}. 'list_count' is the number of deleted values.
+                    const listCount = data.result;
+                    showAlert({ BgColor: '#f2074e', Text: `${listCount} ✖ Link Deleted`});
                 }
             } else {
                 const errorData = await response.json(); // Wait for the JSON error response
@@ -668,6 +668,18 @@ async function iFramePlay() {
     }
 }
 
+// Using third-party API to play video in HTML5 player(more customisable) instead of iframe(less customisable).
+async function apiPlay() {
+    const query = await checkClipboard();
+    // Check if the URL contains 'Terabox'.
+    if (/(teraboxapp|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+        const shortURL = query.split('/').slice(-1)[0];
+        document.getElementById('player').src = "https://apis.forn.fun/tera/m3u8.php?id=" + shortURL;
+    } else {
+        document.getElementById('player').src = query;
+    }
+}
+
 // (Vercel Serverless Function Method) PLAY Video Function.
 async function VercelPlay() {
     const query = await checkClipboard();
@@ -755,6 +767,7 @@ function fetchSinglePost() {
     postContainer.className = 'TG-post-container';
     // Create and add PLAY button
     const button = document.createElement('button');
+    co
     button.className = 'TG-Play'
     button.textContent = 'PLAY';
     button.onclick = function() {
@@ -863,9 +876,12 @@ async function getIframeLink(script) {
     }
     const src = iframe.src;
     try {
-        const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(src));
-        const data = await response.json();
-        const htmlText = data.contents;
+        // **Without CORS Bypass.
+        // **const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(src));
+        // **const data = await response.json();
+        // **const htmlText = data.contents;
+        const response = await fetch(src);
+        const htmlText = await response.text();
         // Parse the HTML and extract anchor tags.
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlText, 'text/html');
@@ -1060,7 +1076,6 @@ async function registerSW() {
   }
 }
 */
-
 
 </script>
 </body>
