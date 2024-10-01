@@ -329,7 +329,7 @@
     <div id="post-container" data-long-press-delay="400"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" onclick="apiPlay()" data-long-press-delay="400">PLAY</button>
+    <button id="button-play" onclick="IFrame_Play()" data-long-press-delay="400">PLAY</button>
     <button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''; document.getElementById('vid').value=''">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
@@ -359,7 +359,7 @@
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
 <iframe id="embedVideo" referrerpolicy="no-referrer" name="videoFrame"></iframe>
-<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted></video>
+<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted autoplay></video>
 <div id="thumbnailContainer"></div>
 <div id="menuBox">
     <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
@@ -369,7 +369,7 @@
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
     <button class="menuButtons" onclick="copyVideoSrc()">📡</button>
     <button class="menuButtons" onclick="getmdp()">📥</button>
-    <button class="menuButtons" onclick="exampleFunction()">🔵</button>
+    <button class="menuButtons" onclick="changePlayFunction()">▶️</button>
     <button class="menuButtons" onclick="vConsole()">🛠️</button>
 </div>
 <!--  <script src="CSS-JS/script.js"></script>  -->
@@ -394,6 +394,16 @@ function getmdp() {
         });
 }
 
+// Cycle through the different "PLAY" functions.
+const [API_Play, Vercel_Play, IFrame_Play];
+let currentIndex = 0;
+function changePlayFunction() {
+    // Update the index to the next "PLAY" function.
+    currentIndex = (currentIndex + 1) % PlayFunctions.length; // The modulo operator (%) ensures that if the index exceeds the length of the array (which is 3), it wraps around to 0. This allows for cycling through the functions in the array.
+    document.getElementById('button-play').onclick = PlayFunctions[currentIndex];
+    showAlert({ BgColor: '#b4b4b4', Text: `${PlayFunctions[currentIndex].name} ✔ Activated`});
+}
+  
 // Long Press Events.
 var el = document.getElementById('textBox');
 el.addEventListener('long-press', function(e) {
@@ -404,7 +414,7 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('button-play');
 el.addEventListener('long-press', function(e) {
   e.preventDefault();
-  VercelPlay();
+  API_Play();
 });
 
 var el = document.getElementById('clearBtn');
@@ -428,7 +438,7 @@ el.addEventListener('long-press', function(e) {
 // Copy the source of the currently playing video.
 function copyVideoSrc() {
   if (document.getElementById('embedVideo').style.display === 'block') {
-    iFramePlay().then(playUrl => navigator.clipboard.writeText(playUrl));
+    IFrame_Play().then(playUrl => navigator.clipboard.writeText(playUrl));
   } else {
     navigator.clipboard.writeText(document.getElementById('player').src);
   }
@@ -647,7 +657,7 @@ async function checkClipboard() {
     }
 }
 // (Iframe Play Method - Used because HTML5 player can't play an URL without extension.) PLAY Video Function.
-async function iFramePlay() {
+async function IFrame_Play() {
     const query = await checkClipboard();
     // Check if the URL contains 'Terabox'.
     if (/(teraboxapp|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
@@ -669,19 +679,20 @@ async function iFramePlay() {
 }
 
 // Using third-party API to play video in HTML5 player(more customisable) instead of iframe(less customisable).
-async function apiPlay() {
+async function API_Play() {
     const query = await checkClipboard();
     // Check if the URL contains 'Terabox'.
     if (/(teraboxapp|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
         const shortURL = query.split('/').slice(-1)[0];
         document.getElementById('player').src = "https://apis.forn.fun/tera/m3u8.php?id=" + shortURL;
     } else {
+        document.getElementById('player').style.maxHeight='85dvh';
         document.getElementById('player').src = query;
     }
 }
 
 // (Vercel Serverless Function Method) PLAY Video Function.
-async function VercelPlay() {
+async function Vercel_Play() {
     const query = await checkClipboard();
     // Check if the URL contains 'Terabox'
     if (/(teraboxapp|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
