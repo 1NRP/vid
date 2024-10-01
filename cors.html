@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#02121b">
   <!--  <link rel="manifest" href="PWA/manifest.json">  -->
   <link rel="icon" sizes="192x192" href="images/green-512.png">
-  <script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
+  <script src="vid/custom-long-press.js"></script>
   <!--  <link rel="stylesheet" href="CSS-JS/style.css">  -->
   <title>Nihar's Video Player (CORS)</title>
 <style>
@@ -538,15 +538,15 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
 
             if (response.ok) {
                 const data = await response.json(); // Wait for the JSON response
-                if (data.result !== 0) {
-                    console.log('Link deleted in Vercel KV.');
-                    // Show "Link(s) Deleted" alert if response result is positive {result: (list_count)}. 'list_count' is the number of deleted values.
-                    const listCount = data.result;
-                    showAlert({ BgColor: '#f2074e', Text: `${listCount} ✖ Link Deleted`});
-                } else {
+                if (data.result == 0) {
                     console.log('This Link does not exist in Vercel KV.');
                     // Show "Link Doesn't Exist" alert if response result is zero {result: 0}.
                     showAlert({ BgColor: '#e8af05', Text: "⚠ Link Doesn't Exist"});
+                } else {
+                    console.log('Link deleted in Vercel KV.');
+                    // Show "Link(s) Deleted" alert if response result is more than zero {result: (list_count)}. 'list_count' is the number of deleted values.
+                    const listCount = data.result;
+                    showAlert({ BgColor: '#f2074e', Text: `${listCount} ✖ Link Deleted`});
                 }
             } else {
                 const errorData = await response.json(); // Wait for the JSON error response
@@ -665,6 +665,18 @@ async function iFramePlay() {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = query;
         adjustStyles();
+    }
+}
+
+// Using third-party API to play video in HTML5 player(more customisable) instead of iframe(less customisable).
+async function apiPlay() {
+    const query = await checkClipboard();
+    // Check if the URL contains 'Terabox'.
+    if (/(teraboxapp|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+        const shortURL = query.split('/').slice(-1)[0];
+        document.getElementById('player').src = "https://apis.forn.fun/tera/m3u8.php?id=" + shortURL;
+    } else {
+        document.getElementById('player').src = query;
     }
 }
 
