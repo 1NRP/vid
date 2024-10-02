@@ -395,13 +395,13 @@ function getmdp() {
 }
 
 // Cycle through the different "PLAY" functions.
-const PlayFunctions = [API_Play, Vercel_Play, IFrame_Play];
+const PlayFunctions = [IFrame_Play, API_Play, Vercel_Play];
 let currentIndex = 0;
 function changePlayFunction() {
     // Update the index to the next "PLAY" function.
     currentIndex = (currentIndex + 1) % PlayFunctions.length; // The modulo operator (%) ensures that if the index exceeds the length of the array (which is 3), it wraps around to 0. This allows for cycling through the functions in the array.
     document.getElementById('button-play').onclick = PlayFunctions[currentIndex];
-    showAlert({ BgColor: '#b4b4b4', Text: `${PlayFunctions[currentIndex].name} ✔ Activated`});
+    showAlert({ BgColor: '#fff', Text: `${PlayFunctions[currentIndex].name} ✔ Activated`});
 }
   
 // Long Press Events.
@@ -414,7 +414,7 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('button-play');
 el.addEventListener('long-press', function(e) {
   e.preventDefault();
-  API_Play();
+  Vercel_Play();
 });
 
 var el = document.getElementById('clearBtn');
@@ -685,9 +685,11 @@ async function API_Play() {
     if (/(teraboxapp|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
         const shortURL = query.split('/').slice(-1)[0];
         document.getElementById('player').src = "https://apis.forn.fun/tera/m3u8.php?id=" + shortURL;
+        adjustStyles();
     } else {
         document.getElementById('player').style.maxHeight='85dvh';
         document.getElementById('player').src = query;
+        adjustStyles();
     }
 }
 
