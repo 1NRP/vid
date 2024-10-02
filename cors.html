@@ -791,21 +791,18 @@ function fetchSinglePost() {
     const tgContainer = document.getElementById('boxContainer');
     const channelName = document.getElementById('channelName').value;
     const messageID = document.getElementById('messageID').value;
-    tgContainer.innerHTML = ''; // Clear previous posts
+    tgContainer.innerHTML = ''; // Clear previous posts.
     createTelegramPost(channelName, messageID, tgContainer); // Fetch single post.
-    // Update current message ID.
-    //currentMessageID = messageID;
-    //initialMessageID = currentMessageID + 1;
 }
 function loadNextPosts() {
     const tgContainer = document.getElementById('boxContainer');
     const channelName = document.getElementById('channelName').value;
-    const messageID = Number(document.getElementById('messageID').value); // 'Number' would make 'messageID' be treated as a number instead of a string.
-    for (let i = 0; i < 11; i++) { // "i++", "i += 1" & "i = i + 1" are same. Load 10 posts.(max value of "i < 11" is 10).
+    const messageID = Number(document.getElementById('messageID').value); // 'Number' would make 'messageID' be treated as a number instead of a string at the time of adding "i" to it. 
+    for (let i = 0; i < 11; i+=1) { // "i++", "i += 1" & "i = i + 1" are same. Load 10 posts.(max value of "i < 11" is 10).
         const currentMessageID = messageID + i;
         createTelegramPost(channelName, currentMessageID, tgContainer); // Fetch each of the given number of posts.
     }
-    // Update message ID input field with the last calculated message ID
+    // Update message ID input field with the last calculated message ID.
     document.getElementById('messageID').value = messageID + 10;
 }
 
