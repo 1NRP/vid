@@ -806,7 +806,7 @@ function loadNextPosts() {
         createTelegramPost(channelName, currentMessageID, tgContainer); // Fetch each of the given number of posts.
     }
     // Update message ID input field with the last calculated message ID
-    document.getElementById('messageID').value = messageID + 10;
+    document.getElementById('messageID').value = Number(messageID) + 10; // 'Number' would make 'messageID' be treated as a number instead of a string.
 }
 
 // Event listener to get the Last Message's ID of the selected Telegram Channel.
