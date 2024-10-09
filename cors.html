@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="theme-color" content="#02121b">
   <!--  <link rel="manifest" href="PWA/manifest.json">  -->
-  <link rel="icon" sizes="192x192" href="https://1nrp.github.io/1/Images/N-Logo22.png">
+  <link rel="icon" sizes="192x192" href="https://1nrp.github.io/1/Images/N-Logo1.png">
   <script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
   <!--  <link rel="stylesheet" href="CSS-JS/style.css">  -->
   <title>Nihar's Video Player (CORS)</title>
@@ -699,13 +699,12 @@ async function Mdisk_Play() {
         var videoId = query.split('/').slice(-1)[0];
         // Remove the first character (assuming it's always '1').
         videoId = videoId.substring(1);
-        // Construct the request URL for preparation
         var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
-        //var allOrigins = `https://api.allorigins.win/get?url=${encodeURIComponent(requestUrl)}`;  // Proxy for CORS.
+        // **var allOrigins = `https://api.allorigins.win/get?url=${encodeURIComponent(requestUrl)}`;  // Proxy for CORS.
         // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
         fetch(requestUrl)
-        .then(response => {    // Comment both [.then(response =>] and [.catch(error =>] code blocks (& uncomment "DIRECT" below) if response is not required.
-            var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
+        .then(response => {   // Comment both [.then(response =>] and [.catch(error =>] code blocks (& uncomment "DIRECT" below) if response is not required.
+            document.getElementById('player').src = "https://video.mdiskplay.com/" + videoId + ".m3u8";
             adjustStyles();
         })  
         .catch(error => {
@@ -736,7 +735,7 @@ async function Vercel_Play() {
             if (!response.ok) {
                 throw new Error('Failed to fetch M3U8 URL');
             }
-            const responseData = await response.json();
+            //const responseData = await response.json();
             const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + videoId + ".m3u8";
             document.getElementById("player").src = playUrl;
             adjustStyles();
