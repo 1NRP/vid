@@ -395,7 +395,7 @@ function getmdp() {
 }
 
 // Cycle through the different "PLAY" functions.
-const PlayFunctions = [IFrame_Play, API_Play, Vercel_Play];
+const PlayFunctions = [IFrame_Play, Mdisk_Play, API_Play, Vercel_Play];
 let currentIndex = 0;
 function changePlayFunction() {
     // Update the index to the next "PLAY" function.
@@ -692,7 +692,35 @@ async function API_Play() {
         adjustStyles();
     }
 }
-
+// MdiskPlay method.
+async function Mdisk_Play() {
+    const query = await checkClipboard();
+    if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+        var videoId = query.split('/').slice(-1)[0];
+        // Remove the first character (assuming it's always '1').
+        videoId = videoId.substring(1);
+        // Construct the request URL for preparation
+        var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
+        //var allOrigins = `https://api.allorigins.win/get?url=${encodeURIComponent(requestUrl)}`;  // Proxy for CORS.
+        // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
+        fetch(requestUrl)
+        .then(response => {    // Comment both [.then(response =>] and [.catch(error =>] code blocks (& uncomment "DIRECT" below) if response is not required.
+            var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
+            adjustStyles();
+        })  
+        .catch(error => {
+            console.error('Error fetching Mdisk URL:', error);
+            alert('Error fetching Mdisk URL. Please try again.');
+        });  
+        // "DIRECT" - Construct the 'playUrl' without waiting for response.
+        //var playUrl = "https://video.mdiskplay.com/" + videoId + ".m3u8";
+        //adjustStyles(); 
+    } else {
+        // Not a terabox URL, play as usual.
+        document.getElementById("player").src = query;
+        adjustStyles();
+    }
+}
 // (Vercel Serverless Function Method) PLAY Video Function.
 async function Vercel_Play() {
     const query = await checkClipboard();
