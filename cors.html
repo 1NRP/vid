@@ -358,7 +358,7 @@
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<iframe id="embedVideo" referrerpolicy="no-referrer" name="videoFrame"></iframe>
+<iframe id="embedVideo" referrerPolicy="no-referrer" name="videoFrame"></iframe>
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted autoplay></video>
 <div id="thumbnailContainer"></div>
 <div id="menuBox">
@@ -666,7 +666,9 @@ async function IFrame_Play() {
             const { shareid, uk } = jsonData;
             const { fs_id } = jsonData.list[0];
             const playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
-            window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
+            //window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
+            document.getElementById('embedVideo').src = playUrl;
+            document.getElementById('player').src = '';
             document.getElementById('player').style.display = 'none';
             document.getElementById('embedVideo').style.height = '80dvh';
             document.getElementById('embedVideo').style.display = 'block';
