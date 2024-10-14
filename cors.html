@@ -568,6 +568,41 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
     }
 }
 
+// Check if the same Link already exists in KV Cloud storage before saving a new one.
+  async function checkLinkExistence() {
+    const linkarea = document.getElementById('vid');
+    const linkValue = linkarea.value.trim();
+    if (linkValue) {
+        try {
+            const response = await fetch('https://1nrp.vercel.app/api/Play/checkLinkExistence', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify([linkValue]),
+            });
+            if (response.ok) {
+                const data = await response.json(); // Wait for the JSON response
+                if (Array.isArray(data.result) && data.result.length <= 0) {
+                    console.log('This Link does not exist in Vercel KV.');
+                    // Show "Link Doesn't Exist" alert if response result is zero {result: 0}.
+                    showAlert({ BgColor: '#cf34eb', Text: "⚠ Link Doesn't Exist"});
+                } else {
+                    console.log('Link deleted in Vercel KV.');
+                    // Show "Link(s) Deleted" alert if response result is more than zero {result: (list_count)}. 'list_count' is the number of deleted values.
+                    const listCount = data.result.length;
+                    showAlert({ BgColor: '#349beb', Text: `${listCount} ☀️ Link Already Exists`});
+                }
+            } else {
+                const errorData = await response.json(); // Wait for the JSON error response
+                console.error('Error from server:', errorData.error);
+            }
+        } catch (error) {
+            console.error('Error deleting Link in Vercel KV:', error);
+        }
+    }
+}
+
 // Retrive the Links from KV Cloud storage.
   async function getLink() {
       const response = await fetch('https://1nrp.vercel.app/api/Play/getLink', {
