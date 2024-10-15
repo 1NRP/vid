@@ -732,11 +732,12 @@ async function API_Play() {
 // MdiskPlay method.
 async function Mdisk_Play() {
     const query = await checkClipboard();
-    if (/(teraboxapp|teraboxlink|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+    if (/(teraboxapp|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
         var videoId = query.split('/').slice(-1)[0];
         // Remove the first character (assuming it's always '1').
         videoId = videoId.substring(1);
         var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId;
+        // **Without CORS.
         // **var allOrigins = `https://api.allorigins.win/get?url=${encodeURIComponent(requestUrl)}`;  // Proxy for CORS.
         // Make a request to the preparation URL, so that it invokes the Mdiskplay server to fetch & store the m3u8 links of the video.
         fetch(requestUrl)
@@ -970,7 +971,7 @@ function handleButtonClick() {
     clickCount++;
     clearTimeout(clickTimer);
     clickTimer = setTimeout(() => {
-        if (clickCount >= 3) {
+        if (clickCount >= 2) {
             toggleMode();
         } else {
             if (deleteMode) {
@@ -980,7 +981,7 @@ function handleButtonClick() {
             }
         }
         clickCount = 0;
-    }, 800);  // 3 clicks in 0.8 second or 800 milliseconds.
+    }, 600);  // 3 clicks in 0.6 second or 600 milliseconds.
 }
 
 // Function to toggle between paste and copy modes
