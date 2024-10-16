@@ -971,7 +971,7 @@ function handleButtonClick() {
     clickCount++;
     clearTimeout(clickTimer);
     clickTimer = setTimeout(() => {
-        if (clickCount >= 2) {
+        if (clickCount >= 3) {
             toggleMode();
         } else {
             if (deleteMode) {
