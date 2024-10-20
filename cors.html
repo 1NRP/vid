@@ -438,7 +438,7 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('post-container');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
-  processItems(jsonResp);
+  processItems();
 });
 
 // Copy the source of the currently playing video.
@@ -1084,12 +1084,15 @@ function fetchPosts() {
         console.error('Error:', error);
     });
 }
-
-// 
-async function fetchData(url) {
+// test fetch post
+ async function fetchRandomItems() {
     const localStorageKey = 'jsonData';
+    const url = 'https://1nrp.github.io/vid/Mdisk_Links_Min.json'; // Replace with your actual URL
+    const count = 4; // Number of items to fetch
+
     // Check if data exists in local storage
     let data = localStorage.getItem(localStorageKey);
+    
     // If not, fetch it from the URL
     if (!data) {
         try {
@@ -1108,53 +1111,46 @@ async function fetchData(url) {
         // Parse the data from local storage
         data = JSON.parse(data);
     }
-    return data;
+
+    // Randomly pick unique items
+    const randomItems = [];
+    const indices = new Set();
+    while (randomItems.length < count && randomItems.length < data.items.length) {
+        const randomIndex = Math.floor(Math.random() * data.items.length);
+        if (!indices.has(randomIndex)) {
+            indices.add(randomIndex);
+            randomItems.push(data.items[randomIndex]);
+        }
+    }
+
+    return randomItems;  // return { items: randomItems }; // Return the items in an object with key "items" in json format.
 }
-function getRandomItems(url, callback) {
-  const url = 'https://1nrp.github.io/vid/Mdisk_Links_Min.json';
-    fetchData(url)
-        .then(data => {
-            if (!data || !data.items || data.items.length < 4) {
-                console.error('Not enough items to process');
-                return;
+
+function processItems() {
+    fetchRandomItems()
+        .then(items => {    // .then(result) => { if (!result) return; const items = result.items; items.forEach(item => {......
+            if (!items) return;
+            items.forEach(item => {
+                    const key = item.key;
+                    //const poster = item.poster;
+                    const link = item.link;
+                    const durationInMinutes = Math.round(item.duration / 60);
+                    const sizeInMB = (item.size / (1024 * 1024 * 3)).toFixed(0); // Divide by 1024 twice for MB and divide by 3 because 360p streaming consumes 3 times less data.
+                    const postElement = document.createElement('div');
+                    postElement.classList.add('post');
+                    postElement.innerHTML = `
+                     <div>
+                        <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
+                          <div class="post-details">
+                          <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
+                          <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
+                        </div>
+                    </div>
+                     `;
+                   postsContainer.appendChild(postElement);
+               });
             }
-            // Randomly pick 4 unique items
-            const randomItems = [];
-            const indices = new Set();
-            while (randomItems.length < 4) {
-                const randomIndex = Math.floor(Math.random() * data.items.length);
-                if (!indices.has(randomIndex)) {
-                    indices.add(randomIndex);
-                    randomItems.push(data.items[randomIndex]);
-                }
-            }
-            // Call the callback with the selected items
-            callback(randomItems);
-        });
-}
-function processItems(jsonResp) {
-  const postsContainer = document.getElementById('post-container');
-  postsContainer.innerHTML = ''; // Clear previous posts.
-  jsonResp.forEach(item => {
-    const key = item.key;
-    //const poster = item.poster;
-    const link = item.link;
-    const durationInMinutes = Math.round(item.duration / 60);
-    const sizeInMB = (item.size / (1024 * 1024 * 3)).toFixed(0); // Divide by 1024 twice for MB and divide by 3 because 360p streaming consumes 3 times less data.
-    const postElement = document.createElement('div');
-    postElement.classList.add('post');
-    postElement.innerHTML = `
-        <div>
-          <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
-            <div class="post-details">
-                <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
-                <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-            </div>
-        </div>
-      `;
-      postsContainer.appendChild(postElement);
-    });
-}
+        }
 
 // Function to handle clicking on the Poster.
 function handlePosterClick(link) {
