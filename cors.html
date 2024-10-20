@@ -438,7 +438,7 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('post-container');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
-  processItems();
+  fetchPosts();
 });
 
 // Copy the source of the currently playing video.
@@ -1053,47 +1053,12 @@ function handleThumbnailClick(lineText) {
     document.getElementById('thumbnailContainer').style.display='none';
 }
 
-// Function to load posts from the server.
-function fetchPosts() {
-    const postsContainer = document.getElementById('post-container');
-    postsContainer.innerHTML = ''; // Clear previous posts
-    fetch('https://mdiskapp-1-k4347368.deta.app/posts?random=true&limit=2')
-    .then(response => response.json())
-    .then(data => {
-        data.items.forEach(item => {
-            const key = item.key;
-            //const poster = item.poster;
-            const link = item.link;
-            const durationInMinutes = Math.round(item.duration / 60);
-            const sizeInMB = (item.size / 1024 / 1024 / 3).toFixed(0);   
-            const postElement = document.createElement('div');
-            postElement.classList.add('post');
-            postElement.innerHTML = `
-                <div>
-                    <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
-                    <div class="post-details">
-                        <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
-                        <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-                    </div>
-                </div>
-            `;
-            postsContainer.appendChild(postElement);
-        });
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-// test fetch post
- async function fetchRandomItems() {
-    const localStorageKey = 'jsonData';
-    const url = 'https://1nrp.github.io/vid/Mdisk_Links_Min.json'; // Replace with your actual URL
-    const count = 4; // Number of items to fetch
-
-    // Check if data exists in local storage
+// Function to load posts from the 9000 JSON items.
+ async function returnRandomPosts() {
+    const localStorageKey = 'jsonTBLinks';
+    const url = 'https://1nrp.github.io/vid/Mdisk_Links_Min.json';
+    const count = 2; // Number of items to fetch at once.
     let data = localStorage.getItem(localStorageKey);
-    
-    // If not, fetch it from the URL
     if (!data) {
         try {
             const response = await fetch(url);
@@ -1101,7 +1066,7 @@ function fetchPosts() {
                 throw new Error('Network response was not ok');
             }
             data = await response.json();
-            // Store the fetched data in local storage
+            // Store the fetched data in local storage to avoid frequent fetching of the json file.
             localStorage.setItem(localStorageKey, JSON.stringify(data));
         } catch (error) {
             console.error('Failed to fetch data:', error);
@@ -1111,8 +1076,7 @@ function fetchPosts() {
         // Parse the data from local storage
         data = JSON.parse(data);
     }
-
-    // Randomly pick unique items
+    // Randomly pick unique items.
     const randomItems = [];
     const indices = new Set();
     while (randomItems.length < count && randomItems.length < data.items.length) {
@@ -1122,38 +1086,36 @@ function fetchPosts() {
             randomItems.push(data.items[randomIndex]);
         }
     }
-
-    return randomItems;  // return { items: randomItems }; // Return the items in an object with key "items" in json format.
+    return randomItems;   //*** return { items: randomItems }; // Return the items in an object with key "items" in json format.
 }
-
-function processItems() {
+function fetchPosts() {
   const postsContainer = document.getElementById('post-container');
   postsContainer.innerHTML = ''; // Clear previous posts.
-    fetchRandomItems()
-        .then(items => {    // .then(result) => { if (!result) return; const items = result.items; items.forEach(item => {......
+    returnRandomPosts()
+        .then(items => {  //*** .then(result) => { if (!result) return; const items = result.items; items.forEach(item => {......
             if (!items) return;
             items.forEach(item => {
                     const key = item.key;
-                    //const poster = item.poster;
                     const link = item.link;
                     const durationInMinutes = Math.round(item.duration / 60);
                     const sizeInMB = (item.size / (1024 * 1024 * 3)).toFixed(0); // Divide by 1024 twice for MB and divide by 3 because 360p streaming consumes 3 times less data.
                     const postElement = document.createElement('div');
                     postElement.classList.add('post');
                     postElement.innerHTML = `
-                     <div>
-                        <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
-                          <div class="post-details">
-                          <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
-                          <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
+                        <div>
+                          <!--  https://ik.imagekit.io/TBoxLinks/TB-Links/${key}.jpg  -->
+                          <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
+                            <div class="post-details">
+                            <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
+                            <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
+                          </div>
                         </div>
-                    </div>
-                     `;
-                   postsContainer.appendChild(postElement);
-               });
-            });
-        }
-
+                         `;
+                       //https://ik.imagekit.io/TBoxLinks/TB-Links/${key}.jpg  // My Storage.
+                       postsContainer.appendChild(postElement);
+                    });
+          });
+}
 // Function to handle clicking on the Poster.
 function handlePosterClick(link) {
     document.getElementById('vid').value = link;
