@@ -314,9 +314,11 @@
         color: #b4b4b4b4;
         border: 2px solid #555;
     }
+    #button-play {
+        color: #000;
+    }
     #vid,
     #textBox,
-    #button-play,
     .size,
     .duration {
         color: #999;
@@ -1103,8 +1105,8 @@ function fetchPosts() {
                     postElement.classList.add('post');
                     postElement.innerHTML = `
                         <div>
-                          <!--  https://ik.imagekit.io/TBoxLinks/TB-Links/${key}.jpg  -->
-                          <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
+                          <!--  https://ik.imagekit.io/TBoxLinks/TB-Links/${key}.jpg  [media91/image] -->
+                          <img src="https://ik.imagekit.io/TBoxLinks/TB-Links/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
                             <div class="post-details">
                             <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
                             <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
