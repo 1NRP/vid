@@ -1054,7 +1054,7 @@ function handleThumbnailClick(lineText) {
     document.getElementById('button-play').click();
     document.getElementById('thumbnailContainer').style.display='none';
 }
-/*
+
 // Function to load posts from the 9000 JSON items with 3rd party "Imagekit" thumbnail service.
  async function returnRandomPosts() {
     const localStorageKey = 'jsonTBLinks';
@@ -1115,7 +1115,7 @@ function fetchPosts() {
                     });
           });
 }
-*/
+/*
 // Function to load posts from the 9000 JSON items with my own "Imagekit" thumbnail service.
  async function returnRandomPosts() {
     const localStorageKey = 'tbJsonLinks';
@@ -1158,8 +1158,8 @@ function fetchPosts() {
             if (!items) return;
             items.forEach(item => {
                     const link = item.link;
-                    const durationInMinutes = Math.round(item.duration / 60);
-                    const sizeInMB = (item.size / (1024 * 1024 * 3)).toFixed(0); // Divide by 1024 twice for MB and divide by 3 because 360p streaming consumes 3 times less data.
+                    const durationInMinutes = item.time;
+                    const sizeInMB = (item.size / 3).toFixed(0); // Divide by 3 because 360p streaming consumes 3 times less data.
                     const postElement = document.createElement('div');
                     postElement.classList.add('post');
                     postElement.innerHTML = `
@@ -1175,7 +1175,7 @@ function fetchPosts() {
                     });
           });
 }
-  
+*/
 // Function to handle clicking on the Poster.
 function handlePosterClick(link) {
     document.getElementById('vid').value = "https://teraboxapp.com/s/" + link;
