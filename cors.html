@@ -1054,14 +1054,16 @@ function handleThumbnailClick(lineText) {
     document.getElementById('button-play').click();
     document.getElementById('thumbnailContainer').style.display='none';
 }
-
-// Function to load posts from the 9000 JSON items.
+/*
+// Function to load posts from the 9000 JSON items with 3rd party "Imagekit" thumbnail service.
  async function returnRandomPosts() {
     const localStorageKey = 'jsonTBLinks';
     const url = 'https://1nrp.github.io/vid/Mdisk_Links_Min.json';
     const count = 2; // Number of items to fetch at once.
-    let data = localStorage.getItem(localStorageKey);
-    if (!data) {
+    let jsonData = localStorage.getItem(localStorageKey);
+    if (jsonData) {
+        data = JSON.parse(jsonData);
+    } else {
         try {
             const response = await fetch(url);
             if (!response.ok) {
@@ -1073,10 +1075,7 @@ function handleThumbnailClick(lineText) {
         } catch (error) {
             console.error('Failed to fetch data:', error);
             return null;
-        }
-    } else {
-        // Parse the data from local storage
-        data = JSON.parse(data);
+        }    
     }
     // Randomly pick unique items.
     const randomItems = [];
@@ -1105,22 +1104,82 @@ function fetchPosts() {
                     postElement.classList.add('post');
                     postElement.innerHTML = `
                         <div>
-                          <!--  https://ik.imagekit.io/TBoxLinks/TB-Links/${key}.jpg  [media91/image] -->
-                          <img src="https://ik.imagekit.io/TBoxLinks/TB-Links/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
+                          <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
                             <div class="post-details">
                             <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
                             <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
                           </div>
                         </div>
                          `;
-                       //https://ik.imagekit.io/TBoxLinks/TB-Links/${key}.jpg  // My Storage.
                        postsContainer.appendChild(postElement);
                     });
           });
 }
+*/
+// Function to load posts from the 9000 JSON items with my own "Imagekit" thumbnail service.
+ async function returnRandomPosts() {
+    const localStorageKey = 'tbJsonLinks';
+    const url = 'https://1nrp.github.io/vid/TB_JSON_Min.json';
+    const count = 2; // Number of items to fetch at once.
+    let jsonData = localStorage.getItem(localStorageKey);
+    if (jsonData) {
+        data = JSON.parse(jsonData);
+    } else {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            data = await response.json();
+            // Store the fetched data in local storage to avoid frequent fetching of the json file.
+            localStorage.setItem(localStorageKey, JSON.stringify(data));
+        } catch (error) {
+            console.error('Failed to fetch data:', error);
+            return null;
+        }    
+    }
+    // Randomly pick unique items.
+    const randomItems = [];
+    const indices = new Set();
+    while (randomItems.length < count && randomItems.length < data.items.length) {
+        const randomIndex = Math.floor(Math.random() * data.items.length);
+        if (!indices.has(randomIndex)) {
+            indices.add(randomIndex);
+            randomItems.push(data.items[randomIndex]);
+        }
+    }
+    return randomItems;   //*** return { items: randomItems }; // Return the items in an object with key "items" in json format.
+}
+function fetchPosts() {
+  const postsContainer = document.getElementById('post-container');
+  postsContainer.innerHTML = ''; // Clear previous posts.
+    returnRandomPosts()
+        .then(items => {  //*** .then(result) => { if (!result) return; const items = result.items; items.forEach(item => {......
+            if (!items) return;
+            items.forEach(item => {
+                    const link = item.link;
+                    const durationInMinutes = Math.round(item.duration / 60);
+                    const sizeInMB = (item.size / (1024 * 1024 * 3)).toFixed(0); // Divide by 1024 twice for MB and divide by 3 because 360p streaming consumes 3 times less data.
+                    const postElement = document.createElement('div');
+                    postElement.classList.add('post');
+                    postElement.innerHTML = `
+                        <div>
+                          <img src="https://ik.imagekit.io/TBoxLinks/TB-Links/${link}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
+                            <div class="post-details">
+                            <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
+                            <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
+                          </div>
+                        </div>
+                         `;
+                       postsContainer.appendChild(postElement);
+                    });
+          });
+}
+  
 // Function to handle clicking on the Poster.
 function handlePosterClick(link) {
-    document.getElementById('vid').value = link;
+    document.getElementById('vid').value = "https://teraboxapp.com/s/" + link;
+    //document.getElementById('vid').value = link;
     document.getElementById('button-play').click();
   }
 
