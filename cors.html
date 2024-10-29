@@ -8,7 +8,7 @@
   <link rel="icon" sizes="192x192" href="https://1nrp.github.io/1/Images/N-Logo1.png">
   <script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
   <!--  <link rel="stylesheet" href="CSS-JS/style.css">  -->
-  <title>Nihar's Video Player (CORS)</title>
+  <title>Video Player (CORS)</title>
 <style>
     body {
       background-color: #0d2136;  
@@ -328,7 +328,7 @@
 </head>
 <div id="Default-Position-Elements"> <!-- Separation between Fixed position and Non-Fixed position elements is for brightness adjustment purpose. The 'brightnessSlider' distorts the positioning of Fixed elements. -->
 <center>
-    <div id="post-container" data-long-press-delay="400"></div>
+    <div id="post-container" data-long-press-delay="1000"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()" ondblclick="checkLinkExistence()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="IFrame_Play()" data-long-press-delay="400">PLAY</button>
@@ -440,7 +440,7 @@ el.addEventListener('long-press', function(e) {
 var el = document.getElementById('post-container');
 el.addEventListener('long-press', function(e) {
   e.preventDefault()
-  fetchPosts();
+  //fetchPosts();
 });
 
 // Copy the source of the currently playing video.
