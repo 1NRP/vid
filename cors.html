@@ -338,14 +338,10 @@
 <div id="boxContainer"></div>
 <button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)');">☰</button>
 <select id="channelName" class="secondRow">
-    <option value="TERABOXBOTVIDE">1st</option>
-    <option value="TERABOXBOTLINK">2nd</option>
-    <option value="xvideosgreen">3rd</option>
-    <option value="Pure_terabox_Videos">4th</option>
-    <option value="TERABOXLINKU">5th</option>
-    <option value="Terabox_chudai_videos_hd">6th</option>
-    <option value="bhabhi_hot_desi_web">7th-E</option>
-    <option value="terabox_kavita_xnx_video_in_hin">8th-E</option>
+    <option value="Onlyfans_videomejar">1st</option>
+    <option value="xvideosgreen">2nd</option>
+    <option value="terabox_kavita_xnx_video_in_hin">3rd</option>
+    <option value="mms_terabox_video">4th</option>
     <!--  Add more channel options here if needed.  -->
 </select>
 <input id="messageID" class="secondRow">
@@ -395,7 +391,7 @@ function getmdp() {
             alert('Error fetching or parsing MdiskPlay json data.');
         });
 }
-
+  
 // Cycle through the different "PLAY" functions.
 const PlayFunctions = [IFrame_Play, Mdisk_Play, API_Play, Vercel_Play];
 let currentIndex = 0;
@@ -697,7 +693,7 @@ async function checkClipboard() {
 async function IFrame_Play() {
     const query = await checkClipboard();
     // Check if the URL contains 'Terabox'.
-    if (/(teraboxapp|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+    if (/(teraboxapp|terasharelink|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
         const shortURL = query.split('/').slice(-1)[0];
         const jsonData = await getTboxAPI(shortURL);
             const { shareid, uk } = jsonData;
@@ -721,7 +717,7 @@ async function IFrame_Play() {
 async function API_Play() {
     const query = await checkClipboard();
     // Check if the URL contains 'Terabox'.
-    if (/(teraboxapp|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+    if (/(teraboxapp|terasharelink|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
         const shortURL = query.split('/').slice(-1)[0];
         document.getElementById('player').src = "https://apis.forn.fun/tera/m3u8.php?id=" + shortURL;
         adjustStyles();
@@ -734,7 +730,7 @@ async function API_Play() {
 // MdiskPlay method.
 async function Mdisk_Play() {
     const query = await checkClipboard();
-    if (/(teraboxapp|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+    if (/(teraboxapp|terasharelink|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
         var videoId = query.split('/').slice(-1)[0];
         // Remove the first character (assuming it's always '1').
         videoId = videoId.substring(1);
@@ -764,7 +760,7 @@ async function Mdisk_Play() {
 async function Vercel_Play() {
     const query = await checkClipboard();
     // Check if the URL contains 'Terabox'
-    if (/(teraboxapp|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+    if (/(teraboxapp|terasharelink|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
         // Extract the video ID from the URL
         var videoId = query.split('/').slice(-1)[0];
         try {
@@ -891,7 +887,7 @@ document.getElementById('channelName').addEventListener('change', async function
             const doc = parser.parseFromString(htmlText, 'text/html');
             // Extract all anchor/link tags
             const anchors = doc.querySelectorAll('a');
-            const keywords = ['https://t.me/TERABOXBOTVIDE/', 'https://t.me/TERABOXBOTLINK/', 'https://t.me/xvideosgreen/', 'https://t.me/Pure_terabox_Videos/', 'https://t.me/TERABOXLINKU/', 'https://t.me/Terabox_chudai_videos_hd/', 'https://t.me/bhabhi_hot_desi_web/', 'https://t.me/terabox_kavita_xnx_video_in_hin/'];
+            const keywords = ['https://t.me/s/Onlyfans_videomejar/', 'https://t.me/xvideosgreen/', 'https://t.me/terabox_kavita_xnx_video_in_hin/', 'https://t.me/mms_terabox_video/'];
             let lastMessage = ''; // Variable to store the last matching link
             // Iterate over anchor tags to find the last matching link
             anchors.forEach(anchor => {
@@ -938,7 +934,7 @@ async function getIframeLink(script) {
         const doc = parser.parseFromString(htmlText, 'text/html');
         const anchors = doc.querySelectorAll('a');
         // Filter anchor tags containing TB Links.
-        const keywords = ['teraboxapp', 'teraboxshare', 'terafileshare', 'teraboxlink', '1024terabox', 'freeterabox'];
+        const keywords = ['teraboxapp', 'teraboxshare', 'terafileshare', 'teraboxlink', 'terasharelink', '1024terabox', 'freeterabox'];
         let found = false;
         let TBoxLink = '';
         anchors.forEach(anchor => {
