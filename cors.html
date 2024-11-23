@@ -338,9 +338,10 @@
 <div id="boxContainer"></div>
 <button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)');">☰</button>
 <select id="channelName" class="secondRow">
-    <option value="Onlyfans_videomejar">1st</option>
-    <option value="xvideosgreen">2nd</option>
-    <option value="terabox_kavita_xnx_video_in_hin">3rd</option>
+    <option value="Onlyfans_videomejar">One</option>
+    <option value="xvideosgreen">Two</option>
+    <option value="terabox_kavita_xnx_video_in_hin">Three</option>
+    <option value="Ex_Boyfriend4">Four</option>
     <!--  Add more channel options here if needed.  -->
 </select>
 <input id="messageID" class="secondRow">
@@ -390,7 +391,25 @@ function getmdp() {
             alert('Error fetching or parsing MdiskPlay json data.');
         });
 }
-  
+
+//Check whether Dark theme is active and change colours of elements.
+function updateTheme() {
+  const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const contentElement = document.getElementById('content');
+  const body = document.body;
+  if (isDarkMode) {
+    const allElements = document.querySelectorAll('*');
+    allElements.forEach(element => {
+      const currentColor = window.getComputedStyle(element).color;
+      // Check if the element's color is '#000' and update it to '#fff' because it will again be inverted to '#000' due to Dark mode of browser.
+      if (currentColor === 'rgb(0, 0, 0)') {
+        element.style.color = '#ffffff';
+      } });
+   }
+}
+updateTheme();
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
+
 // Cycle through the different "PLAY" functions.
 const PlayFunctions = [IFrame_Play, Mdisk_Play, API_Play, Vercel_Play];
 let currentIndex = 0;
@@ -887,7 +906,7 @@ document.getElementById('channelName').addEventListener('change', async function
             const doc = parser.parseFromString(htmlText, 'text/html');
             // Extract all anchor/link tags
             const anchors = doc.querySelectorAll('a');
-            const keywords = ['https://t.me/Onlyfans_videomejar/', 'https://t.me/xvideosgreen/', 'https://t.me/terabox_kavita_xnx_video_in_hin/'];
+            const keywords = ['https://t.me/Onlyfans_videomejar/', 'https://t.me/xvideosgreen/', 'https://t.me/terabox_kavita_xnx_video_in_hin/', 'https://t.me/Ex_Boyfriend4/'];
             let lastMessage = ''; // Variable to store the last matching link
             // Iterate over anchor tags to find the last matching link
             anchors.forEach(anchor => {
