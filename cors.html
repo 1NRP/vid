@@ -392,24 +392,6 @@ function getmdp() {
         });
 }
 
-//Check whether Dark theme is active and change colours of elements.
-function updateTheme() {
-  const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const contentElement = document.getElementById('content');
-  const body = document.body;
-  if (isDarkMode) {
-    const allElements = document.querySelectorAll('*');
-    allElements.forEach(element => {
-      const currentColor = window.getComputedStyle(element).color;
-      // Check if the element's color is '#000' and update it to '#fff' because it will again be inverted to '#000' due to Dark mode of browser.
-      if (currentColor === 'rgb(0, 0, 0)') {
-        element.style.color = '#ffffff';
-      } });
-   }
-}
-updateTheme();
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
-
 // Cycle through the different "PLAY" functions.
 const PlayFunctions = [IFrame_Play, Mdisk_Play, API_Play, Vercel_Play];
 let currentIndex = 0;
@@ -861,7 +843,7 @@ function createTelegramPost(channelName, messageID, tgContainer) {
     postContainer.className = 'TG-post-container';
     const button = document.createElement('button');
     button.className = 'TG-Play';
-    button.textContent = 'PLAY';
+    button.textContent = 'PLAY THE VIDEO';
     button.onclick = () => getIframeLink(postContainer.querySelector('script'));
     postContainer.appendChild(button);
     postContainer.appendChild(script);
@@ -880,12 +862,12 @@ function loadNextPosts() {
     const tgContainer = document.getElementById('boxContainer');
     const channelName = document.getElementById('channelName').value;
     const messageID = Number(document.getElementById('messageID').value); // 'Number' would make 'messageID' be treated as a number instead of a string at the time of adding "i" to it. 
-    for (let i = 0; i < 11; i+=1) { // "i++", "i += 1" & "i = i + 1" are same. Load 10 posts.(max value of "i < 11" is 10).
+    for (let i = 0; i < 5; i+=1) { // "i++", "i += 1" & "i = i + 1" are same. Load 4 posts.(max value of "i < 5" is 4).
         const currentMessageID = messageID + i;
         createTelegramPost(channelName, currentMessageID, tgContainer); // Fetch each of the given number of posts.
     }
     // Update message ID input field with the last calculated message ID.
-    document.getElementById('messageID').value = messageID + 10;
+    document.getElementById('messageID').value = messageID + 4;
 }
 
 // Event listener to get the Last Message's ID of the selected Telegram Channel.
