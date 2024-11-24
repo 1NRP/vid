@@ -134,8 +134,8 @@
       overflow: hidden;
     }
     .TG-Play {
-      background-Color: #c96500;
-      color: #000;
+      background-Color: #5e3103;
+      color: #fff;
       border: none;
       border-radius: 50px;
       font-size: 15px;
@@ -260,16 +260,16 @@
     }
     #button-play:hover,
     #clearBtn:hover {
-      background-color: #c96500;
-      color: #000;
+      background-color: #5e3103;
+      color: #fff;
   }
   .Alerts {
       position: fixed;
    /* top: 5dvh; */
       left: 20dvw;
       z-index: 50;
-      background-color: #fff;
-      color: #000;
+      background-color: #ffffff;
+      color: #fff;
       font-weight: 1000;
       padding: 5px;
       border: none;
@@ -313,9 +313,6 @@
     #nightModeBtn {
         color: #b4b4b4b4;
         border: 2px solid #555;
-    }
-    #button-play {
-        color: #000;
     }
     #vid,
     #textBox,
@@ -843,7 +840,7 @@ function createTelegramPost(channelName, messageID, tgContainer) {
     postContainer.className = 'TG-post-container';
     const button = document.createElement('button');
     button.className = 'TG-Play';
-    button.textContent = 'PLAY THE VIDEO';
+    button.textContent = 'PLAY';
     button.onclick = () => getIframeLink(postContainer.querySelector('script'));
     postContainer.appendChild(button);
     postContainer.appendChild(script);
