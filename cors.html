@@ -334,15 +334,9 @@
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
 <button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)');">☰</button>
-<select id="channelName" class="secondRow">
-  <!--  <option value="Onlyfans_videomejar">One</option>
-    <option value="xvideosgreen">Two</option>
-    <option value="terabox_kavita_xnx_video_in_hin">Three</option>
-    <option value="Ex_Boyfriend4">Four</option>
-    <!--  Add more channel options here if needed.  -->
-</select>
+<select id="channelName" class="secondRow"></select>
 <input id="messageID" class="secondRow">
-<button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
+<button id="go-btn" class="secondRow" onclick="fetchOptions(); fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 <div>
@@ -492,9 +486,8 @@ brSlider.addEventListener('input', function () {
     document.getElementById('thumbnailContainer').style.filter = `brightness(${brightnessValue}%)`;
 });
 
-
-// Global array to store fetched options
-let channelKeywords = [];
+// Fetch the TG Channels from database and populate the <select> element with the channels.
+let channelKeywords = [];  // Global array to store all the TG channel names.
 function fetchOptions() {
     fetch('https://1nrp.vercel.app/api/Play/tgChannels')
         .then(response => response.json())
@@ -506,67 +499,33 @@ function fetchOptions() {
             defaultOption.value = '';
             defaultOption.textContent = 'SELECT';
             selectElement.appendChild(defaultOption);
-            // Clear the keywords array before populating it with new data
+            // Clear the "channelKeywords" array before populating it with the channel names.
             channelKeywords = [];
             // Populate the <select> element with the fetched options.
             data.result.forEach((jsonString, index) => {
                 let parsedObject = JSON.parse(jsonString);
-                // Iterate over each key-value pair in the parsed object
                 for (const key in parsedObject) {
                     if (parsedObject.hasOwnProperty(key)) {
                         const rawChannel = `${parsedObject[key]}`;
-                        const channel = rawChannel.split('/').slice(-1)[0];
-                        const fullChannel = "https://t.me/" + channel + "/";
-                        // Add the channel to the global keywords array
+                        const channelID = rawChannel.split('/').slice(-1)[0];
+                        const fullChannel = "https://t.me/" + channelID + "/";
+                        // Add the channels to the global Telegram Channel Keywords array.
                         channelKeywords.push(fullChannel);
-                        // Create a new option element for each channel
+                        // Create a new option element for each channel.
                         const option = document.createElement('option');
-                        option.value = channel;
-                        option.textContent = `${index + 1} - ${channel}`;
+                        option.value = channelID;
+                        option.textContent = `${index + 1} ● ${channelID}`;
                         selectElement.appendChild(option);
                     }
                 }
             });
         })
         .catch(error => {
-            console.error('Error fetching options:', error);
+            console.error('Error fetching Telegram Channel options:', error);
         });
 }
-window.onload = fetchOptions;
-/*
-// Function to fetch TG Channel options from the database and populate the <select> element.
-function fetchOptions() {
-    fetch('https://1nrp.vercel.app/api/Play/tgChannels')
-        .then(response => response.json())
-        .then(data => {
-            const selectElement = document.getElementById('dynamicSelect');
-            selectElement.innerHTML = '';
-            // Create a default "Select" option.
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.textContent = 'SELECT CHANNEL';
-            selectElement.appendChild(defaultOption);
-            // Populate the <select> element with the fetched options.
-            const option = document.createElement('option');
-            data.result.forEach((jsonString) => {   // data.result.forEach((jsonString, index) => {  -To add numbering.
-                let parsedObject = JSON.parse(jsonString);
-                for (const key in parsedObject) {
-                    if (parsedObject.hasOwnProperty(key)) {
-                        const rawChannel = `${parsedObject[key]}`;
-                        const Channel = rawChannel.split('/').slice(-1)[0];
-                        option.value = Channel;
-                        option.textContent = Channel;  // option.textContent = `${index} - ` Channel;
-                        selectElement.appendChild(option);
-                    }
-                }
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching options:', error);
-        });
-}
-window.onload = fetchOptions;
-*/
+// window.onload = fetchOptions;
+
 // Show Alerts depending upon the response received.
 function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
     var alertBox = document.createElement('div');
