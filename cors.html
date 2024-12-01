@@ -175,7 +175,7 @@
     }
     #channelName {
       width: 80px;
-      padding: 4px 2px 4px 15px;
+      padding: 4px 2px 4px 4px;
     }
     #messageID {
       width: 60px;
@@ -335,7 +335,7 @@
 <div id="boxContainer"></div>
 <button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)');">☰</button>
 <select id="channelName" class="secondRow">
-    <option value="Onlyfans_videomejar">One</option>
+  <!--  <option value="Onlyfans_videomejar">One</option>
     <option value="xvideosgreen">Two</option>
     <option value="terabox_kavita_xnx_video_in_hin">Three</option>
     <option value="Ex_Boyfriend4">Four</option>
@@ -499,12 +499,12 @@ function fetchOptions() {
     fetch('https://1nrp.vercel.app/api/Play/tgChannels')
         .then(response => response.json())
         .then(data => {
-            const selectElement = document.getElementById('dynamicSelect');
+            const selectElement = document.getElementById('channelName');
             selectElement.innerHTML = '';
             // Create a default "Select" option.
             const defaultOption = document.createElement('option');
             defaultOption.value = '';
-            defaultOption.textContent = 'SELECT CHANNEL';
+            defaultOption.textContent = 'SELECT';
             selectElement.appendChild(defaultOption);
             // Clear the keywords array before populating it with new data
             channelKeywords = [];
