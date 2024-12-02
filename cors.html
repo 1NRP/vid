@@ -82,14 +82,14 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    ::placeholder { color: #a8a8a8; }
+    ::placeholder { color: #a2a2a2; }
     #vid {
       width: 57%;
       max-width: 300px;
       padding: 6px 2px;
       display: inline-block;
       background-color: #000;
-      color: #a8a8a8;
+      color: #a2a2a2;
       font-weight: 600;
       border: 2px solid #555;
       border-radius: 4px;
@@ -97,7 +97,7 @@
     #button-play {
       background-color: #000;
       width: 17%;
-      color: #a8a8a8;
+      color: #a2a2a2;
       font-weight: 1000;
       max-width: 100px;
       padding: 6px;
@@ -269,7 +269,7 @@
    /* top: 5dvh; */
       left: 20dvw;
       z-index: 50;
-      background-color: #ffffff;
+      background-color: #fff;
       color: #000;
       font-weight: 1000;
       padding: 5px;
@@ -348,8 +348,7 @@
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
 <!--  Fixed Position Elements. -->
-<iframe id="embedVideo" referrerPolicy="no-referrer" name="videoFrame" allow="autoplay; fullscreen" allowfullscreen></iframe>
-
+<iframe id="embedVideo" referrerPolicy="no-referrer" name="videoFrame"></iframe>
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted autoplay></video>
 <div id="thumbnailContainer"></div>
 <div id="menuBox">
@@ -436,7 +435,7 @@ el.addEventListener('long-press', function(e) {
 // Copy the source of the currently playing video.
 function copyVideoSrc() {
   if (document.getElementById('embedVideo').style.display === 'block') {
-    IFrame_Play().then(playUrl => navigator.clipboard.writeText(playUrl));
+    navigator.clipboard.writeText(document.getElementById('embedVideo').src);
   } else {
     navigator.clipboard.writeText(document.getElementById('player').src);
   }
@@ -733,13 +732,12 @@ async function IFrame_Play() {
             const { shareid, uk } = jsonData;
             const { fs_id } = jsonData.list[0];
             const playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
-            //window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
+            // window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
             document.getElementById('embedVideo').src = playUrl;
             document.getElementById('player').src = '';
             document.getElementById('player').style.display = 'none';
             document.getElementById('embedVideo').style.height = '80dvh';
             document.getElementById('embedVideo').style.display = 'block';
-            return playUrl;
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = query;
