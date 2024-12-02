@@ -335,7 +335,7 @@
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
 <button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)');">☰</button>
-<select id="channelName" class="secondRow" onclick="fetchOptions()"></select>
+<select id="channelName" class="secondRow" ondblclick="fetchOptions()"></select>
 <input id="messageID" class="secondRow">
 <button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
