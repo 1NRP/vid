@@ -82,13 +82,14 @@
       border-radius: 4px;
       cursor: pointer;
     }
+    ::placeholder { color: #a8a8a8; }
     #vid {
       width: 57%;
       max-width: 300px;
       padding: 6px 2px;
       display: inline-block;
       background-color: #000;
-      color: #b4b4b4;
+      color: #a8a8a8;
       font-weight: 600;
       border: 2px solid #555;
       border-radius: 4px;
@@ -96,7 +97,7 @@
     #button-play {
       background-color: #000;
       width: 17%;
-      color: #b4b4b4;
+      color: #a8a8a8;
       font-weight: 1000;
       max-width: 100px;
       padding: 6px;
@@ -334,9 +335,9 @@
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
 <button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)');">☰</button>
-<select id="channelName" class="secondRow"></select>
+<select id="channelName" class="secondRow" onclick="fetchOptions()"></select>
 <input id="messageID" class="secondRow">
-<button id="go-btn" class="secondRow" onclick="fetchOptions(); fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
+<button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 <div>
