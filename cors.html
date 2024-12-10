@@ -77,7 +77,7 @@
     #saveDeleteBtn {
       background-color: #000;
       padding: 6px;  
-      border: 2px solid #444;
+      border: 2px solid #555;
       color: #fff;
       border-radius: 4px;
       cursor: pointer;
@@ -91,7 +91,7 @@
       background-color: #000;
       color: #a2a2a2;
       font-weight: 600;
-      border: 2px solid #444;
+      border: 2px solid #555;
       border-radius: 4px;
     }
     #button-play {
@@ -101,7 +101,7 @@
       font-weight: 1000;
       max-width: 100px;
       padding: 6px;
-      border: 2px solid #444;
+      border: 2px solid #555;
       border-radius: 4px;
     }
     #clearBtn {
@@ -111,7 +111,7 @@
       max-width: 50px;
       padding: 6px;
       z-index: 10;
-      border: 2px solid #444;
+      border: 2px solid #555;
       border-radius: 4px;
     }
     #boxContainer {
@@ -861,7 +861,7 @@ async function getTboxAPI(shortURL) {
 }
   
 // Telegram Post fetching function.
-async function createTelegramPost(channelName, messageID, tgContainer) {
+function createTelegramPost(channelName, messageID, tgContainer) {
     const script = document.createElement('script');
     script.async = true;
     script.src = `https://telegram.org/js/telegram-widget.js?22`;
@@ -988,7 +988,6 @@ async function getIframeLink(script) {
     }
 }
 */
-
 async function getIframeLink(script) {
     // Retrieve iframe source from script's data attribute.
     const iframeSrc = script.dataset.telegramPost;
@@ -1022,7 +1021,6 @@ async function getIframeLink(script) {
                     const h = window.innerHeight;
                     const apiUrl = `https://teraboxapp.xyz/secure-redirect?d=${token}&t=${ts}&w=${w}&h=${h}`;
                     try {
-                        // Inline async function to fetch the URL from the API, catching any redirects
                         const apiResponse = await fetch(apiUrl, { method: 'GET', redirect: 'follow' });
                         if (apiResponse.ok) {
                             const redirectUrl = apiResponse.url; // Capture the final redirect URL.
