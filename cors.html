@@ -1016,8 +1016,10 @@ async function getIframeLink(script) {
                 found = true;
                 // Check if the link contains 'teraboxapp.xyz'
                 if (TBoxLink.includes('teraboxapp.xyz')) {
+                    const invokeApi = await fetch(TBoxLink);
+                    setTimeout(function() {
                     const token = "eyJpdiI6IkhFMXMvd0ZBaHdzZmpZcDgzaVpRbVE9PSIsInZhbHVlIjoieElWeExyNzUxUk1ReVRZOHlhMnZ4VTdUbERGdWgwdEo2U1MzUXk1TUwvUTB5NmRUZ010amZLRjJqb0xhZXk4aEwzc29ORHByYkthditnVGZkQThSeEF0QlZZWHNOdlJwaXkza0xPRU1MSHEydzVUNjRkbTJYZVozSTNQd2Vxd1FSU3Y5b01nelB1ZWhhTFYzZVVkN0FtZGRpOXJwRkZ5b2MxUlJhNWZjUWloWHFWeFZGVVVMNUtacDJxMnFqMjhpcXIzSTdrcStFeEF1anFTbzRadCtNVEJ2ay9JS1M2N2tad3ZyUTRPTFJxYnk4VlVhV0RzanpNNThqaG0vWXFaM24vL0RlY3BjSTBNNHNuNHMzd0dxVTJBaUJSZENabUlUM3ZWUXBFbFg3bm8vNWp1OGZzR2c3M2VIZzlKQ0I0T3FERk00YjVVcGhVKzFJNXdYWTdQUGs5azVsaHdZSVRuT3RsRFF1c0o2RENTN0xvcnhJVkRGNWxDcHFvMS9mby9pUzVNVFY0Kyt2bVlNSW5pQkh1aEFNWkxZeXFwVGlucjQ3NHJmd0g5MjYyTlhpRWdtUjZ4NmhVVjFMRmtXcjBKQUhGZHAxUmIrZjJNRmRNVGdXTW4zajdjT3VBRDFtYWNENHhqRTZtTjhOUWZaaHVaWVZFQ1g1aEpMZnFFbTBnRGNhRnQzRXBSY1FOSnRZQmYzS25mK1hLY2FrREhRdTNJbGdKRHNSbDVFdHh5S0ZYTWltN1QydGY0UEVwRzVYRmM4bUI1Z2FOVERLQzBVd21zcmpVT0lrYlpLZitFQWZMOFgzSElJdW5ueFcrbnBWNGJ3ZEtpVjdMaE00MmIyck9uaFhLRnlzcU53NVR3YW9QUy9jRUdVNTBKRU1qL1F2UUJaMCt4WTgyUWJxQlU4YmMxQzdLN3ZyK2NyNU9QNUYyUU8zQWJ5ZDRKRGg4ZXVBNjJtRHZwZ0RRPT0iLCJtYWMiOiIxOWYzNzVkMDM0YjI4NTM4MzkzYjE0ZDExZjE5MjZhMDRiY2UxZDQ1YWQ4MDllYWJjOWIwNTg5N2Y0YTFkZDU1IiwidGFnIjoiIn0=";
-                    const ts = Date.now() - 8000;
+                    const ts = Date.now();
                     const apiUrl = `https://teraboxapp.xyz/secure-redirect?d=${token}&t=${ts}&w=360&h=624`;
                     try {
                         const apiResponse = await fetch(apiUrl, { method: 'GET', redirect: 'follow' });
@@ -1031,7 +1033,7 @@ async function getIframeLink(script) {
                     } catch (apiError) {
                         console.error('API Error:', apiError);
                         alert('Error fetching API or redirect URL.');
-                    }
+                    } }, 4000);
                 }
             }
         });
