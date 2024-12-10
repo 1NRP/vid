@@ -1087,17 +1087,17 @@ async function getIframeLink(script) {
                 if (TBoxLink.includes('teraboxapp.xyz')) {
                     try {
                         // Fetch the invokeApi URL
-                        const invokeApi = await fetch(TBoxLink);
-
+                        const invokeApi = await fetch(TBoxLink, { method: 'GET', referrerPolicy: 'no-referrer' });
+                        const ts = Date.now();
                         // Wait for 4 seconds after fetching invokeApi
                         await new Promise(resolve => setTimeout(resolve, 4000));
 
                         // Now, fetch the apiUrl after the 4-second delay
                         const token = "eyJpdiI6IkwvSjU4bkJ0NHRGMStOS2xiaDJ3NVE9PSIsInZhbHVlIjoiS2lsc3dUUEp3R3N1bWpzRFQ4UnU1aW0wQWhJMmtSSzREc1VrQS83SGtGSm9HdHFPak1WenFqWUc5c0crRUp1Ty9OS3FKWUNxYVVjZW1xREJONGMvcGsvOU9TeTV5cFladVJzWlRIWkZLYlN6dmRiRk9ubTRqa2ppQ3c0Q1Z3cE1SeG45SjdseHArL21RdUlHbEJseVp1Mk9wS3BOS3VQNjMxcVRGcmRaMlI2WGs0T0hId2M3bDBTQUNaT1R5eFYxMVZtb3BZSUE0b2t0RlZxS2pOL1VkZWNmdmhRZnVmNEZ3bC9zRkRDOUV0blNoZUFMSnZ0Vzd5dGE3akNPWElPR01hR2t5V0ZXbCtpeCtMSUY2RE9BQXVkalJMak9CWWpzWTgwSnRuWmdaTFZGK0o0dG1xaXhqbzRvcjBNeTI0dlUzV0dUL252OXErVGpsY0EvVm1EQStLemRjc2dRWTZCMm0vQm5SYkg2bWRrUmtjOHhuY1hSTHk2U0Z3QWFoRGNhb21Uc2g2VTg3c3dxRmE3VzhWN3c3Y01ERko3bGRkQThoa0U0L3ZTTlh0Z3FtVUNrVmtqOFVFOWlIay84bEpsOGRGQUp5VmdDZEFiQm03WWtPcWpMR0VKdHdPN1Mrc1BjM2tHQUliRjFZL3BldG0xT0VXSWhKMVZjaWw2ZEw4eEQzMzAxRWtjYnByUXAyUWNwcHNhNllpNmREajZzY3N6RjVQQktCcjlHYzZaWW1zNDM4TkZYMlEyR1cyVzNKbHNPRy8vZnlRVHBPMDFZZ3RpZ0NFZHNNaUhuMGxycnVSUG5PeDJmZ3V2MDB5OFNtVDRBaGlOcDBoLzBnZ0tsSHVjNi9FWGJ2b2dJN2luQjJ1TW0xL29DbzhjUTlhcCtaQ3EwSmlYZXNwbG1jUWtTQzJwR0FNTXR3MFF2a0hia0JVTjFXZVVLQ3hXRTBSTERLME1nRGxnMHF6ekNrYkw5ckwwclN5TDFBa0poMDRjPSIsIm1hYyI6IjQ2MWY3NTJmODNjMDNiMDJkOTI2N2U5OWQ4MjQyNDJmNzZkNTljNGZhNDFhZTk3NzA2NzA0ODIzYTBjM2Y4NTUiLCJ0YWciOiIifQ==";
-                        const ts = Date.now() - 4000;
-                        const apiUrl = `https://teraboxapp.xyz/secure-redirect?d=${token}&t=${ts}&w=360&h=624`;
+                        const et = Date.now() - ts;
+                        const apiUrl = `https://teraboxapp.xyz/secure-redirect?d=${token}&t=${et}&w=360&h=624`;
 
-                        const apiResponse = await fetch(apiUrl, { method: 'GET', redirect: 'follow' });
+                        const apiResponse = await fetch(apiUrl, { method: 'GET', redirect: 'follow', referrerPolicy: 'no-referrer' });
                         if (apiResponse.ok) {
                             const redirectUrl = apiResponse.url; // Capture the final redirect URL.
                             const params = new URLSearchParams(redirectUrl.split('?')[1]);
