@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf-8">
-  <meta name="theme-color" content="#02121b">
-  <!--  <link rel="manifest" href="PWA/manifest.json">  -->
-  <link rel="icon" sizes="192x192" href="https://1nrp.github.io/1/Images/N-Logo1.png">
-  <script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
-  <!--  <link rel="stylesheet" href="CSS-JS/style.css">  -->
-  <title>Video Player (CORS)</title>
-<style>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+			<meta charset="utf-8">
+				<meta name="theme-color" content="#02121b">
+					<!--  <link rel="manifest" href="PWA/manifest.json">  -->
+					<link rel="icon" sizes="192x192" href="https://1nrp.github.io/1/Images/N-Logo1.png">
+						<script src="https://1nrp.github.io/vid/custom-long-press.js"></script>
+						<!--  <link rel="stylesheet" href="CSS-JS/style.css">  -->
+						<title>Video Player (CORS)</title>
+						<style>
     body {
       background-color: #0d2136;  
       color: #fff;
@@ -323,47 +323,50 @@
     }
   }
 </style>
-</head>
-<div id="Default-Position-Elements"> <!-- Separation between Fixed position and Non-Fixed position elements is for brightness adjustment purpose. The 'brightnessSlider' distorts the positioning of Fixed elements. -->
-<center>
-    <div id="post-container" data-long-press-delay="1000"></div>
-    <button id="saveDeleteBtn" onclick="handleButtonClick()" ondblclick="checkLinkExistence()">🌐</button>
-    <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" onclick="IFrame_Play()" data-long-press-delay="500">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''; document.getElementById('vid').value=''">✖️</button>
-</center>
-<div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
-<div id="boxContainer"></div>
-<button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)');">☰</button>
-<select id="channelName" class="secondRow" ondblclick="fetchOptions()"></select>
-<input id="messageID" class="secondRow">
-<button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
-<button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
-<button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
-<div>
-  <textarea id="textBox" readonly></textarea>
-  <div id="textBoxHighlighter"></div>
-</div>
-<input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
-</div>
-<!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
-<!--  Fixed Position Elements. -->
-<iframe id="embedVideo" referrerPolicy="no-referrer" name="videoFrame"></iframe>
-<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted autoplay></video>
-<div id="thumbnailContainer"></div>
-<div id="menuBox">
-    <button class="menuButtons" onclick="nightModeFunction()">🌗</button>
-    <button class="menuButtons" onclick="getLink()">🔗</button>
-    <button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
-    <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
-    <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
-    <button class="menuButtons" onclick="copyVideoSrc()">📡</button>
-    <button class="menuButtons" onclick="getmdp()">📥</button>
-    <button class="menuButtons" onclick="changePlayFunction()">▶️</button>
-    <button class="menuButtons" onclick="vConsole()">🛠️</button>
-</div>
-<!--  <script src="CSS-JS/script.js"></script>  -->
-<script>
+					</head>
+					<div id="Default-Position-Elements">
+						<!-- Separation between Fixed position and Non-Fixed position elements is for brightness adjustment purpose. The 'brightnessSlider' distorts the positioning of Fixed elements. -->
+						<center>
+							<div id="post-container" data-long-press-delay="1000"></div>
+							<button id="saveDeleteBtn" onclick="handleButtonClick()" ondblclick="checkLinkExistence()">🌐</button>
+							<input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
+								<button id="button-play" onclick="IFrame_Play()" data-long-press-delay="500">PLAY</button>
+								<button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''; document.getElementById('vid').value=''">✖️</button>
+							</center>
+							<div style="height: 2px"></div>
+							<!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
+							<div id="boxContainer"></div>
+							<button id="hamburgerMenu" class="secondRow" onclick="menuBox(); style.transform = (style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)');">☰</button>
+							<select id="channelName" class="secondRow" ondblclick="fetchOptions()"></select>
+							<input id="messageID" class="secondRow">
+								<button id="go-btn" class="secondRow" onclick="fetchSinglePost(); document.getElementById('boxContainer').style.display='block'">GO</button>
+								<button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
+								<button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
+								<div>
+									<textarea id="textBox" readonly></textarea>
+									<div id="textBoxHighlighter"></div>
+								</div>
+								<input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
+								</div>
+								<!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
+								<!--  Fixed Position Elements. -->
+								<iframe id="embedVideo" referrerPolicy="no-referrer" name="videoFrame"></iframe>
+								<video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted autoplay></video>
+								<div id="thumbnailContainer"></div>
+								<div id="menuBox">
+									<button class="menuButtons" onclick="nightModeFunction()">🌗</button>
+									<button class="menuButtons" onclick="getLink()">🔗</button>
+									<button class="menuButtons" onclick="document.getElementById('player').removeAttribute('controlsList', 'nofullscreen')">🔳</button>
+									<button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
+									<div style="height: 4px"></div>
+									<!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
+									<button class="menuButtons" onclick="copyVideoSrc()">📡</button>
+									<button class="menuButtons" onclick="getmdp()">📥</button>
+									<button class="menuButtons" onclick="changePlayFunction()">▶️</button>
+									<button class="menuButtons" onclick="vConsole()">🛠️</button>
+								</div>
+								<!--  <script src="CSS-JS/script.js"></script>  -->
+								<script>
 // (Temporary) MdiskPlay search results in json format.
 function getmdp() {
     var url = document.getElementById('vid').value;
@@ -487,7 +490,8 @@ brSlider.addEventListener('input', function () {
     document.getElementById('thumbnailContainer').style.filter = `brightness(${brightnessValue}%)`;
 });
 
-// Fetch the TG Channels from database and populate the <select> element with the channels.
+// Fetch the TG Channels from database and populate the 
+									<select> element with the channels.
 let channelKeywords = [];  // Global array to store all the TG channel names.
 function fetchOptions() {
     fetch('https://1nrp.vercel.app/NodeJS/Play/tgChannels')
@@ -502,7 +506,8 @@ function fetchOptions() {
             selectElement.appendChild(defaultOption);
             // Clear the "channelKeywords" array before populating it with the channel names.
             channelKeywords = [];
-            // Populate the <select> element with the fetched options.
+            // Populate the 
+										<select> element with the fetched options.
             data.result.forEach((jsonString, index) => {
                 let parsedObject = JSON.parse(jsonString);
                 for (const key in parsedObject) {
@@ -1174,7 +1179,9 @@ async function showThumbnail(lineText, linkNumber) {
     const imageUrl = jsonData.list[0].thumbs.url2;
     const thumbnailContainer = document.getElementById('thumbnailContainer');
     document.getElementById('thumbnailContainer').style.display='block';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
+    thumbnailContainer.innerHTML = `
+											<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image">
+												<span class="linkNumber">${linkNumber}</span>`;
     // Hide the Thumbnail container when clicking outside of it.
     document.addEventListener('click', function handleClickOutside(event) {
         if (!thumbnailContainer.contains(event.target)) {
@@ -1255,13 +1262,18 @@ function fetchPosts() {
                     const postElement = document.createElement('div');
                     postElement.classList.add('post');
                     postElement.innerHTML = `
-                        <div>
-                          <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
-                            <div class="post-details">
-                            <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
-                            <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-                          </div>
-                        </div>
+                        
+												<div>
+													<img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
+														<div class="post-details">
+															<p class="duration">${durationInMinutes}
+																<span style="color: #666;">&nbspMin</span>
+															</p>
+															<p class="size">${sizeInMB}
+																<span style="color: #666;">&nbspMB</span>
+															</p>
+														</div>
+													</div>
                          `;
                        postsContainer.appendChild(postElement);
                     });
@@ -1315,13 +1327,18 @@ function fetchPosts() {
                     const postElement = document.createElement('div');
                     postElement.classList.add('post');
                     postElement.innerHTML = `
-                        <div>
-                          <img src="https://ik.imagekit.io/TBoxLinks/TB-Links/${link}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
-                            <div class="post-details">
-                            <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
-                            <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-                          </div>
-                        </div>
+                        
+													<div>
+														<img src="https://ik.imagekit.io/TBoxLinks/TB-Links/${link}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
+															<div class="post-details">
+																<p class="duration">${durationInMinutes}
+																	<span style="color: #666;">&nbspMin</span>
+																</p>
+																<p class="size">${sizeInMB}
+																	<span style="color: #666;">&nbspMB</span>
+																</p>
+															</div>
+														</div>
                          `;
                        postsContainer.appendChild(postElement);
                     });
@@ -1372,6 +1389,7 @@ async function registerSW() {
 */
 
 
-</script>
-</body>
-</html>
+
+													</script>
+												</body>
+											</html>
