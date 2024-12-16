@@ -1053,55 +1053,36 @@ async function getIframeLink(script) {
 async function getIframeLink(script) {
     const iframeSrc = script.dataset.telegramPost;
     const iframe = document.querySelector(`iframe[src*="${iframeSrc}"]`);
-
     if (!iframe) {
         alert("Iframe not found.");
         return;
     }
-
     const src = iframe.src;
     try {
         // Fetch iframe content
         const response = await fetch(src);
         const htmlText = await response.text();
-
         // Parse the HTML and extract anchor tags
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlText, 'text/html');
         const anchors = doc.querySelectorAll('a');
-
         // Keywords for filtering links
         const keywords = ['teraboxapp', 'teraboxshare', 'terafileshare', 'teraboxlink', 'terasharelink', '1024terabox', 'freeterabox'];
-
         let found = false;
         let TBoxLink = '';
-
         // Loop through all anchor tags
         const anchorPromises = Array.from(anchors).map(async (anchor) => {
             const href = anchor.href;
             if (keywords.some(keyword => href.includes(keyword))) {
                 TBoxLink = href;
                 found = true;
-
                 // Check if the link contains 'teraboxapp.xyz'
                 if (TBoxLink.includes('teraboxapp.xyz')) {
                     try {
                         // Fetch the invokeApi URL
-                        const invokeApi = await fetch(TBoxLink, { method: 'GET', referrerPolicy: 'no-referrer' });
-                        const ts = Date.now();
-                        // Wait for 4 seconds after fetching invokeApi
-                        await new Promise(resolve => setTimeout(resolve, 4000));
-
-                        // Now, fetch the apiUrl after the 4-second delay
-                        const token = "eyJpdiI6IkwvSjU4bkJ0NHRGMStOS2xiaDJ3NVE9PSIsInZhbHVlIjoiS2lsc3dUUEp3R3N1bWpzRFQ4UnU1aW0wQWhJMmtSSzREc1VrQS83SGtGSm9HdHFPak1WenFqWUc5c0crRUp1Ty9OS3FKWUNxYVVjZW1xREJONGMvcGsvOU9TeTV5cFladVJzWlRIWkZLYlN6dmRiRk9ubTRqa2ppQ3c0Q1Z3cE1SeG45SjdseHArL21RdUlHbEJseVp1Mk9wS3BOS3VQNjMxcVRGcmRaMlI2WGs0T0hId2M3bDBTQUNaT1R5eFYxMVZtb3BZSUE0b2t0RlZxS2pOL1VkZWNmdmhRZnVmNEZ3bC9zRkRDOUV0blNoZUFMSnZ0Vzd5dGE3akNPWElPR01hR2t5V0ZXbCtpeCtMSUY2RE9BQXVkalJMak9CWWpzWTgwSnRuWmdaTFZGK0o0dG1xaXhqbzRvcjBNeTI0dlUzV0dUL252OXErVGpsY0EvVm1EQStLemRjc2dRWTZCMm0vQm5SYkg2bWRrUmtjOHhuY1hSTHk2U0Z3QWFoRGNhb21Uc2g2VTg3c3dxRmE3VzhWN3c3Y01ERko3bGRkQThoa0U0L3ZTTlh0Z3FtVUNrVmtqOFVFOWlIay84bEpsOGRGQUp5VmdDZEFiQm03WWtPcWpMR0VKdHdPN1Mrc1BjM2tHQUliRjFZL3BldG0xT0VXSWhKMVZjaWw2ZEw4eEQzMzAxRWtjYnByUXAyUWNwcHNhNllpNmREajZzY3N6RjVQQktCcjlHYzZaWW1zNDM4TkZYMlEyR1cyVzNKbHNPRy8vZnlRVHBPMDFZZ3RpZ0NFZHNNaUhuMGxycnVSUG5PeDJmZ3V2MDB5OFNtVDRBaGlOcDBoLzBnZ0tsSHVjNi9FWGJ2b2dJN2luQjJ1TW0xL29DbzhjUTlhcCtaQ3EwSmlYZXNwbG1jUWtTQzJwR0FNTXR3MFF2a0hia0JVTjFXZVVLQ3hXRTBSTERLME1nRGxnMHF6ekNrYkw5ckwwclN5TDFBa0poMDRjPSIsIm1hYyI6IjQ2MWY3NTJmODNjMDNiMDJkOTI2N2U5OWQ4MjQyNDJmNzZkNTljNGZhNDFhZTk3NzA2NzA0ODIzYTBjM2Y4NTUiLCJ0YWciOiIifQ==";
-                        const et = Date.now() - ts;
-                        const apiUrl = `https://teraboxapp.xyz/secure-redirect?d=${token}&t=${et}&w=360&h=624`;
-
-                        const apiResponse = await fetch(apiUrl, { method: 'GET', redirect: 'follow', referrerPolicy: 'no-referrer' });
-                        if (apiResponse.ok) {
-                            const redirectUrl = apiResponse.url; // Capture the final redirect URL.
-                            const params = new URLSearchParams(redirectUrl.split('?')[1]);
-                            const surl = params.get('surl');
+                        const invoke = await fetch(TBoxLink);
+                        const data = await invoke.json();
+                        const surl = data.surl;
                             if (surl) {
                                 TBoxLink = `https://1024terabox.com/s/1${surl}`;
                             } else {
@@ -1116,10 +1097,8 @@ async function getIframeLink(script) {
                 }
             }
         });
-
         // Wait for all anchor promises to complete
         await Promise.all(anchorPromises);
-
         if (found) {
             // Set the TBox link and trigger the play action
             document.getElementById('vid').value = TBoxLink;
@@ -1127,7 +1106,6 @@ async function getIframeLink(script) {
         } else {
             alert("No TB Link was found.");
         }
-
     } catch (error) {
         alert("Error fetching the URL. Please make sure the URL is correct.");
         console.error('Error fetching HTML:', error);
