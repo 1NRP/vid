@@ -1275,16 +1275,16 @@ function handlePosterClick(link) {
 // Show or Hide Hamburger menu box.
 function menuBox() {
    const alertBox = document.getElementById('menuBox');
-   if (alertBox.style.display === 'inline') {
+   if (alertBox.style.display === 'block') {
        alertBox.style.display = 'none';
    } else {
-       alertBox.style.display = 'inline';
+       alertBox.style.display = 'block';
    }
 }
 // Hide menuBox when clicked on it.
 document.addEventListener('click', function(event) {
     const menuBox = document.getElementById('menuBox');
-    if (menuBox && menuBox.style.display === 'inline') { // && menuBox.contains(event.target)) {      
+    if (menuBox && !menuBox.contains(event.target)|menuBox.contains(event.target)) {      
         setTimeout(() => {
         menuBox.style.display = 'none';
         }, 300);
