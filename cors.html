@@ -1284,7 +1284,8 @@ function menuBox() {
 // Hide menuBox when clicked on it.
 document.addEventListener('click', function(event) {
     const menuBox = document.getElementById('menuBox');
-    if (menuBox && menuBox.style.display === 'block') {      
+    const menu = document.getElementById('hamburgerMenu');
+    if (menuBox && menuBox.style.display === 'block' && !menu.contains(event.target)) {      
         setTimeout(() => {
         menuBox.style.display = 'none';
         }, 300);
