@@ -1284,7 +1284,7 @@ function menuBox() {
 // Hide menuBox when clicked on it.
 document.addEventListener('click', function(event) {
     const menuBox = document.getElementById('menuBox');
-    if (menuBox) { // && menuBox.contains(event.target)) {      
+    if (menuBox && menuBox.style.display === 'inline') { // && menuBox.contains(event.target)) {      
         setTimeout(() => {
         menuBox.style.display = 'none';
         }, 300);
