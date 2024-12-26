@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -787,7 +786,7 @@ async function Vercel_Play() {
         var videoId = query.split('/').slice(-1)[0];
         try {
             // Make a request to the API endpoint.
-            const response = await fetch(`https://1nrp.vercel.app/NodeJS/Play/getM3U8?shortURL=${videoId}`, {
+            const response = await fetch(`https://1nrp.vercel.app/getM3U8?shortURL=${videoId}`, {
                 method: 'GET',
             });
             if (!response.ok) {
@@ -927,7 +926,7 @@ document.getElementById('channelName').addEventListener('change', async function
     }
     await getMessageID();
 });
-/*
+
 // Extract the TB Link from the Telegram post.
 async function getIframeLink(script) {
     // Retrieve iframe source from script's data attribute.
@@ -968,7 +967,8 @@ async function getIframeLink(script) {
         console.error('Error fetching HTML:', error);
     }
 }
-*/
+
+/*
 async function getIframeLink(script) {
     const iframeSrc = script.dataset.telegramPost;
     const iframe = document.querySelector(`iframe[src*="${iframeSrc}"]`);
@@ -1029,6 +1029,7 @@ async function getIframeLink(script) {
         console.error('Error fetching HTML:', error);
     }
 }
+*/
 
 // Logic for toggling the mode between 'storing' and 'deleting' Link.
 const textBox = document.getElementById('textBox');
