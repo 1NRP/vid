@@ -315,11 +315,11 @@
 </head>
 <div id="Default-Position-Elements"> <!-- Separation between Fixed position and Non-Fixed position elements is for brightness adjustment purpose. The 'brightnessSlider' distorts the positioning of Fixed elements. -->
 <center>
-    <div id="post-container" data-long-press-delay="1000"></div>
+    <div id="post-container" data-long-press-delay="1000" ondblclick="document.getElementById('vid').value=''"></div>
     <button id="saveDeleteBtn" onclick="handleButtonClick()" ondblclick="checkLinkExistence()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="IFrame_Play()" data-long-press-delay="500">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''; document.getElementById('vid').value=''">✖️</button>
+    <button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
