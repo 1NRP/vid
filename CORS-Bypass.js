@@ -1,26 +1,20 @@
 // ==UserScript==
 // @name         CORS Bypass
-// @description  CORS Bypass Via Tampermonkey.
-// @version      2.0
-// @author       Nihar Ranjan Pradhan
+// @description  CORS Bypass Via Tampermonkey's "GM_xmlhttpRequest".
+// @version      1.0
 // @match        https://1nrp.github.io/vid/cors
 // @grant        GM_xmlhttpRequest
 // @connect      *
-// @namespace    https://greasyfork.org/users/882700
 // @license      MIT
-// @icon         https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://mybrowseraddon.com/access-control-allow-origin.html&size=64
+// @icon         https://www.google.com/s2/favicons?domain=https://mybrowseraddon.com/access-control-allow-origin.html&sz=32
 // ==/UserScript==
-
-
 
 const CORSViaGM = document.body.appendChild(Object.assign(document.createElement('div'), { id: 'CORSViaGM' }));
 
 CORSViaGM.init = function (window = unsafeWindow) {
     if (!window) throw new Error('The window parameter must be passed in!');
-
     // Define the native fetch method for non-CORS sites.
     const nativeFetch = window.fetch.bind(window);
-
     // Override fetch method selectively
     window.fetch = function (url, init) {
         if (shouldUseGM(url)) {
@@ -30,11 +24,10 @@ CORSViaGM.init = function (window = unsafeWindow) {
             return nativeFetch(url, init);
         }
     };
-
-    const info = '🐵🐒🐵 CORS-Via-GM Initiated.';
-    alert('🔵 CORS 🔵 Bypass Activated.');
-    console.info(info);
-    return info;
+    // Update User Interface stating CORS Bypass is activated. Function "showAlert()" is defined in the original web page.
+    showAlert({ BgColor: '#0cabf5', Text: 'CORS - BYPASS' });
+    //alert('🔵 CORS 🔵 Bypass Activated.');
+    console.info('🐵🐒🐵 CORS-Via-GM Initiated.');
 };
 // Add sites here to bypass CORS.
 function shouldUseGM(url) {
