@@ -458,9 +458,9 @@ const element3 = document.getElementById('textBox');
 let touchTimeout;
 let activeElement;
 document.addEventListener('touchstart', function(event) {
-    if ((event.target === element1 && element1.innerHTML !== null) || event.target === element2 || event.target === element3) {
+    if ((event.target === element1 && element1.innerHTML !== "") || event.target === element2 || event.target === element3) {
         event.preventDefault();
-        activeElement = element1;
+        activeElement = event.target;
 	activeElement.style.zIndex = 100;
         clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
     }
