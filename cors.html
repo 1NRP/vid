@@ -63,7 +63,7 @@
       background-color: #02121b;
       width: 98.9dvw;
       display: block;
-      height: 40vh /*195px; */
+      height: 30vh /* 195px; */
     }
     #player {
       position: fixed;
@@ -458,19 +458,23 @@ const element2 = document.getElementById('boxContainer');
 const element3 = document.getElementById('textBox');
 let touchTimeout;
 let activeElement;
-document.addEventListener('touchstart', function(event) {
+document.addEventListener('mousedown', function(event) {
     if (event.target === element1 || event.target === element2 || event.target === element3) {
+      if (event.target === element1) {
+	  event.target.innerHTML !== null;
         event.preventDefault();
         activeElement = event.target;
 	activeElement.style.zIndex = 100;
         clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
     }
 });
-document.addEventListener('touchend', function(event) {
+document.addEventListener('mouseup', function(event) {
     event.preventDefault();
     touchTimeout = setTimeout(function() {
+    if (activeElement) {
         activeElement.style.zIndex = 0; // Reset z-index after 500ms.
 	activeElement = null;
+      }
     }, 500);
 });
 
