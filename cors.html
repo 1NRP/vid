@@ -56,6 +56,7 @@
       position: fixed;
       top: 0vh;
       left: 0vw;
+      z-index: 5;
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
@@ -453,14 +454,14 @@ const element1 = document.getElementById('post-container');
 const element2 = document.getElementById('boxContainer');
 const element3 = document.getElementById('textBox');
 let touchTimeout;
-document.addEventListener('mousedown', function(event) {
+document.addEventListener('touchstart', function(event) {
     if (event.target === element1 || event.target === element2 || event.target === element3) {
         event.preventDefault();
         event.target.style.zIndex = 100;
         clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
     }
 });
-document.addEventListener('mouseup', function(event) {
+document.addEventListener('touchend', function(event) {
     event.preventDefault();
     touchTimeout = setTimeout(function() {
         event.target.style.zIndex = 0; // Reset z-index after 500ms.
