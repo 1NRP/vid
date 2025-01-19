@@ -458,14 +458,14 @@ const element3 = document.getElementById('textBox');
 let touchTimeout;
 let activeElement;
 document.addEventListener('touchstart', function(event) {
-    if ((event.target === element1 && element1.innerHTML !== "") || event.target === element2 || event.target === element3) {
+    if (document.getElementById('embedVideo').src !== "" && ((event.target === element1 && element1.innerHTML !== "") || event.target === element2 || event.target === element3)) {
         event.preventDefault();
         activeElement = event.target;
 	activeElement.style.zIndex = 100;
         clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
     }
 });
-document.addEventListener('mouseup', function(event) {
+document.addEventListener('touchend', function(event) {
     touchTimeout = setTimeout(function() {
     if (activeElement) {
         activeElement.style.zIndex = 0; // Reset z-index after 500ms.
