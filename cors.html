@@ -57,7 +57,6 @@
       position: fixed;
       top: 0vh;
       left: 0vw;
-      z-index: 5;
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
@@ -459,13 +458,19 @@ const element3 = document.getElementById('textBox');
 let touchTimeout;
 let activeElement;
 document.addEventListener('mousedown', function(event) {
-    if (event.target === element1 && element1.innerHTML !== null || event.target === element2 || event.target === element3) {
+    /*if (event.target === element1 && element1.innerHTML !== null || event.target === element2 || event.target === element3) {
         event.preventDefault();
         activeElement = element1;
 	activeElement.style.zIndex = 100;
         clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
     }
-});
+});*/
+    if ((event.target === element1 && element1.innerHTML.trim() !== "") || event.target === element2 || event.target === element3) {
+    event.preventDefault();
+    activeElement = element1;
+    activeElement.style.zIndex = 100;
+    clearTimeout(touchTimeout);
+    }
 document.addEventListener('mouseup', function(event) {
     touchTimeout = setTimeout(function() {
     if (activeElement) {
