@@ -63,7 +63,7 @@
       background-color: #02121b;
       width: 98.9dvw;
       display: block;
-      height: 30vh /* 195px; */
+      height: 30vh;
     }
     #player {
       position: fixed;
@@ -459,17 +459,14 @@ const element3 = document.getElementById('textBox');
 let touchTimeout;
 let activeElement;
 document.addEventListener('mousedown', function(event) {
-    if (event.target === element1 || event.target === element2 || event.target === element3) {
-      if (event.target === element1) {
-	  event.target.innerHTML !== null;
+    if (event.target === element1 && element1.innerHTML !== null || event.target === element2 || event.target === element3) {
         event.preventDefault();
-        activeElement = event.target;
+        activeElement = element1;
 	activeElement.style.zIndex = 100;
         clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
     }
 });
 document.addEventListener('mouseup', function(event) {
-    event.preventDefault();
     touchTimeout = setTimeout(function() {
     if (activeElement) {
         activeElement.style.zIndex = 0; // Reset z-index after 500ms.
