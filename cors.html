@@ -23,6 +23,7 @@
       width: 99%;
       height: 360px;
       border-radius: 8px;
+      position: relative;
       border: 2px solid #333;
       overflow-y: scroll;
       background-color: #02121b;
@@ -60,9 +61,9 @@
       border: 2px solid #333;
       border-radius: 6px;
       background-color: #02121b;
-      width: 98.5dvw;
+      width: 98.9dvw;
       display: block;
-      height: 195px;
+      height: 40vh /*195px; */
     }
     #player {
       position: fixed;
@@ -72,7 +73,7 @@
       display: none;
       border-radius: 6px;
       background-color: #02121b;
-      max-width: 98.5dvw;       /* dvw = dynamic viewport width */
+      max-width: 98.9dvw;       /* dvw = dynamic viewport width */
       max-height: 85dvh;        /* dvh = dynamic viewport height */
       margin: 0px 0px 0px 0px;  /* Top, Right, Bottom, Left */
     }
@@ -118,6 +119,7 @@
       overflow-y: scroll;
       border: 2px solid #333;
       padding: 2px;
+      position: relative;
       background-color: #02121b;
       border-radius: 8px;
       margin: 2px;
@@ -204,6 +206,7 @@
       font-weight: 800;
       font-size: 11px;
       resize: none;
+      position: relative;
       white-space: pre;
       background-color: #02121b;
       border: 2px solid #333;
@@ -264,7 +267,7 @@
   }
   .Alerts {
       position: fixed;
-   /* top: 5dvh; */
+     /* top: 5dvh; */
       left: 20dvw;
       z-index: 50;
       background-color: #fff;
@@ -449,22 +452,25 @@ addHighlightBar(event.clientX, event.clientY);
 document.getElementById('textBox').addEventListener('scroll', () => {
     if (currentBar) { currentBar.remove(); currentBar = null; } });
 
-// Increase Z-Index of "post-container", "boxContainer" and "textBox" on hovering.
+// Increase Z-Index of "post-container", "boxContainer" and "textBox" on hovering to be shown above "embedVideo" iFrame.
 const element1 = document.getElementById('post-container');
 const element2 = document.getElementById('boxContainer');
 const element3 = document.getElementById('textBox');
 let touchTimeout;
+let activeElement;
 document.addEventListener('touchstart', function(event) {
     if (event.target === element1 || event.target === element2 || event.target === element3) {
         event.preventDefault();
-        event.target.style.zIndex = 100;
+        activeElement = event.target;
+	activeElement.style.zIndex = 100;
         clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
     }
 });
 document.addEventListener('touchend', function(event) {
     event.preventDefault();
     touchTimeout = setTimeout(function() {
-        event.target.style.zIndex = 0; // Reset z-index after 500ms.
+        activeElement.style.zIndex = 0; // Reset z-index after 500ms.
+	activeElement = null;
     }, 500);
 });
 
