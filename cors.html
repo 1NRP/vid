@@ -60,14 +60,15 @@
       border-radius: 6px;
       background-color: #02121b;
       width: 98.5dvw;
-      display: none;
-      height: 80dvh;
+      display: block;
+      height: 195px;
     }
     #player {
       position: fixed;
       top: 0vh;
       left: 0vw;
       border: 2px solid #333;
+      display: none;
       border-radius: 6px;
       background-color: #02121b;
       max-width: 98.5dvw;       /* dvw = dynamic viewport width */
@@ -447,6 +448,25 @@ addHighlightBar(event.clientX, event.clientY);
 document.getElementById('textBox').addEventListener('scroll', () => {
     if (currentBar) { currentBar.remove(); currentBar = null; } });
 
+// Increase Z-Index of "post-container", "boxContainer" and "textBox" on hovering.
+const element1 = document.getElementById('post-container');
+const element2 = document.getElementById('boxContainer');
+const element3 = document.getElementById('textBox');
+let touchTimeout;
+document.addEventListener('mousedown', function(event) {
+    if (event.target === element1 || event.target === element2 || event.target === element3) {
+        event.preventDefault();
+        event.target.style.zIndex = 100;
+        clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
+    }
+});
+document.addEventListener('mouseup', function(event) {
+    event.preventDefault();
+    touchTimeout = setTimeout(function() {
+        event.target.style.zIndex = 0; // Reset z-index after 500ms.
+    }, 500);
+});
+
 // Function to load the vConsole debug tool.
 function vConsole() {
     const script = document.createElement('script');
@@ -725,7 +745,7 @@ async function IFrame_Play() {
             document.getElementById('embedVideo').src = playUrl;
             document.getElementById('player').src = '';
             document.getElementById('player').style.display = 'none';
-            document.getElementById('embedVideo').style.height = '80dvh';
+            document.getElementById('embedVideo').style.height = '85dvh';
             document.getElementById('embedVideo').style.display = 'block';
     } else {
         // Not a terabox URL, play as usual
