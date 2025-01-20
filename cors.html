@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -323,7 +324,7 @@
     <button id="saveDeleteBtn" onclick="handleButtonClick()" ondblclick="checkLinkExistence()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
     <button id="button-play" onclick="IFrame_Play()" data-long-press-delay="500">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').src=''">✖️</button>
+    <button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').removeAttribute('src')">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
@@ -450,7 +451,7 @@ addHighlightBar(event.clientX, event.clientY);
 });
 document.getElementById('textBox').addEventListener('scroll', () => {
     if (currentBar) { currentBar.remove(); currentBar = null; } });
-
+/*
 // Increase Z-Index of "post-container", "boxContainer" and "textBox" on hovering to be shown above "embedVideo" iFrame.
 const element1 = document.getElementById('post-container');
 const element2 = document.getElementById('boxContainer');
@@ -460,10 +461,11 @@ let activeElement;
 document.addEventListener('touchstart', zIndexUp);
 document.addEventListener('mouseover', zIndexUp);
 function zIndexUp(event) {
-    if (document.getElementById('embedVideo').src != '' && ((element1.contains(event.target) && element1.innerHTML !== '') || element2.contains(event.target) || event.target === element3)) {
+    if (document.getElementById('embedVideo').src == "" && ((element1.contains(event.target) && element1.innerHTML !== '') || element2.contains(event.target) || event.target === element3)) {
         event.preventDefault();
-        activeElement = event.target.parentElement; // or, event.target.closest('#post-container');
+        activeElement = event.target.closest('#post-container');
 	activeElement.style.zIndex = 100;
+    console.log('mover & ',activeElement);
         clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
     }
 }
@@ -473,9 +475,52 @@ function zIndexDown(event) {
     touchTimeout = setTimeout(function() {
     if (activeElement) {
         activeElement.style.zIndex = 0; // Reset z-index after 500ms.
+        console.log('mout & ', activeElement,'Out');
 	activeElement = null;
       }
    }, 500);
+}
+*/
+const element1 = document.getElementById('post-container');
+const element2 = document.getElementById('boxContainer');
+const element3 = document.getElementById('textBox');
+let touchTimeout;
+let activeElement;
+
+// Add event listeners directly to the three elements
+element1.addEventListener('touchstart', handleZIndexUp);
+element1.addEventListener('mouseover', handleZIndexUp);
+element2.addEventListener('touchstart', handleZIndexUp);
+element2.addEventListener('mouseover', handleZIndexUp);
+element3.addEventListener('touchstart', handleZIndexUp);
+element3.addEventListener('mouseover', handleZIndexUp);
+
+function handleZIndexUp(event) {
+    if (document.getElementById('embedVideo').src) {
+        if ((this === element1 && element1.innerHTML !== '') || this === element2 || this === element3) {
+            event.preventDefault();
+            activeElement = this;
+            activeElement.style.zIndex = 100;
+            console.log('mover & ', activeElement);
+            clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
+        }
+    }
+}
+element1.addEventListener('touchend', handleZIndexDown);
+element1.addEventListener('mouseout', handleZIndexDown);
+element2.addEventListener('touchend', handleZIndexDown);
+element2.addEventListener('mouseout', handleZIndexDown);
+element3.addEventListener('touchend', handleZIndexDown);
+element3.addEventListener('mouseout', handleZIndexDown);
+
+function handleZIndexDown(event) {
+    touchTimeout = setTimeout(() => {
+        if (activeElement) {
+            activeElement.style.zIndex = 0; // Reset z-index after 500ms.
+            console.log('mout & ', activeElement, 'Out');
+            activeElement = null;
+        }
+    }, 500);
 }
 
 // Function to load the vConsole debug tool.
