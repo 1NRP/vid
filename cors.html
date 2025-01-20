@@ -461,7 +461,7 @@ document.addEventListener('touchstart', zIndexUp);
 document.addEventListener('mouseover', zIndexUp);
 function zIndexUp(event) {
     if (document.getElementById('embedVideo').src != '' && ((element1.contains(event.target) && element1.innerHTML !== '') || element2.contains(event.target) || event.target === element3)) {
-        //event.preventDefault();
+        event.preventDefault();
         activeElement = event.target.parentElement; // or, event.target.closest('#post-container');
 	activeElement.style.zIndex = 100;
         clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
