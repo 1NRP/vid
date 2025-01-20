@@ -457,22 +457,26 @@ const element2 = document.getElementById('boxContainer');
 const element3 = document.getElementById('textBox');
 let touchTimeout;
 let activeElement;
-document.addEventListener('touchstart', function(event) {
-    if (document.getElementById('embedVideo').src !== "" && ((event.target === element1 && element1.innerHTML !== "") || event.target === element2 || event.target === element3)) {
-        event.preventDefault();
-        activeElement = event.target;
+document.addEventListener('touchstart', zIndexUp);
+document.addEventListener('mouseover', zIndexUp);
+function zIndexUp(event) {
+    if (document.getElementById('embedVideo').src != '' && ((element1.contains(event.target) && element1.innerHTML !== '') || element2.contains(event.target) || event.target === element3)) {
+        //event.preventDefault();
+        activeElement = event.target.parentElement; // or, event.target.closest('#post-container');
 	activeElement.style.zIndex = 100;
         clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
     }
-});
-document.addEventListener('touchend', function(event) {
+}
+document.addEventListener('touchend', zIndexDown);
+document.addEventListener('mouseout', zIndexDown);
+function zIndexDown(event) {
     touchTimeout = setTimeout(function() {
     if (activeElement) {
         activeElement.style.zIndex = 0; // Reset z-index after 500ms.
 	activeElement = null;
       }
-    }, 500);
-});
+   }, 500);
+}
 
 // Function to load the vConsole debug tool.
 function vConsole() {
