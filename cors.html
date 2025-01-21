@@ -366,8 +366,12 @@ function getmdp() {
         .then(data => {
             let lines = [];
             data.result.forEach((item, index) => {
-                const teraId = item.id;
-                lines.push(`${index} ● https://teraboxapp.com/s/1${teraId}`);
+                const tera = item.id;
+		let teraId;
+		if (tera.indexOf('1') == 1) {
+		   teraId = tera;
+		} else { teraId = `1${tera}`; }
+                lines.push(`${index} ● https://teraboxapp.com/s/${teraId}`);
             });
             const result = lines.join('\n\n');
             const textbox = document.getElementById('textBox');
