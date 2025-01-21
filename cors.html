@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -368,7 +367,7 @@ function getmdp() {
             data.result.forEach((item, index) => {
                 const tera = item.id;
 		let teraId;
-		if (tera.indexOf('1') == 1) {
+		if (tera.startsWith('1')) {
 		   teraId = tera;
 		} else { teraId = `1${tera}`; }
                 lines.push(`${index} ● https://teraboxapp.com/s/${teraId}`);
