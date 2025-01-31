@@ -501,7 +501,6 @@ element3.addEventListener('mouseover', handleZIndexUp);
 function handleZIndexUp(event) {
     if (document.getElementById('embedVideo').src) {
         if ((this === element1 && element1.innerHTML !== '') || this === element2 || this === element3) {
-            event.preventDefault();
             activeElement = this;
             activeElement.style.zIndex = 100;
             console.log('mover & ', activeElement);
@@ -520,7 +519,7 @@ function handleZIndexDown(event) {
     touchTimeout = setTimeout(() => {
         if (activeElement) {
             activeElement.style.zIndex = 0; // Reset z-index after 500ms.
-            console.log('mout & ', activeElement, 'Out');
+            //console.log('mout & ', activeElement, 'Out');
             activeElement = null;
         }
     }, 500);
