@@ -805,6 +805,7 @@ async function IFrame_Play() {
             const { fs_id } = jsonData.list[0];
             const playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
             // window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
+	    document.getElementById('embedVideo').src = playUrl;
 	    adjustIframeStyles();
     } else {
         // Not a terabox URL, play as usual
@@ -864,7 +865,6 @@ async function Vercel_Play() {
 
 // Repetitive code for height and display adjustment in 'PLAY' functions.
 function adjustIframeStyles() {
-    document.getElementById('embedVideo').src = playUrl;
     document.getElementById('player').src = '';
     document.getElementById('player').style.display = 'none';
     document.getElementById('embedVideo').style.height = '85dvh';
