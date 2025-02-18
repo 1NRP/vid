@@ -805,11 +805,7 @@ async function IFrame_Play() {
             const { fs_id } = jsonData.list[0];
             const playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
             // window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
-            document.getElementById('embedVideo').src = playUrl;
-            document.getElementById('player').src = '';
-            document.getElementById('player').style.display = 'none';
-            document.getElementById('embedVideo').style.height = '85dvh';
-            document.getElementById('embedVideo').style.display = 'block';
+	    adjustIframeStyles();
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = query;
@@ -867,13 +863,20 @@ async function Vercel_Play() {
 }
 
 // Repetitive code for height and display adjustment in 'PLAY' functions.
-  function adjustStyles() {
+function adjustIframeStyles() {
+    document.getElementById('embedVideo').src = playUrl;
+    document.getElementById('player').src = '';
+    document.getElementById('player').style.display = 'none';
+    document.getElementById('embedVideo').style.height = '85dvh';
+    document.getElementById('embedVideo').style.display = 'block';
+}
+function adjustStyles() {
     document.getElementById('embedVideo').src='';
     document.getElementById('embedVideo').style.display='none';
     document.getElementById('player').style.display='block';
     document.getElementById('player').style.maxHeight='85dvh';
     document.getElementById('player').play();
-  }
+}
 
 // Function for fetching Terabox API with another retry if initial request fails.
 async function getTboxAPI(shortURL) {
@@ -956,7 +959,6 @@ document.getElementById('channelName').addEventListener('change', async function
         try {
             // **Without CORS Bypass (Tampermonkey). Using server-side proxy.
             // **const response = await fetch('https://1nrp.vercel.app/NodeJS/CORS-Proxy?URL=' + encodeURIComponent(TgChannel));
-            // **const htmlText = await response.text();
             const response = await fetch(TgChannel);
             const htmlText = await response.text();
             // Parse the HTML content
@@ -1001,7 +1003,6 @@ async function getIframeLink(script) {
     try {
         // **Without CORS Bypass (Tampermonkey). Using server-side proxy.
         // **const response = await fetch('https://1nrp.vercel.app/NodeJS/CORS-Proxy?URL=' + encodeURIComponent(src));
-        // **const htmlText = await response.json();
         const response = await fetch(src);
         const htmlText = await response.text();
         // Parse the HTML and extract anchor tags.
@@ -1196,7 +1197,7 @@ function textBoxLink(lineText) {
         const { fid, sid, uk } = textBoxJsonData[index];
         const frame = document.getElementById('embedVideo');
         frame.src = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${sid}&type=M3U8_AUTO_360&fid=${fid}&sign=1&timestamp=1&clienttype=1&channel=1`;
-        frame.style.display = 'block';
+        adjustIframeStyles();
         thumbnailContainer.style.display='none';
     } else {
         document.getElementById('vid').value = lineText;
