@@ -1190,8 +1190,9 @@ document.getElementById('textBox').addEventListener('click', function (event) {
 // Function to handle clicking on the Thumbnail.
 function textBoxLink(lineText) {
     const thumbnailContainer = document.getElementById('thumbnailContainer');
-    if (textBoxArray.includes(lineText)) {
-        const index = textBoxArray.indexOf(lineText);
+    const linkID = lineText.split('/').slice(-1)[0];
+    if (textBoxArray.includes(linkID)) {
+        const index = textBoxArray.indexOf(linkID);
         const { fid, sid, uk } = textBoxJsonData[index];
         const frame = document.getElementById('embedVideo');
         frame.src = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${sid}&type=M3U8_AUTO_360&fid=${fid}&sign=1&timestamp=1&clienttype=1&channel=1`;
