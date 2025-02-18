@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -384,7 +383,7 @@ function getmdp() {
 }
 
 // Cycle through the different "PLAY" functions.
-const PlayFunctions = [IFrame_Play, Mdisk_Play, API_Play, Vercel_Play];
+const PlayFunctions = [IFrame_Play, Mdisk_Play, Vercel_Play];
 let currentIndex = 0;
 function changePlayFunction() {
     // Update the index to the next "PLAY" function.
@@ -704,28 +703,30 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
 }
 
 // Retrive the Links from KV Cloud storage.
-  async function getLink() {
-      const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/getLink', {
-          method: 'GET',
-        })
-        .then(response => response.json())
-        .then(data => {
+let textBoxArray = [];
+async function getLink() {
+    try {
+        const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/getLink');
+        const data = await response.json();
             let lines = [];
             data.result.forEach((jsonString, index) => {
                 let parsedObject = JSON.parse(jsonString);
                 for (const key in parsedObject) {
                     if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`${index + 1} ● ${parsedObject[key]}`);
+                        lines.push(`${index} ● ${parsedObject[key]}`);
                     }
                 }
             });
             const result = lines.join('\n\n');
             const textbox = document.getElementById('textBox');
             textbox.value = result;
-        })
-        .catch(error => {
+            // Fetch the already saved data json.
+            const blob = await fetch('https://srbo3gia676hprqy.public.blob.vercel-storage.com/Others/KV-Store-Saved-TB-Link-Thumbnails.json');
+            const blobdata = await blob.json();
+            for (let item of blobdata) { shortURL = item.url; textBoxArray.push(shortURL); }
+        } catch(error) {
             console.error('Error fetching or parsing data:', error);
-        });
+        }
 }
 // getLink();
 
@@ -975,8 +976,7 @@ document.getElementById('channelName').addEventListener('change', async function
             const doc = parser.parseFromString(htmlText, 'text/html');
             // Extract all anchor/link tags
             const anchors = doc.querySelectorAll('a');
-            //const channelKeywords = ['https://t.me/Onlyfans_videomejar/', 'https://t.me/xvideosgreen/', 'https://t.me/terabox_kavita_xnx_video_in_hin/', 'https://t.me/Ex_Boyfriend4/'];
-            let lastMessage = ''; // Variable to store the last matching link
+            let lastMessage = ''; // Variable to store the last matching link.
             // Iterate over anchor tags to find the last matching link
             anchors.forEach(anchor => {
                 const href = anchor.href;
@@ -999,7 +999,7 @@ document.getElementById('channelName').addEventListener('change', async function
     }
     await getMessageID();
 });
-/*
+
 // Extract the TB Link from the Telegram post.
 async function getIframeLink(script) {
     // Retrieve iframe source from script's data attribute.
@@ -1042,7 +1042,8 @@ async function getIframeLink(script) {
         console.error('Error fetching HTML:', error);
     }
 }
-*/
+
+/*
 async function getIframeLink(script) {
     const iframeSrc = script.dataset.telegramPost;
     const iframe = document.querySelector(`iframe[src*="${iframeSrc}"]`);
@@ -1086,7 +1087,7 @@ async function getIframeLink(script) {
                         console.error('API Error:', apiError);
                         alert('Error fetching API or redirect URL.');
                     }
-                }
+                }  
             }
         });
         // Wait for all anchor promises to complete
@@ -1103,6 +1104,7 @@ async function getIframeLink(script) {
         console.error('Error fetching HTML:', error);
     }
 }
+*/
 
 // Logic for toggling the mode between 'storing' and 'deleting' Link.
 const textBox = document.getElementById('textBox');
@@ -1162,18 +1164,24 @@ function getLineText(event) {
 // Show thumbnail function with 3 attempts to fetch the TB API if failed in the 1st or 2nd attempts.
 async function showThumbnail(lineText, linkNumber) {
     const shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
-    const jsonData = await getTboxAPI(shortURL);
-    const imageUrl = jsonData.list[0].thumbs.url2;
     const thumbnailContainer = document.getElementById('thumbnailContainer');
-    document.getElementById('thumbnailContainer').style.display='block';
-    thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="handleThumbnailClick('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
-    // Hide the Thumbnail container when clicking outside of it.
-    document.addEventListener('click', function handleClickOutside(event) {
+    thumbnailContainer.style.display='block';
+    if ( textBoxArray.includes(shortURL)) {
+        const index = textBoxArray.indexOf(shortURL);
+        const { img } = textBoxArray[index];
+        thumbnailContainer.innerHTML = `<img src="${img}" class="thumbnail" onclick="textBoxLink('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
+    } else {
+      const jsonData = await getTboxAPI(shortURL);
+      const imageUrl = jsonData.list[0].thumbs.url2;
+      thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="textBoxLink('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
+      // Hide the Thumbnail container when clicking outside of it.
+      document.addEventListener('click', function handleClickOutside(event) {
         if (!thumbnailContainer.contains(event.target)) {
             document.getElementById('thumbnailContainer').style.display='none';
             document.removeEventListener('click', handleClickOutside);
         }
     });
+  }
 }
 let clickTimeout;
 const clickDelay = 200;
@@ -1182,8 +1190,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
         var { lineText } = getLineText(event);
-        document.getElementById('vid').value = lineText;
-        document.getElementById('button-play').click();
+        textBoxLink(lineText);
     } else {
         clickTimeout = setTimeout(function () {
             clickTimeout = null;
@@ -1193,10 +1200,20 @@ document.getElementById('textBox').addEventListener('click', function (event) {
     }
 });
 // Function to handle clicking on the Thumbnail.
-function handleThumbnailClick(lineText) {
-    document.getElementById('vid').value = lineText;
-    document.getElementById('button-play').click();
-    document.getElementById('thumbnailContainer').style.display='none';
+function textBoxLink(lineText) {
+    const thumbnailContainer = document.getElementById('thumbnailContainer');
+    if (textBoxArray.includes(lineText)) {
+        const index = textBoxArray.indexOf(lineText);
+        const { fid, sid, uk, } = textBoxArray[index];
+        const frame = document.getElementById('embedVideo');
+        frame.src = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${sid}&type=M3U8_AUTO_360&fid=${fid}&sign=1&timestamp=1&clienttype=1&channel=1`;
+        frame.style.display = 'block';
+        thumbnailContainer.style.display='none';
+    } else {
+        document.getElementById('vid').value = lineText;
+        document.getElementById('button-play').click();
+        thumbnailContainer.style.display='none';
+    }
 }
 /*
 // Function to load posts from the 9000 JSON items with 3rd party "Imagekit" thumbnail service.
@@ -1316,7 +1333,7 @@ function fetchPosts() {
                         </div>
                          `;
                        postsContainer.appendChild(postElement);
-                    });
+                    });8
           });
 }
 
