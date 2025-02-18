@@ -306,6 +306,7 @@
     .menuButtons {
         color: #b4b4b4b4;
     }
+    #clearBtn { z-index: 100 };
     #vid,
     #textBox,
     #button-play,
@@ -703,7 +704,7 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
 }
 
 // Retrive the Links from KV Cloud storage.
-let textBoxArray = [];
+let textBoxArray = [], textBoxJsonData = [];
 async function getLink() {
     try {
         const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/getLink');
@@ -723,7 +724,8 @@ async function getLink() {
             // Fetch the already saved data json.
             const blob = await fetch('https://srbo3gia676hprqy.public.blob.vercel-storage.com/Others/KV-Store-Saved-TB-Link-Thumbnails.json');
             const blobdata = await blob.json();
-            for (let item of blobdata) { shortURL = item.url; textBoxArray.push(shortURL); }
+	    textBoxJsonData = blobdata;
+            for (let item of blobdata) { const shortURL = item.url; textBoxArray.push(shortURL); }
         } catch(error) {
             console.error('Error fetching or parsing data:', error);
         }
@@ -815,20 +817,6 @@ async function IFrame_Play() {
     }
 }
 
-// Using third-party API to play video in HTML5 player(more customisable) instead of iframe(less customisable).
-async function API_Play() {
-    const query = await checkClipboard();
-    // Check if the URL contains 'Terabox'.
-    if (/(teraboxapp|terasharelink|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
-        const shortURL = query.split('/').slice(-1)[0];
-        document.getElementById('player').src = "https://apis.forn.fun/tera/m3u8.php?id=" + shortURL;
-        adjustStyles();
-    } else {
-        document.getElementById('player').style.maxHeight='85dvh';
-        document.getElementById('player').src = query;
-        adjustStyles();
-    }
-}
 // MdiskPlay method.
 async function Mdisk_Play() {
     const query = await checkClipboard();
@@ -1168,7 +1156,7 @@ async function showThumbnail(lineText, linkNumber) {
     thumbnailContainer.style.display='block';
     if ( textBoxArray.includes(shortURL)) {
         const index = textBoxArray.indexOf(shortURL);
-        const { img } = textBoxArray[index];
+        const { img } = textBoxJsonData[index];
         thumbnailContainer.innerHTML = `<img src="${img}" class="thumbnail" onclick="textBoxLink('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
     } else {
       const jsonData = await getTboxAPI(shortURL);
@@ -1204,7 +1192,7 @@ function textBoxLink(lineText) {
     const thumbnailContainer = document.getElementById('thumbnailContainer');
     if (textBoxArray.includes(lineText)) {
         const index = textBoxArray.indexOf(lineText);
-        const { fid, sid, uk, } = textBoxArray[index];
+        const { fid, sid, uk } = textBoxJsonData[index];
         const frame = document.getElementById('embedVideo');
         frame.src = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${sid}&type=M3U8_AUTO_360&fid=${fid}&sign=1&timestamp=1&clienttype=1&channel=1`;
         frame.style.display = 'block';
