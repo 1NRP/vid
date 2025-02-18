@@ -1162,14 +1162,14 @@ async function showThumbnail(lineText, linkNumber) {
       const jsonData = await getTboxAPI(shortURL);
       const imageUrl = jsonData.list[0].thumbs.url2;
       thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="textBoxLink('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
-      // Hide the Thumbnail container when clicking outside of it.
-      document.addEventListener('click', function handleClickOutside(event) {
+  }
+  // Hide the Thumbnail container when clicking outside of it.
+  document.addEventListener('click', function handleClickOutside(event) {
         if (!thumbnailContainer.contains(event.target)) {
             document.getElementById('thumbnailContainer').style.display='none';
             document.removeEventListener('click', handleClickOutside);
         }
     });
-  }
 }
 let clickTimeout;
 const clickDelay = 200;
