@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -335,7 +336,7 @@
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 <div>
-  <textarea id="textBox" readonly data-long-press-delay="5000"></textarea>
+  <textarea id="textBox" readonly data-long-press-delay="2000"></textarea>
   <div id="textBoxHighlighter"></div>
 </div>
 <input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
@@ -353,34 +354,32 @@
     <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
     <button class="menuButtons" onclick="copyVideoSrc()">📡</button>
-    <button class="menuButtons" onclick="getmdp()">📥</button>
+    <button class="menuButtons" onclick="getOtherLinks()">📥</button>
     <button class="menuButtons" onclick="changePlayFunction()">▶️</button>
     <button class="menuButtons" onclick="vConsole()">🛠️</button>
 </div>
 <!--  <script src="CSS-JS/script.js"></script>  -->
 <script>
-// (Temporary) MdiskPlay search results in json format.
-function getmdp() {
-    var url = document.getElementById('vid').value;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            let lines = [];
-            data.result.forEach((item, index) => {
-                const tera = item.id;
+// Get external Links from other sources.
+async function getOtherLinks() {
+try {
+    const url = document.getElementById('vid').value;
+    const response = await fetch(url);
+    const data = await response.json();
+    const results = data.result;
+    let lines = [];
+    for (const i = 1; i <= results.length; i++) {
+        const tera = results[i].id;
 		let teraId;
-		if (tera.startsWith('1')) {
-		   teraId = tera;
-		} else { teraId = `1${tera}`; }
-                lines.push(`${index} ● https://teraboxapp.com/s/${teraId}`);
-            });
-            const result = lines.join('\n\n');
-            const textbox = document.getElementById('textBox');
-            textbox.value = result;
-        })
-        .catch(error => {
-            alert('Error fetching or parsing MdiskPlay json data.');
-        });
+		if (tera.startsWith('1')) { teraId = tera } else { teraId = 1 + tera };
+        lines.push(`${i} ● https://teraboxapp.com/s/${teraId}`);
+    }
+    const result = lines.join('\n\n');
+        const textbox = document.getElementById('textBox');
+        textbox.value = result;
+    } catch (error) {
+        alert('Error fetching or parsing MdiskPlay json data.');
+    }
 }
 
 // Cycle through the different "PLAY" functions.
@@ -390,7 +389,7 @@ function changePlayFunction() {
     // Update the index to the next "PLAY" function.
     currentIndex = (currentIndex + 1) % PlayFunctions.length; // The modulo operator (%) ensures that if the index exceeds the length of the array (which is 3), it wraps around to 0. This allows for cycling through the functions in the array.
     document.getElementById('button-play').onclick = PlayFunctions[currentIndex];
-    showAlert({ BgColor: '#fff', Text: `${PlayFunctions[currentIndex].name} ✔ Activated`});
+    showAlert({ BgColor: '#2894c7', Text: `${PlayFunctions[currentIndex].name} ✔ Activated`});
 }
   
 // Long Press Events.
@@ -558,41 +557,30 @@ brSlider.addEventListener('input', function () {
 
 // Fetch the TG Channels from database and populate the <select> element with the channels.
 let channelKeywords = [];  // Global array to store all the TG channel names.
-function fetchOptions() {
-    fetch('https://1nrp.vercel.app/NodeJS/Play/tgChannels')
-        .then(response => response.json())
-        .then(data => {
-            const selectElement = document.getElementById('channelName');
-            selectElement.innerHTML = '';
-            // Create a default "Select" option.
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.textContent = 'SELECT';
-            selectElement.appendChild(defaultOption);
-            // Clear the "channelKeywords" array before populating it with the channel names.
-            channelKeywords = [];
-            // Populate the <select> element with the fetched options.
-            data.result.forEach((jsonString, index) => {
-                let parsedObject = JSON.parse(jsonString);
-                for (const key in parsedObject) {
-                    if (parsedObject.hasOwnProperty(key)) {
-                        const rawChannel = `${parsedObject[key]}`;
-                        const channelID = rawChannel.split('/').slice(-1)[0];
-                        const fullChannel = "https://t.me/" + channelID + "/";
-                        // Add the channels to the global Telegram Channel Keywords array.
-                        channelKeywords.push(fullChannel);
-                        // Create a new option element for each channel.
-                        const option = document.createElement('option');
-                        option.value = channelID;
-                        option.textContent = `${index + 1} ● ${channelID}`;
-                        selectElement.appendChild(option);
-                    }
-                }
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching Telegram Channel options:', error);
-        });
+async function fetchOptions() {
+    const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/tgChannels')
+    const data = await response.json();
+    const selectElement = document.getElementById('channelName');
+    selectElement.innerHTML = '';
+    // Create a default "Select" option.
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'SELECT';
+    selectElement.appendChild(defaultOption);
+    // Clear the "channelKeywords" array before populating it with the channel names.
+    channelKeywords = [];
+    // Populate the <select> element with the fetched options.
+    for (const rawChannel of data.result) {
+        const channelID = rawChannel.split('/').slice(-1)[0];
+        const fullChannel = "https://t.me/" + channelID + "/";
+        // Add the channels to the global Telegram Channel Keywords array.
+        channelKeywords.push(fullChannel);
+        // Create a new option element for each channel.
+        const option = document.createElement('option');
+        option.value = channelID;
+        option.textContent = `${index + 1} ● ${channelID}`;
+        selectElement.appendChild(option);
+    }
 }
 // window.onload = fetchOptions;
 
@@ -616,14 +604,11 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
             try {
                 const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/saveLink', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify([textValue]),
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: textValue
                 });
-
                 if (response.ok) {
-                    const data = await response.json(); // Wait for the JSON response
+                    const data = await response.json(); // Wait for the JSON response.
                     const listCount = data.result;
                     // Show "Link Saved" alert when "OK" response (200) is received from the server.
                     showAlert({ BgColor: '#1bd13d', Text: `${listCount} ✔ Link Saved`});
@@ -646,12 +631,9 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
         try {
             const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/deleteLink', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify([deleteValue]),
+                headers: { 'Content-Type': 'text/plain'  },
+                body: deleteValue
             });
-
             if (response.ok) {
                 const data = await response.json(); // Wait for the JSON response
                 if (data.result == 0) {
@@ -681,10 +663,8 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
         try {
             const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/checkLinkExistence', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify([linkValue]),
+                headers: { 'Content-Type': 'text/plain' },
+                body: linkValue,
             });
             if (response.ok) {
                 const data = await response.json(); // Wait for the JSON response.
@@ -709,28 +689,20 @@ async function getLink() {
     try {
         const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/getLink');
         const data = await response.json();
+        const resultsArray = data.result;
             let lines = [];
-            data.result.forEach((jsonString, index) => {
-                let parsedObject = JSON.parse(jsonString);
-                for (const key in parsedObject) {
-                    if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`${index} ● ${parsedObject[key]}`);
-                    }
-                }
-            });
+            for (let index = 1; index <= resultsArray.length; index++) { lines.push(`${index} ● ${resultsArray[index]}`) };
             const result = lines.join('\n\n');
-            const textbox = document.getElementById('textBox');
-            textbox.value = result;
+            document.getElementById('textBox').value = result;
             // Fetch the already saved data json.
             const blob = await fetch('https://srbo3gia676hprqy.public.blob.vercel-storage.com/Others/KV-Store-Saved-TB-Link-Thumbnails.json');
             const blobdata = await blob.json();
-	    textBoxJsonData = blobdata;
+	        textBoxJsonData = blobdata;
             for (let item of blobdata) { const shortURL = item.url; textBoxArray.push(shortURL); }
         } catch(error) {
             console.error('Error fetching or parsing data:', error);
         }
 }
-// getLink();
 
 // Night-Mode toggle function.
 function nightModeFunction() {
@@ -744,7 +716,6 @@ document.addEventListener("keydown", function(event) {
     if (event.key === "ArrowRight") {
         arrowRightPressed = true;
     }
-    
     if (arrowRightPressed) {
         if (event.key === "ArrowUp") {
             saveLink();
@@ -757,7 +728,6 @@ document.addEventListener("keydown", function(event) {
         }
     }
 });
-
 document.addEventListener("keyup", function(event) {
     if (event.key === "ArrowRight") {
         arrowRightPressed = false;
@@ -1205,7 +1175,7 @@ function textBoxLink(lineText) {
         thumbnailContainer.style.display='none';
     }
 }
-/*
+
 // Function to load posts from the 9000 JSON items with 3rd party "Imagekit" thumbnail service.
  async function returnRandomPosts() {
     const localStorageKey = 'jsonTBLinks';
@@ -1222,7 +1192,7 @@ function textBoxLink(lineText) {
             }
             data = await response.json();
             // Store the fetched data in local storage to avoid frequent fetching of the json file.
-            localStorage.setItem(localStorageKey, JSON.stringify(data));
+            localStorage.setItem(localStorageKey, (data));
         } catch (error) {
             console.error('Failed to fetch data:', error);
             return null;
@@ -1266,7 +1236,8 @@ function fetchPosts() {
                     });
           });
 }
-*/
+
+/*
 // Function to load posts from the 9000 JSON items with my own "Imagekit" thumbnail service.
  async function returnRandomPosts() {
     const localStorageKey = 'tbJsonLinks';
@@ -1326,6 +1297,7 @@ function fetchPosts() {
                     });8
           });
 }
+*/
 
 // Function to handle clicking on the Poster.
 function handlePosterClick(link) {
