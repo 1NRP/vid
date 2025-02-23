@@ -570,6 +570,7 @@ async function fetchOptions() {
     // Clear the "channelKeywords" array before populating it with the channel names.
     channelKeywords = [];
     // Populate the <select> element with the fetched options.
+    let index = 1;
     for (const rawChannel of data.result) {
         const channelID = rawChannel.split('/').slice(-1)[0];
         const fullChannel = "https://t.me/" + channelID + "/";
@@ -578,8 +579,9 @@ async function fetchOptions() {
         // Create a new option element for each channel.
         const option = document.createElement('option');
         option.value = channelID;
-        option.textContent = `${index + 1} ● ${channelID}`;
+        option.textContent = `${index} ● ${channelID}`;
         selectElement.appendChild(option);
+	index += 1;
     }
 }
 // window.onload = fetchOptions;
