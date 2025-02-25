@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -504,7 +503,6 @@ function handleZIndexUp(event) {
         if ((this === element1 && element1.innerHTML !== '') || this === element2 || this === element3) {
             activeElement = this;
             activeElement.style.zIndex = 100;
-            console.log('mover & ', activeElement);
             clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
         }
     }
@@ -520,7 +518,6 @@ function handleZIndexDown(event) {
     touchTimeout = setTimeout(() => {
         if (activeElement) {
             activeElement.style.zIndex = 0; // Reset z-index after 500ms.
-            //console.log('mout & ', activeElement, 'Out');
             activeElement = null;
         }
     }, 500);
@@ -1194,7 +1191,7 @@ function textBoxLink(lineText) {
             }
             data = await response.json();
             // Store the fetched data in local storage to avoid frequent fetching of the json file.
-            localStorage.setItem(localStorageKey, (data));
+            localStorage.setItem(localStorageKey, JSON.stringify(data));
         } catch (error) {
             console.error('Failed to fetch data:', error);
             return null;
