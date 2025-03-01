@@ -202,25 +202,28 @@
       width: 98%;
       height: 150px;
       color: #b4b4b4;
-      font-weight: 800;
-      font-size: 11px;
       resize: none;
       position: relative;
-      white-space: pre;
       background-color: #02121b;
       border: 2px solid #333;
       border-radius: 8px;
       overflow-y: scroll;
-      overflow-x: hidden;
       margin: 2px 0px;
     }
-    .highlightBar {
-      width: 75vw;
-      height: 10px;
-      left: 20vw;
-      position: absolute;
-      background-color: #c930c280;
-      pointer-events: none;
+    .txtDiv {
+	 color: #b4b4b4;
+	 overflow-x: hidden;
+	 padding: 2px;
+	 margin: 4px 0px;
+	 text-wrap: no-wrap;
+	 white-space: pre;
+         font-size: 12px;
+	 border-radius: 4px;
+	 font-weight: 600;
+    }
+    .txtDiv:hover {
+      background-color: dodgerblue;
+      color: #222;
     }
     #thumbnailContainer {
       position: fixed;
@@ -686,17 +689,19 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
 let textBoxArray = [], textBoxJsonData = [];
 async function getLink() {
     try {
-        const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/getLink');
+	const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/getLink');
         const data = await response.json();
         const resultsArray = data.result;
-            let lines = [];
-            for (let index = 1; index <= resultsArray.length; index++) { lines.push(`${index} ● ${resultsArray[index]}`) };
-            const result = lines.join('\n\n');
-            document.getElementById('textBox').value = result;
+        for (const [index, value] of resultsArray.entries()) {
+	    let div = document.createElement('div');
+            div.className = 'txtDiv';
+            div.innerText = `${index+1} ● ${value}`;
+	    document.getElementById('textBox').appendChild(div);
+	    };
             // Fetch the already saved data json.
             const blob = await fetch('https://srbo3gia676hprqy.public.blob.vercel-storage.com/Others/KV-Store-Saved-TB-Link-Thumbnails.json');
             const blobdata = await blob.json();
-	        textBoxJsonData = blobdata;
+	    textBoxJsonData = blobdata;
             for (let item of blobdata) { const shortURL = item.url; textBoxArray.push(shortURL); }
         } catch(error) {
             console.error('Error fetching or parsing data:', error);
