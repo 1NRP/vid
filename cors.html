@@ -88,7 +88,7 @@
       width: 57%;
       max-width: 300px;
       padding: 6px 2px;
-      display: inline-block;
+      display: block;
       background-color: #000;
       color: #a2a2a2;
       font-weight: 600;
@@ -338,15 +338,15 @@
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 <div>
-  <textarea id="textBox" readonly data-long-press-delay="2000"></textarea>
-  <div id="textBoxHighlighter"></div>
+  <div id="textBox" readonly data-long-press-delay="2000"></div>
+  <!--b<div id="textBoxHighlighter"></div> -->
 </div>
 <input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
-<!--  Fixed Position Elements. -->
+<!--  Fixed Position Elements. 
 <iframe id="embedVideo" referrerPolicy="no-referrer" name="videoFrame"></iframe>
-<iframe id="dummyIframe" referrerpolicy="no-referrer" style="display: none"></iframe>
+<iframe id="dummyIframe" referrerpolicy="no-referrer" style="display: none"></iframe> -->
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted autoplay></video>
 <div id="thumbnailContainer"></div>
 <div id="menuBox">
