@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,7 +70,6 @@
       top: 0vh;
       left: 0vw;
       border: 2px solid #333;
-      display: none;
       border-radius: 6px;
       background-color: #02121b;
       max-width: 98.9dvw;       /* dvw = dynamic viewport width */
@@ -199,7 +199,7 @@
       background-color: #02121b;
     }
     #textBox {
-      width: 98%;
+      width: 99%;
       height: 150px;
       color: #b4b4b4;
       resize: none;
@@ -214,16 +214,12 @@
 	 color: #b4b4b4;
 	 overflow-x: hidden;
 	 padding: 2px;
-	 margin: 4px 0px;
+	 margin: 4px 2px;
 	 text-wrap: no-wrap;
 	 white-space: pre;
-         font-size: 12px;
+     font-size: 12px;
 	 border-radius: 4px;
 	 font-weight: 600;
-    }
-    .txtDiv:hover {
-      background-color: dodgerblue;
-      color: #222;
     }
     #thumbnailContainer {
       position: fixed;
@@ -322,12 +318,12 @@
 </style>
 </head>
 <div id="Default-Position-Elements"> <!-- Separation between Fixed position and Non-Fixed position elements is for brightness adjustment purpose. The 'brightnessSlider' distorts the positioning of Fixed elements. -->
-<center>
     <div id="post-container" data-long-press-delay="1000" ondblclick="document.getElementById('vid').value=''"></div>
+<center style="display: flex; gap: 2px;">
     <button id="saveDeleteBtn" onclick="handleButtonClick()" ondblclick="checkLinkExistence()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" onclick="IFrame_Play()" data-long-press-delay="500">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').removeAttribute('src')">✖️</button>
+    <button id="button-play" onclick="CloudFlare_Play()" data-long-press-delay="500">PLAY</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value='';"; ondblclick="document.getElementById('player').src='';">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
@@ -365,20 +361,17 @@
 // Get external Links from other sources.
 async function getOtherLinks() {
 try {
-    const url = document.getElementById('vid').value;
-    const response = await fetch(url);
-    const data = await response.json();
-    const results = data.result;
-    let lines = [];
-    for (const i = 1; i <= results.length; i++) {
-        const tera = results[i].id;
+    const response = await fetch(`${document.getElementById('vid').value}`);
+        const data = await response.json();
+        for (const [index, object] of data.result.entries()) {
+        const tera = object.id;
 		let teraId;
 		if (tera.startsWith('1')) { teraId = tera } else { teraId = 1 + tera };
-        lines.push(`${i} ● https://teraboxapp.com/s/${teraId}`);
-    }
-    const result = lines.join('\n\n');
-        const textbox = document.getElementById('textBox');
-        textbox.value = result;
+	    let div = document.createElement('div');
+            div.className = 'txtDiv';
+            div.innerText = `${index+1} ● https://teraboxapp.com/s/${teraId}`;
+	    document.getElementById('textBox').appendChild(div);
+	    };
     } catch (error) {
         alert('Error fetching or parsing MdiskPlay json data.');
     }
@@ -504,7 +497,7 @@ element3.addEventListener('touchstart', handleZIndexUp);
 element3.addEventListener('mouseover', handleZIndexUp);
 
 function handleZIndexUp(event) {
-    if (document.getElementById('embedVideo').src) {
+    if (document.getElementById('player').src) {
         if ((this === element1 && element1.innerHTML !== '') || this === element2 || this === element3) {
             activeElement = this;
             activeElement.style.zIndex = 100;
@@ -771,7 +764,7 @@ async function checkClipboard() {
 }
 
 /*
-// (Iframe Play Method - Used because HTML5 player can't play an URL without extension.) PLAY Video Function.
+// Iframe Play Method.
 async function IFrame_Play() {
     const query = await checkClipboard();
     // Check if the URL contains 'Terabox'.
@@ -1019,69 +1012,6 @@ async function getIframeLink(script) {
     }
 }
 
-/*
-async function getIframeLink(script) {
-    const iframeSrc = script.dataset.telegramPost;
-    const iframe = document.querySelector(`iframe[src*="${iframeSrc}"]`);
-    if (!iframe) {
-        alert("Iframe not found.");
-        return;
-    }
-    const src = iframe.src;
-    try {
-        // Fetch iframe content
-        const response = await fetch(src);
-        const htmlText = await response.text();
-        // Parse the HTML and extract anchor tags
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlText, 'text/html');
-        const anchors = doc.querySelectorAll('a');
-        // Keywords for filtering links
-        const keywords = ['teraboxapp', 'teraboxshare', 'terafileshare', 'teraboxlink', 'terasharelink', '1024terabox', 'freeterabox'];
-        let found = false;
-        let TBoxLink = '';
-        // Loop through all anchor tags
-        const anchorPromises = Array.from(anchors).map(async (anchor) => {
-            const href = anchor.href;
-            if (keywords.some(keyword => href.includes(keyword))) {
-                TBoxLink = href;
-                found = true;
-                // Check if the link contains 'teraboxapp.xyz'
-                if (TBoxLink.includes('teraboxapp.xyz')) {
-                    try {
-                        // Fetch the invokeApi URL
-                        const invoke = await fetch(TBoxLink);
-                        const data = await invoke.json();
-                        const surl = data.surl;
-                            if (surl) {
-                                TBoxLink = `https://1024terabox.com/s/1${surl}`;
-                            } else {
-                                alert('No "surl" parameter found in the API response.');
-                                found = false;
-		            }
-                    } catch (apiError) {
-                        console.error('API Error:', apiError);
-                        alert('Error fetching API or redirect URL.');
-                    }
-                }  
-            }
-        });
-        // Wait for all anchor promises to complete
-        await Promise.all(anchorPromises);
-        if (found) {
-            // Set the TBox link and trigger the play action
-            document.getElementById('vid').value = TBoxLink;
-            document.getElementById('button-play').click();
-        } else {
-            alert("No TB Link was found.");
-        }
-    } catch (error) {
-        alert("Error fetching the URL. Please make sure the URL is correct.");
-        console.error('Error fetching HTML:', error);
-    }
-}
-*/
-
 // Logic for toggling the mode between 'storing' and 'deleting' Link.
 const textBox = document.getElementById('textBox');
 const placeholder = document.getElementById('vid');
@@ -1117,22 +1047,7 @@ document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonC
 
 // Function to show Thumbnail and Paste LineText in link input field.
 function getLineText(event) {
-    var textBox = document.getElementById('textBox');
-    var texts = textBox.value;
-    var cursorPosition = textBox.selectionStart; // Get cursor position
-    var startOfLine = texts.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
-    var endOfLine = texts.indexOf('\n\n', cursorPosition); // Find the end of the line
-    // If no line break is found before the cursor position.
-    if (startOfLine === -1) {
-        startOfLine = 0;
-    } else {
-        startOfLine += 2; // Move past the line break
-    }
-    // If no line break is found after the cursor position, end of the text
-    if (endOfLine === -1) {
-        endOfLine = texts.length;
-    }
-    var numText = texts.substring(startOfLine, endOfLine);
+    var numText = event.target.innerText;
     var lineText = numText.split('●').slice(1)[0];
     var linkNumber = numText.split('●').slice(0)[0];
     return { lineText, linkNumber };
@@ -1159,9 +1074,13 @@ async function showThumbnail(lineText, linkNumber) {
         }
     });
 }
-let clickTimeout;
+let clickTimeout, highlightedDiv;
 const clickDelay = 300;
 document.getElementById('textBox').addEventListener('click', function (event) {
+    const targetDiv = event.target.closest('.txtDiv');
+    if (highlightedDiv) { highlightedDiv.style.backgroundColor = 'none' };
+    targetDiv.style.backgroundColor = '#405580';
+    highlightedDiv = targetDiv;
     if (clickTimeout) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
@@ -1180,11 +1099,11 @@ function textBoxLink(lineText) {
     const thumbnailContainer = document.getElementById('thumbnailContainer');
     const linkID = lineText.split('/').slice(-1)[0];
     if (textBoxArray.includes(linkID)) {
-        const index = textBoxArray.indexOf(linkID);
-        const { fid, sid, uk } = textBoxJsonData[index];
-        const frame = document.getElementById('embedVideo');
-        frame.src = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${sid}&type=M3U8_AUTO_360&fid=${fid}&sign=1&timestamp=1&clienttype=1&channel=1`;
-        adjustIframeStyles();
+        //const index = textBoxArray.indexOf(linkID);
+        //const { fid, sid, uk } = textBoxJsonData[index];
+        document.getElementById('vid').value = lineText;
+        document.getElementById('button-play').click();
+        //adjustIframeStyles();
         thumbnailContainer.style.display='none';
     } else {
         document.getElementById('vid').value = lineText;
