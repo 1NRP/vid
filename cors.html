@@ -355,11 +355,12 @@
 <!--  <script src="CSS-JS/script.js"></script>  -->
 <script>
 // Check browser color theme and adapt colors accordingly.
-/* function darkTheme() {
+function darkTheme() {
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
     document.body.color = '#000';
   }
-} */
+}
+darkTheme();
 // Get external Links from other sources.
 async function getOtherLinks() {
 try {
@@ -1072,7 +1073,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
     const targetDiv = event.target.closest('.txtDiv');
     //if (highlightedDiv) { highlightedDiv.style.backgroundColor = null };
     targetDiv.style.backgroundColor = '#405580';
-    targetDiv.style.color = '#000';
+    targetDiv.style.color = '#fff';
     //highlightedDiv = targetDiv;
     if (clickTimeout) {
         clearTimeout(clickTimeout);
@@ -1094,7 +1095,7 @@ function textBoxLink(lineText) {
       const cfToken = prompt("Enter The 'Cloudflare-Access-Token' :");
       localStorage.setItem('Cloudflare-Access-Token', cfToken)
     };
-    const cfToken = localStorage.getItem('CloudFlare-Access-Token');
+    const cfToken = localStorage.getItem('Cloudflare-Access-Token');
     document.getElementById('player').src = "https://tbox.1nrp.workers.dev?URL=" + linkID + "&CacheOption=Yes&AccessToken=" + cfToken;
     document.getElementById('thumbnailContainer').style.display='none';
 }
