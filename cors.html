@@ -135,7 +135,6 @@
     }
     .TG-Play {
       background-Color: #405580;
-      color: #000;
       border: none;
       border-radius: 50px;
       font-size: 15px;
@@ -261,7 +260,6 @@
     #button-play:hover,
     #clearBtn:hover {
       background-color: #405580;
-      color: #000;
   }
   .Alerts {
       position: fixed;
@@ -269,7 +267,6 @@
       left: 20dvw;
       z-index: 50;
       background-color: #fff;
-      color: #000;
       font-weight: 1000;
       padding: 5px;
       border: none;
@@ -305,7 +302,6 @@
     .menuButtons {
         color: #b4b4b4b4;
     }
-    #clearBtn { z-index: 100 };
     #vid,
     #textBox,
     #button-play,
@@ -358,6 +354,12 @@
 </div>
 <!--  <script src="CSS-JS/script.js"></script>  -->
 <script>
+// Check browser color theme and adapt colors accordingly.
+/* function darkTheme() {
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    document.body.color = '#000';
+  }
+} */
 // Get external Links from other sources.
 async function getOtherLinks() {
 try {
@@ -436,24 +438,6 @@ function copyVideoSrc() {
   // }
 }
 
-/*
-// Add a highlighter to the clicked link in the 'textBox'.
-let currentBar = null;
-function addHighlightBar(x, y) {
-    // Remove the existing bar if there is one.
-    if (currentBar) { currentBar.remove(); }
-    const bar = document.createElement('div');
-    bar.className = 'highlightBar';
-    document.body.appendChild(bar);
-    bar.style.top = `${y + window.scrollY}px`;  // Adjust for the scrolled height.
-    currentBar = bar;
-}
-document.getElementById('textBox').addEventListener('click', (event) => {
-addHighlightBar(event.clientX, event.clientY);
-});
-document.getElementById('textBox').addEventListener('scroll', () => {
-    if (currentBar) { currentBar.remove(); currentBar = null; } });
-*/
 /*
 // Increase Z-Index of "post-container", "boxContainer" and "textBox" on hovering to be shown above "embedVideo" iFrame.
 const element1 = document.getElementById('post-container');
@@ -790,16 +774,21 @@ async function IFrame_Play() {
  
 // Cloudflare Workers Play Method.
 async function CloudFlare_Play() {
-    const query = await checkClipboard();
-    if (/(teraboxapp|terasharelink|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
-        var videoId = query.split('/').slice(-1)[0];
-        document.getElementById('player').src = "https://tbox.1nrp.workers.dev?URL=" + videoId;
-        //adjustStyles();
-    } else {
-        // Not a terabox URL, play as usual.
-        document.getElementById("player").src = query;
-        //adjustStyles();
-    }
+  const query = await checkClipboard();
+  if (/(teraboxapp|terasharelink|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+      const shortURL = query.split('/').slice(-1)[0];
+  if (!localStorage.getItem('Cloudflare-Access-Token')) {
+      const cfToken = prompt("Enter The 'Cloudflare-Access-Token' :");
+      localStorage.setItem('Cloudflare-Access-Token', cfToken)
+      };
+      const cfToken = localStorage.getItem('CloudFlare-Access-Token');
+      document.getElementById('player').src = "https://tbox.1nrp.workers.dev?URL=" + shortURL + "&CacheOption=No&AccessToken=" + cfToken;
+      //adjustStyles();
+  } else {
+      // Not a terabox URL, play as usual.
+      document.getElementById("player").src = query;
+      //adjustStyles();
+  }
 }
 
 // MdiskPlay method.
@@ -1077,13 +1066,14 @@ async function showThumbnail(lineText, linkNumber) {
         }
     });
 }
-let clickTimeout, highlightedDiv;
+let clickTimeout; // ,highlightedDiv;
 const clickDelay = 300;
 document.getElementById('textBox').addEventListener('click', function (event) {
     const targetDiv = event.target.closest('.txtDiv');
-    if (highlightedDiv) { highlightedDiv.style.backgroundColor = 'none' };
+    //if (highlightedDiv) { highlightedDiv.style.backgroundColor = null };
     targetDiv.style.backgroundColor = '#405580';
-    highlightedDiv = targetDiv;
+    targetDiv.style.color = '#000';
+    //highlightedDiv = targetDiv;
     if (clickTimeout) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
@@ -1099,20 +1089,14 @@ document.getElementById('textBox').addEventListener('click', function (event) {
 });
 // Function to handle clicking on the Thumbnail.
 function textBoxLink(lineText) {
-    const thumbnailContainer = document.getElementById('thumbnailContainer');
     const linkID = lineText.split('/').slice(-1)[0];
-    if (textBoxArray.includes(linkID)) {
-        //const index = textBoxArray.indexOf(linkID);
-        //const { fid, sid, uk } = textBoxJsonData[index];
-        document.getElementById('vid').value = lineText;
-        document.getElementById('button-play').click();
-        //adjustIframeStyles();
-        thumbnailContainer.style.display='none';
-    } else {
-        document.getElementById('vid').value = lineText;
-        document.getElementById('button-play').click();
-        thumbnailContainer.style.display='none';
-    }
+    if (!localStorage.getItem('Cloudflare-Access-Token')) {
+      const cfToken = prompt("Enter The 'Cloudflare-Access-Token' :");
+      localStorage.setItem('Cloudflare-Access-Token', cfToken)
+    };
+    const cfToken = localStorage.getItem('CloudFlare-Access-Token');
+    document.getElementById('player').src = "https://tbox.1nrp.workers.dev?URL=" + linkID + "&CacheOption=Yes&AccessToken=" + cfToken;
+    document.getElementById('thumbnailContainer').style.display='none';
 }
 
 // Function to load posts from the 9000 JSON items with 3rd party "Imagekit" thumbnail service.
