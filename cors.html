@@ -782,7 +782,7 @@ async function CloudFlare_Play() {
       const cfToken = prompt("Enter The 'Cloudflare-Access-Token' :");
       localStorage.setItem('Cloudflare-Access-Token', cfToken)
       };
-      const cfToken = localStorage.getItem('CloudFlare-Access-Token');
+      const cfToken = localStorage.getItem('Cloudflare-Access-Token');
       document.getElementById('player').src = "https://tbox.1nrp.workers.dev?URL=" + shortURL + "&CacheOption=No&AccessToken=" + cfToken;
       //adjustStyles();
   } else {
