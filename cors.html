@@ -1041,7 +1041,7 @@ document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonC
 // Function to show Thumbnail and Paste LineText in link input field.
 function getLineText(event) {
     var numText = event.target.innerText;
-    var lineText = numText.split('●').slice(1)[0];
+    var lineText = numText.split('●').slice(1)[0].trim();
     var linkNumber = numText.split('●').slice(0)[0];
     return { lineText, linkNumber };
 }
@@ -1075,7 +1075,7 @@ document.getElementById('textBox').addEventListener('click', function (event) {
     const targetDiv = event.target.closest('.txtDiv');
     //if (highlightedDiv) { highlightedDiv.style.backgroundColor = null };
     targetDiv.style.backgroundColor = '#405580';
-    targetDiv.style.color = '#888';
+    targetDiv.style.color = '#aaa';
     //highlightedDiv = targetDiv;
     if (clickTimeout) {
         clearTimeout(clickTimeout);
