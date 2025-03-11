@@ -1069,26 +1069,27 @@ async function showThumbnail(lineText, linkNumber) {
         }
     });
 }
-let clickTimeout; // ,highlightedDiv;
-const clickDelay = 300;
+
+// let clickTimeout; // ,highlightedDiv;
+// const clickDelay = 300;
 document.getElementById('textBox').addEventListener('click', function (event) {
     const targetDiv = event.target.closest('.txtDiv');
     //if (highlightedDiv) { highlightedDiv.style.backgroundColor = null };
     targetDiv.style.backgroundColor = '#405580';
     targetDiv.style.color = '#aaa';
     //highlightedDiv = targetDiv;
-    if (clickTimeout) {
+ /*   if (clickTimeout) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
         var { lineText } = getLineText(event);
         textBoxLink(lineText);
     } else {
         clickTimeout = setTimeout(function () {
-            clickTimeout = null;
-            var { lineText, linkNumber } = getLineText(event);
+            clickTimeout = null; */ 
+            const { lineText, linkNumber } = getLineText(event);
             showThumbnail(lineText, linkNumber);
-        }, clickDelay);
-    }
+      //  }, clickDelay);
+  //  }
 });
 // Function to handle clicking on the Thumbnail.
 function textBoxLink(lineText) {
