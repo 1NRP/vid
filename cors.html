@@ -1070,26 +1070,26 @@ async function showThumbnail(lineText, linkNumber) {
     });
 }
 
-// let clickTimeout; // ,highlightedDiv;
-// const clickDelay = 300;
+ let clickTimeout; // ,highlightedDiv;
+ const clickDelay = 10;
 document.getElementById('textBox').addEventListener('click', function (event) {
     const targetDiv = event.target.closest('.txtDiv');
     //if (highlightedDiv) { highlightedDiv.style.backgroundColor = null };
     targetDiv.style.backgroundColor = '#405580';
     targetDiv.style.color = '#aaa';
     //highlightedDiv = targetDiv;
- /*   if (clickTimeout) {
+    if (clickTimeout) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
         var { lineText } = getLineText(event);
         textBoxLink(lineText);
     } else {
         clickTimeout = setTimeout(function () {
-            clickTimeout = null; */ 
+            clickTimeout = null;
             const { lineText, linkNumber } = getLineText(event);
             showThumbnail(lineText, linkNumber);
-      //  }, clickDelay);
-  //  }
+        }, clickDelay);
+    }
 });
 // Function to handle clicking on the Thumbnail.
 function textBoxLink(lineText) {
@@ -1136,33 +1136,31 @@ function textBoxLink(lineText) {
             randomItems.push(data.items[randomIndex]);
         }
     }
-    return randomItems;   //*** return { items: randomItems }; // Return the items in an object with key "items" in json format.
+    return randomItems;
 }
-function fetchPosts() {
+async function fetchPosts() {
   const postsContainer = document.getElementById('post-container');
   postsContainer.innerHTML = ''; // Clear previous posts.
-    returnRandomPosts()
-        .then(items => {  //*** .then(result) => { if (!result) return; const items = result.items; items.forEach(item => {......
-            if (!items) return;
-            items.forEach(item => {
-                    const key = item.key;
-                    const link = item.link;
-                    const durationInMinutes = Math.round(item.duration / 60);
-                    const sizeInMB = (item.size / (1024 * 1024 * 3)).toFixed(0); // Divide by 1024 twice for MB and divide by 3 because 360p streaming consumes 3 times less data.
-                    const postElement = document.createElement('div');
-                    postElement.classList.add('post');
-                    postElement.innerHTML = `
-                        <div>
-                          <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
-                            <div class="post-details">
-                            <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
-                            <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-                          </div>
-                        </div>
-                         `;
-                       postsContainer.appendChild(postElement);
-                    });
-          });
+  const items = await returnRandomPosts();
+  if (!items) return;
+  for ( const item of items ) {
+        const key = item.key;
+        const link = item.link;
+        const durationInMinutes = Math.round(item.duration / 60);
+        const sizeInMB = (item.size / (1024 * 1024 * 3)).toFixed(0); // Divide by 1024 twice for MB and divide by 3 because 360p streaming consumes 3 times less data.
+        const postElement = document.createElement('div');
+        postElement.classList.add('post');
+        postElement.innerHTML = `
+        <div>
+            <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
+            <div class="post-details">
+            <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
+            <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
+        </div>
+        </div>
+        `;
+        postsContainer.appendChild(postElement);
+  }
 }
 
 /*
