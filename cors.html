@@ -784,6 +784,7 @@ async function CloudFlare_Play() {
       };
       const cfToken = localStorage.getItem('Cloudflare-Access-Token');
       document.getElementById('player').src = "https://tbox.1nrp.workers.dev?URL=" + shortURL + "&CacheOption=No&AccessToken=" + cfToken;
+      document.getElementById('player').style.maxHeight='85dvh';
       //adjustStyles();
   } else {
       // Not a terabox URL, play as usual.
@@ -803,6 +804,7 @@ async function Mdisk_Play() {
         //document.getElementById('dummyIframe').src = requestUrl;
         var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId + "?aka=baka";
         var response = await fetch(requestUrl);
+	document.getElementById('player').style.maxHeight='85dvh';
         document.getElementById('player').src = "https://video.mdiskplay.com/" + videoId + ".m3u8";
         //adjustStyles();
     } else {
@@ -823,6 +825,7 @@ async function Vercel_Play() {
             if (!response.ok) { throw new Error('Failed to fetch M3U8 URL') };
             //const responseData = await response.json();
             const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + videoId + ".m3u8";
+	    document.getElementById('player').style.maxHeight='85dvh';
             document.getElementById("player").src = playUrl;
             //adjustStyles();
         } catch (error) {
@@ -1071,7 +1074,7 @@ async function showThumbnail(lineText, linkNumber) {
 }
 
  let clickTimeout; // ,highlightedDiv;
- const clickDelay = 10;
+ const clickDelay = 0;
 document.getElementById('textBox').addEventListener('click', function (event) {
     const targetDiv = event.target.closest('.txtDiv');
     //if (highlightedDiv) { highlightedDiv.style.backgroundColor = null };
@@ -1100,6 +1103,7 @@ function textBoxLink(lineText) {
     };
     const cfToken = localStorage.getItem('Cloudflare-Access-Token');
     document.getElementById('vid').value = lineText;
+    document.getElementById('player').style.maxHeight='85dvh';
     document.getElementById('player').src = "https://tbox.1nrp.workers.dev?URL=" + linkID + "&CacheOption=Yes&AccessToken=" + cfToken;
     document.getElementById('thumbnailContainer').style.display='none';
 }
