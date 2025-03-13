@@ -540,7 +540,7 @@ brSlider.addEventListener('input', function () {
 // Fetch the TG Channels from database and populate the <select> element with the channels.
 let channelKeywords = [];  // Global array to store all the TG channel names.
 async function fetchOptions() {
-    const response = await fetch('https://1nrp.vercel.app//tgChannels')
+    const response = await fetch('https://1nrp.vercel.app/tgChannels')
     const data = await response.json();
     const selectElement = document.getElementById('channelName');
     selectElement.innerHTML = '';
