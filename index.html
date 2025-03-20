@@ -53,7 +53,7 @@
       font-weight: 600;
       margin: 0px 20px 1px 35vw;
     }
-    #embedVideo {
+  /*  #embedVideo {
       position: fixed;
       top: 0vh;
       left: 0vw;
@@ -63,13 +63,12 @@
       width: 98.9dvw;
       display: block;
       height: 30vh;
-    }
+    } */
     #player {
       position: fixed;
       top: 0vh;
       left: 0vw;
       border: 2px solid #333;
-      display: none;
       border-radius: 6px;
       background-color: #02121b;
       max-width: 98.9dvw;       /* dvw = dynamic viewport width */
@@ -78,7 +77,8 @@
     }
     #saveDeleteBtn {
       background-color: #000;
-      padding: 6px;  
+      padding: 6px;
+      margin-left: 2px;
       border: 2px dashed #555;
       color: #fff;
       cursor: pointer;
@@ -88,7 +88,7 @@
       width: 57%;
       max-width: 300px;
       padding: 6px 2px;
-      display: inline-block;
+      display: block;
       background-color: #000;
       color: #a2a2a2;
       font-weight: 600;
@@ -135,7 +135,6 @@
     }
     .TG-Play {
       background-Color: #405580;
-      color: #000;
       border: none;
       border-radius: 50px;
       font-size: 15px;
@@ -199,28 +198,27 @@
       background-color: #02121b;
     }
     #textBox {
-      width: 98%;
+      width: 99%;
       height: 150px;
       color: #b4b4b4;
-      font-weight: 800;
-      font-size: 11px;
       resize: none;
       position: relative;
-      white-space: pre;
       background-color: #02121b;
       border: 2px solid #333;
       border-radius: 8px;
       overflow-y: scroll;
-      overflow-x: hidden;
       margin: 2px 0px;
     }
-    .highlightBar {
-      width: 75vw;
-      height: 10px;
-      left: 20vw;
-      position: absolute;
-      background-color: #c930c280;
-      pointer-events: none;
+    .txtDiv {
+	 color: #b4b4b4;
+	 overflow-x: hidden;
+	 padding: 2px;
+	 margin: 4px 2px;
+	 text-wrap: no-wrap;
+	 white-space: pre;
+         font-size: 12px;
+	 border-radius: 4px;
+	 font-weight: 500;
     }
     #thumbnailContainer {
       position: fixed;
@@ -262,7 +260,6 @@
     #button-play:hover,
     #clearBtn:hover {
       background-color: #405580;
-      color: #000;
   }
   .Alerts {
       position: fixed;
@@ -270,7 +267,6 @@
       left: 20dvw;
       z-index: 50;
       background-color: #fff;
-      color: #000;
       font-weight: 1000;
       padding: 5px;
       border: none;
@@ -306,7 +302,6 @@
     .menuButtons {
         color: #b4b4b4b4;
     }
-    #clearBtn { z-index: 100 };
     #vid,
     #textBox,
     #button-play,
@@ -319,12 +314,12 @@
 </style>
 </head>
 <div id="Default-Position-Elements"> <!-- Separation between Fixed position and Non-Fixed position elements is for brightness adjustment purpose. The 'brightnessSlider' distorts the positioning of Fixed elements. -->
-<center>
     <div id="post-container" data-long-press-delay="1000" ondblclick="document.getElementById('vid').value=''"></div>
+<center style="display: flex; gap: 4px;">
     <button id="saveDeleteBtn" onclick="handleButtonClick()" ondblclick="checkLinkExistence()">🌐</button>
     <input type="text" placeholder="Enter Download Link..." id="vid" name="vid" autocomplete="off" maxlength="10000">
-    <button id="button-play" onclick="IFrame_Play()" data-long-press-delay="500">PLAY</button>
-    <button id="clearBtn" onclick="document.getElementById('embedVideo').style.height='195px'" ondblclick="document.getElementById('player').src=''; document.getElementById('embedVideo').removeAttribute('src')">✖️</button>
+    <button id="button-play" onclick="CloudFlare_Play()" data-long-press-delay="500">PLAY</button>
+    <button id="clearBtn" onclick="document.getElementById('vid').value='';"; ondblclick="document.getElementById('player').src='';">✖️</button>
 </center>
 <div style="height: 2px"></div>  <!--  To create gap between 1st and 2nd row of buttons (saveDeleteBtn, hamburgerMenu etc) .  -->
 <div id="boxContainer"></div>
@@ -335,15 +330,15 @@
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 <div>
-  <textarea id="textBox" readonly data-long-press-delay="5000"></textarea>
-  <div id="textBoxHighlighter"></div>
+  <div id="textBox" readonly data-long-press-delay="2000"></div>
+  <!--b<div id="textBoxHighlighter"></div> -->
 </div>
 <input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
 </div>
 <!--  Keyboard Shortcuts: Play: "ArrowRight + ArrowDown", Fetch Posts: "ArrowRight + ArrowLeft", Clear Button(click): "ArrowRight + End", Save Link: "ArrowRight + ArowUp"  -->
-<!--  Fixed Position Elements. -->
+<!--  Fixed Position Elements. 
 <iframe id="embedVideo" referrerPolicy="no-referrer" name="videoFrame"></iframe>
-<iframe id="dummyIframe" referrerpolicy="no-referrer" style="display: none"></iframe>
+<iframe id="dummyIframe" referrerpolicy="no-referrer" style="display: none"></iframe> -->
 <video id="player" controls controlsList="nofullscreen" poster="img/my_name_logo_1.2.1.jpg" data-long-press-delay="400" tabindex="0" loop="loop" src="" width="100%" muted autoplay></video>
 <div id="thumbnailContainer"></div>
 <div id="menuBox">
@@ -353,44 +348,48 @@
     <button class="menuButtons" onclick="document.getElementById('brightnessSlider').style.display = (document.getElementById('brightnessSlider').style.display === 'flex' ? 'none' : 'flex')">↔️</button>
     <div style="height: 4px"></div>  <!--  Gap between 1st and 2nd row of 'Menu' buttons.  -->
     <button class="menuButtons" onclick="copyVideoSrc()">📡</button>
-    <button class="menuButtons" onclick="getmdp()">📥</button>
+    <button class="menuButtons" onclick="getOtherLinks()">📥</button>
     <button class="menuButtons" onclick="changePlayFunction()">▶️</button>
     <button class="menuButtons" onclick="vConsole()">🛠️</button>
 </div>
 <!--  <script src="CSS-JS/script.js"></script>  -->
 <script>
-// (Temporary) MdiskPlay search results in json format.
-function getmdp() {
-    var url = document.getElementById('vid').value;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            let lines = [];
-            data.result.forEach((item, index) => {
-                const tera = item.id;
-		let teraId;
-		if (tera.startsWith('1')) {
-		   teraId = tera;
-		} else { teraId = `1${tera}`; }
-                lines.push(`${index} ● https://teraboxapp.com/s/${teraId}`);
-            });
-            const result = lines.join('\n\n');
-            const textbox = document.getElementById('textBox');
-            textbox.value = result;
-        })
-        .catch(error => {
-            alert('Error fetching or parsing MdiskPlay json data.');
-        });
+// Check browser color theme and adapt colors accordingly.
+function darkTheme() {
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    document.body.color = '#000';
+  }
+}
+darkTheme();
+// Get external Links from other sources.
+async function getOtherLinks() {
+try {
+    const response = await fetch(`${document.getElementById('vid').value}`);
+        const data = await response.json();
+	const box = document.getElementById('textBox');
+	box.innerHTML = '';
+        for (const [index, object] of data.result.entries()) {
+            const tera = object.id;
+	    let teraId;
+	    if (tera.startsWith('1')) { teraId = tera } else { teraId = 1 + tera };
+	    const div = document.createElement('div');
+            div.className = 'txtDiv';
+            div.innerText = `${index+1} ● https://teraboxapp.com/s/${teraId}`;
+            box.appendChild(div);
+	};
+    } catch (error) {
+        alert('Error fetching or parsing MdiskPlay json data.');
+    }
 }
 
 // Cycle through the different "PLAY" functions.
-const PlayFunctions = [IFrame_Play, Mdisk_Play, Vercel_Play];
+const PlayFunctions = [CloudFlare_Play, Mdisk_Play, Vercel_Play];
 let currentIndex = 0;
 function changePlayFunction() {
     // Update the index to the next "PLAY" function.
     currentIndex = (currentIndex + 1) % PlayFunctions.length; // The modulo operator (%) ensures that if the index exceeds the length of the array (which is 3), it wraps around to 0. This allows for cycling through the functions in the array.
     document.getElementById('button-play').onclick = PlayFunctions[currentIndex];
-    showAlert({ BgColor: '#fff', Text: `${PlayFunctions[currentIndex].name} ✔ Activated`});
+    showAlert({ BgColor: '#2894c7', Text: `${PlayFunctions[currentIndex].name} ✔ Activated`});
 }
   
 // Long Press Events.
@@ -433,29 +432,13 @@ el.addEventListener('long-press', function(e) {
 
 // Copy the source of the currently playing video.
 function copyVideoSrc() {
-  if (document.getElementById('embedVideo').style.display === 'block') {
+ /* if (document.getElementById('embedVideo').style.display === 'block') {
     navigator.clipboard.writeText(document.getElementById('embedVideo').src);
-  } else {
+  } else { */
     navigator.clipboard.writeText(document.getElementById('player').src);
-  }
+  // }
 }
 
-// Add a highlighter to the clicked link in the 'textBox'.
-let currentBar = null;
-function addHighlightBar(x, y) {
-    // Remove the existing bar if there is one.
-    if (currentBar) { currentBar.remove(); }
-    const bar = document.createElement('div');
-    bar.className = 'highlightBar';
-    document.body.appendChild(bar);
-    bar.style.top = `${y + window.scrollY}px`;  // Adjust for the scrolled height.
-    currentBar = bar;
-}
-document.getElementById('textBox').addEventListener('click', (event) => {
-addHighlightBar(event.clientX, event.clientY);
-});
-document.getElementById('textBox').addEventListener('scroll', () => {
-    if (currentBar) { currentBar.remove(); currentBar = null; } });
 /*
 // Increase Z-Index of "post-container", "boxContainer" and "textBox" on hovering to be shown above "embedVideo" iFrame.
 const element1 = document.getElementById('post-container');
@@ -501,11 +484,10 @@ element3.addEventListener('touchstart', handleZIndexUp);
 element3.addEventListener('mouseover', handleZIndexUp);
 
 function handleZIndexUp(event) {
-    if (document.getElementById('embedVideo').src) {
+    if (document.getElementById('player').src) {
         if ((this === element1 && element1.innerHTML !== '') || this === element2 || this === element3) {
             activeElement = this;
             activeElement.style.zIndex = 100;
-            console.log('mover & ', activeElement);
             clearTimeout(touchTimeout); // Clear any previous timeout to avoid resetting prematurely.
         }
     }
@@ -521,7 +503,6 @@ function handleZIndexDown(event) {
     touchTimeout = setTimeout(() => {
         if (activeElement) {
             activeElement.style.zIndex = 0; // Reset z-index after 500ms.
-            //console.log('mout & ', activeElement, 'Out');
             activeElement = null;
         }
     }, 500);
@@ -558,41 +539,32 @@ brSlider.addEventListener('input', function () {
 
 // Fetch the TG Channels from database and populate the <select> element with the channels.
 let channelKeywords = [];  // Global array to store all the TG channel names.
-function fetchOptions() {
-    fetch('https://1nrp.vercel.app/NodeJS/Play/tgChannels')
-        .then(response => response.json())
-        .then(data => {
-            const selectElement = document.getElementById('channelName');
-            selectElement.innerHTML = '';
-            // Create a default "Select" option.
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.textContent = 'SELECT';
-            selectElement.appendChild(defaultOption);
-            // Clear the "channelKeywords" array before populating it with the channel names.
-            channelKeywords = [];
-            // Populate the <select> element with the fetched options.
-            data.result.forEach((jsonString, index) => {
-                let parsedObject = JSON.parse(jsonString);
-                for (const key in parsedObject) {
-                    if (parsedObject.hasOwnProperty(key)) {
-                        const rawChannel = `${parsedObject[key]}`;
-                        const channelID = rawChannel.split('/').slice(-1)[0];
-                        const fullChannel = "https://t.me/" + channelID + "/";
-                        // Add the channels to the global Telegram Channel Keywords array.
-                        channelKeywords.push(fullChannel);
-                        // Create a new option element for each channel.
-                        const option = document.createElement('option');
-                        option.value = channelID;
-                        option.textContent = `${index + 1} ● ${channelID}`;
-                        selectElement.appendChild(option);
-                    }
-                }
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching Telegram Channel options:', error);
-        });
+async function fetchOptions() {
+    const response = await fetch('https://1nrp.vercel.app/tgChannels')
+    const data = await response.json();
+    const selectElement = document.getElementById('channelName');
+    selectElement.innerHTML = '';
+    // Create a default "Select" option.
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'SELECT';
+    selectElement.appendChild(defaultOption);
+    // Clear the "channelKeywords" array before populating it with the channel names.
+    channelKeywords = [];
+    // Populate the <select> element with the fetched options.
+    let index = 1;
+    for (const rawChannel of data.result) {
+        const channelID = rawChannel.split('/').slice(-1)[0];
+        const fullChannel = "https://t.me/" + channelID + "/";
+        // Add the channels to the global Telegram Channel Keywords array.
+        channelKeywords.push(fullChannel);
+        // Create a new option element for each channel.
+        const option = document.createElement('option');
+        option.value = channelID;
+        option.textContent = `${index} ● ${channelID}`;
+        selectElement.appendChild(option);
+	index += 1;
+    }
 }
 // window.onload = fetchOptions;
 
@@ -614,16 +586,13 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
       const textValue = textarea.value.trim();
         if (textValue) {
             try {
-                const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/saveLink', {
+                const response = await fetch('https://1nrp.vercel.app/saveLink', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify([textValue]),
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: textValue
                 });
-
                 if (response.ok) {
-                    const data = await response.json(); // Wait for the JSON response
+                    const data = await response.json(); // Wait for the JSON response.
                     const listCount = data.result;
                     // Show "Link Saved" alert when "OK" response (200) is received from the server.
                     showAlert({ BgColor: '#1bd13d', Text: `${listCount} ✔ Link Saved`});
@@ -644,14 +613,11 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
     
     if (deleteValue) {
         try {
-            const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/deleteLink', {
+            const response = await fetch('https://1nrp.vercel.app/deleteLink', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify([deleteValue]),
+                headers: { 'Content-Type': 'text/plain'  },
+                body: deleteValue
             });
-
             if (response.ok) {
                 const data = await response.json(); // Wait for the JSON response
                 if (data.result == 0) {
@@ -679,12 +645,10 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
     const linkValue = document.getElementById('vid').value.trim();
     if (linkValue) {
         try {
-            const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/checkLinkExistence', {
+            const response = await fetch('https://1nrp.vercel.app/checkLinkExistence', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify([linkValue]),
+                headers: { 'Content-Type': 'text/plain' },
+                body: linkValue,
             });
             if (response.ok) {
                 const data = await response.json(); // Wait for the JSON response.
@@ -707,20 +671,15 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
 let textBoxArray = [], textBoxJsonData = [];
 async function getLink() {
     try {
-        const response = await fetch('https://1nrp.vercel.app/NodeJS/Play/getLink');
+	const response = await fetch('https://1nrp.vercel.app/getLink');
         const data = await response.json();
-            let lines = [];
-            data.result.forEach((jsonString, index) => {
-                let parsedObject = JSON.parse(jsonString);
-                for (const key in parsedObject) {
-                    if (parsedObject.hasOwnProperty(key)) {
-                        lines.push(`${index} ● ${parsedObject[key]}`);
-                    }
-                }
-            });
-            const result = lines.join('\n\n');
-            const textbox = document.getElementById('textBox');
-            textbox.value = result;
+        const box = document.getElementById('textBox');
+	box.innerHTML = '';
+        for (const [index, value] of data.result.entries()) {
+	    let div = document.createElement('div');
+            div.className = 'txtDiv';
+            div.innerText = `${index+1} ● ${value}`;
+            box.appendChild(div); };
             // Fetch the already saved data json.
             const blob = await fetch('https://srbo3gia676hprqy.public.blob.vercel-storage.com/Others/KV-Store-Saved-TB-Link-Thumbnails.json');
             const blobdata = await blob.json();
@@ -730,7 +689,6 @@ async function getLink() {
             console.error('Error fetching or parsing data:', error);
         }
 }
-// getLink();
 
 // Night-Mode toggle function.
 function nightModeFunction() {
@@ -744,7 +702,6 @@ document.addEventListener("keydown", function(event) {
     if (event.key === "ArrowRight") {
         arrowRightPressed = true;
     }
-    
     if (arrowRightPressed) {
         if (event.key === "ArrowUp") {
             saveLink();
@@ -757,7 +714,6 @@ document.addEventListener("keydown", function(event) {
         }
     }
 });
-
 document.addEventListener("keyup", function(event) {
     if (event.key === "ArrowRight") {
         arrowRightPressed = false;
@@ -794,7 +750,9 @@ async function checkClipboard() {
       return query;
     }
 }
-// (Iframe Play Method - Used because HTML5 player can't play an URL without extension.) PLAY Video Function.
+
+/*
+// Iframe Play Method.
 async function IFrame_Play() {
     const query = await checkClipboard();
     // Check if the URL contains 'Terabox'.
@@ -805,16 +763,34 @@ async function IFrame_Play() {
             const { fs_id } = jsonData.list[0];
             const playUrl = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${shareid}&type=M3U8_AUTO_360&fid=${fs_id}&sign=1&timestamp=1&clienttype=1&channel=1`;
             // window.open(playUrl, 'videoFrame', 'noopener,noreferrer');
-            document.getElementById('embedVideo').src = playUrl;
-            document.getElementById('player').src = '';
-            document.getElementById('player').style.display = 'none';
-            document.getElementById('embedVideo').style.height = '85dvh';
-            document.getElementById('embedVideo').style.display = 'block';
+	    document.getElementById('embedVideo').src = playUrl;
+	    adjustIframeStyles();
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = query;
         adjustStyles();
     }
+}
+*/
+ 
+// Cloudflare Workers Play Method.
+async function CloudFlare_Play() {
+  const query = await checkClipboard();
+  if (/(teraboxapp|terasharelink|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+      const shortURL = query.split('/').slice(-1)[0];
+  if (!localStorage.getItem('Cloudflare-Access-Token')) {
+      const cfToken = prompt("Enter The 'Cloudflare-Access-Token' :");
+      localStorage.setItem('Cloudflare-Access-Token', cfToken)
+      };
+      const cfToken = localStorage.getItem('Cloudflare-Access-Token');
+      document.getElementById('player').src = "https://tbox.1nrp.workers.dev?URL=" + shortURL + "&CacheOption=No&AccessToken=" + cfToken;
+      document.getElementById('player').style.maxHeight='85dvh';
+      //adjustStyles();
+  } else {
+      // Not a terabox URL, play as usual.
+      document.getElementById("player").src = query;
+      //adjustStyles();
+  }
 }
 
 // MdiskPlay method.
@@ -828,12 +804,13 @@ async function Mdisk_Play() {
         //document.getElementById('dummyIframe').src = requestUrl;
         var requestUrl = "https://core.mdiskplay.com/box/terabox/" + videoId + "?aka=baka";
         var response = await fetch(requestUrl);
+	document.getElementById('player').style.maxHeight='85dvh';
         document.getElementById('player').src = "https://video.mdiskplay.com/" + videoId + ".m3u8";
-        adjustStyles();
+        //adjustStyles();
     } else {
         // Not a terabox URL, play as usual.
         document.getElementById("player").src = query;
-        adjustStyles();
+        //adjustStyles();
     }
 }
 // (Vercel Serverless Function Method) PLAY Video Function.
@@ -844,17 +821,13 @@ async function Vercel_Play() {
         // Extract the video ID from the URL
         var videoId = query.split('/').slice(-1)[0];
         try {
-            // Make a request to the API endpoint.
-            const response = await fetch(`https://1nrp.vercel.app/NodeJS/Play/getM3U8?shortURL=${videoId}`, {
-                method: 'GET',
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch M3U8 URL');
-            }
+            const response = await fetch(`https://1nrp.vercel.app/getM3U8?shortURL=${videoId}`);
+            if (!response.ok) { throw new Error('Failed to fetch M3U8 URL') };
             //const responseData = await response.json();
             const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + videoId + ".m3u8";
+	    document.getElementById('player').style.maxHeight='85dvh';
             document.getElementById("player").src = playUrl;
-            adjustStyles();
+            //adjustStyles();
         } catch (error) {
             console.error('Error fetching or processing:', error);
             alert('Failed to fetch M3U8 File. Please try again later.');
@@ -862,18 +835,24 @@ async function Vercel_Play() {
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = query;
-        adjustStyles();
+        //adjustStyles();
     }
 }
 
 // Repetitive code for height and display adjustment in 'PLAY' functions.
-  function adjustStyles() {
+function adjustIframeStyles() {
+    document.getElementById('player').src = '';
+    document.getElementById('player').style.display = 'none';
+    document.getElementById('embedVideo').style.height = '85dvh';
+    document.getElementById('embedVideo').style.display = 'block';
+}
+function adjustStyles() {
     document.getElementById('embedVideo').src='';
     document.getElementById('embedVideo').style.display='none';
     document.getElementById('player').style.display='block';
     document.getElementById('player').style.maxHeight='85dvh';
     document.getElementById('player').play();
-  }
+}
 
 // Function for fetching Terabox API with another retry if initial request fails.
 async function getTboxAPI(shortURL) {
@@ -884,7 +863,7 @@ async function getTboxAPI(shortURL) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 3000); // Abort after 3 seconds if response is not yet received.
         try {
-        const response = await fetch(`https://1nrp.vercel.app/NodeJS/CORS-Proxy?URL=${encodeURIComponent(`https://www.terabox.app/api/shorturlinfo?shorturl=${shortURL}&root=1`)}`, {
+        const response = await fetch(`https://1nrp.vercel.app/CORS-Proxy?URL=${encodeURIComponent(`https://www.terabox.app/api/shorturlinfo?shorturl=${shortURL}&root=1`)}`, {
            signal: controller.signal
         });
         clearTimeout(timeoutId); // Clear the timeout if response is received.
@@ -952,7 +931,7 @@ document.getElementById('channelName').addEventListener('change', async function
         const channelName = document.getElementById('channelName').value;
         const TgChannel = 'https://t.me/s/' + channelName;  // Telegram Channel URL to fetch and parse.
         try {
-            const response = await fetch('https://1nrp.vercel.app/NodeJS/CORS-Proxy?URL=' + encodeURIComponent(TgChannel));
+            const response = await fetch('https://1nrp.vercel.app/CORS-Proxy?URL=' + encodeURIComponent(TgChannel));
             const htmlText = await response.text();
             // Parse the HTML content
             const parser = new DOMParser();
@@ -994,7 +973,7 @@ async function getIframeLink(script) {
     }
     const src = iframe.src;
     try {
-        const response = await fetch('https://1nrp.vercel.app/NodeJS/CORS-Proxy?URL=' + encodeURIComponent(src));
+        const response = await fetch('https://1nrp.vercel.app/CORS-Proxy?URL=' + encodeURIComponent(src));
         const htmlText = await response.text();
         // Parse the HTML and extract anchor tags.
         const parser = new DOMParser();
@@ -1022,69 +1001,6 @@ async function getIframeLink(script) {
         console.error('Error fetching HTML:', error);
     }
 }
-
-/*
-async function getIframeLink(script) {
-    const iframeSrc = script.dataset.telegramPost;
-    const iframe = document.querySelector(`iframe[src*="${iframeSrc}"]`);
-    if (!iframe) {
-        alert("Iframe not found.");
-        return;
-    }
-    const src = iframe.src;
-    try {
-        // Fetch iframe content
-        const response = await fetch(src);
-        const htmlText = await response.text();
-        // Parse the HTML and extract anchor tags
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlText, 'text/html');
-        const anchors = doc.querySelectorAll('a');
-        // Keywords for filtering links
-        const keywords = ['teraboxapp', 'teraboxshare', 'terafileshare', 'teraboxlink', 'terasharelink', '1024terabox', 'freeterabox'];
-        let found = false;
-        let TBoxLink = '';
-        // Loop through all anchor tags
-        const anchorPromises = Array.from(anchors).map(async (anchor) => {
-            const href = anchor.href;
-            if (keywords.some(keyword => href.includes(keyword))) {
-                TBoxLink = href;
-                found = true;
-                // Check if the link contains 'teraboxapp.xyz'
-                if (TBoxLink.includes('teraboxapp.xyz')) {
-                    try {
-                        // Fetch the invokeApi URL
-                        const invoke = await fetch(TBoxLink);
-                        const data = await invoke.json();
-                        const surl = data.surl;
-                            if (surl) {
-                                TBoxLink = `https://1024terabox.com/s/1${surl}`;
-                            } else {
-                                alert('No "surl" parameter found in the API response.');
-                                found = false;
-		            }
-                    } catch (apiError) {
-                        console.error('API Error:', apiError);
-                        alert('Error fetching API or redirect URL.');
-                    }
-                }  
-            }
-        });
-        // Wait for all anchor promises to complete
-        await Promise.all(anchorPromises);
-        if (found) {
-            // Set the TBox link and trigger the play action
-            document.getElementById('vid').value = TBoxLink;
-            document.getElementById('button-play').click();
-        } else {
-            alert("No TB Link was found.");
-        }
-    } catch (error) {
-        alert("Error fetching the URL. Please make sure the URL is correct.");
-        console.error('Error fetching HTML:', error);
-    }
-}
-*/
 
 // Logic for toggling the mode between 'storing' and 'deleting' Link.
 const textBox = document.getElementById('textBox');
@@ -1121,23 +1037,8 @@ document.getElementById('saveDeleteBtn').addEventListener('click', handleButtonC
 
 // Function to show Thumbnail and Paste LineText in link input field.
 function getLineText(event) {
-    var textBox = document.getElementById('textBox');
-    var texts = textBox.value;
-    var cursorPosition = textBox.selectionStart; // Get cursor position
-    var startOfLine = texts.lastIndexOf('\n\n', cursorPosition - 1); // Find the start of the line
-    var endOfLine = texts.indexOf('\n\n', cursorPosition); // Find the end of the line
-    // If no line break is found before the cursor position.
-    if (startOfLine === -1) {
-        startOfLine = 0;
-    } else {
-        startOfLine += 2; // Move past the line break
-    }
-    // If no line break is found after the cursor position, end of the text
-    if (endOfLine === -1) {
-        endOfLine = texts.length;
-    }
-    var numText = texts.substring(startOfLine, endOfLine);
-    var lineText = numText.split('●').slice(1)[0];
+    var numText = event.target.innerText;
+    var lineText = numText.split('●').slice(1)[0].trim();
     var linkNumber = numText.split('●').slice(0)[0];
     return { lineText, linkNumber };
 }
@@ -1145,15 +1046,17 @@ function getLineText(event) {
 async function showThumbnail(lineText, linkNumber) {
     const shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
     const thumbnailContainer = document.getElementById('thumbnailContainer');
-    thumbnailContainer.style.display='block';
+    document.getElementById('vid').value = lineText;
     if ( textBoxArray.includes(shortURL)) {
         const index = textBoxArray.indexOf(shortURL);
         const { img } = textBoxJsonData[index];
         thumbnailContainer.innerHTML = `<img src="${img}" class="thumbnail" onclick="textBoxLink('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
+        thumbnailContainer.style.display='block';
     } else {
       const jsonData = await getTboxAPI(shortURL);
       const imageUrl = jsonData.list[0].thumbs.url2;
       thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="textBoxLink('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
+      thumbnailContainer.style.display='block';
   }
   // Hide the Thumbnail container when clicking outside of it.
   document.addEventListener('click', function handleClickOutside(event) {
@@ -1163,9 +1066,15 @@ async function showThumbnail(lineText, linkNumber) {
         }
     });
 }
-let clickTimeout;
-const clickDelay = 200;
+
+ let clickTimeout; // ,highlightedDiv;
+ const clickDelay = 0;
 document.getElementById('textBox').addEventListener('click', function (event) {
+    const targetDiv = event.target.closest('.txtDiv');
+    //if (highlightedDiv) { highlightedDiv.style.backgroundColor = null };
+    targetDiv.style.backgroundColor = '#405580';
+    targetDiv.style.color = '#aaa';
+    //highlightedDiv = targetDiv;
     if (clickTimeout) {
         clearTimeout(clickTimeout);
         clickTimeout = null;
@@ -1174,32 +1083,29 @@ document.getElementById('textBox').addEventListener('click', function (event) {
     } else {
         clickTimeout = setTimeout(function () {
             clickTimeout = null;
-            var { lineText, linkNumber } = getLineText(event);
+            const { lineText, linkNumber } = getLineText(event);
             showThumbnail(lineText, linkNumber);
         }, clickDelay);
     }
 });
 // Function to handle clicking on the Thumbnail.
 function textBoxLink(lineText) {
-    const thumbnailContainer = document.getElementById('thumbnailContainer');
-    if (textBoxArray.includes(lineText)) {
-        const index = textBoxArray.indexOf(lineText);
-        const { fid, sid, uk } = textBoxJsonData[index];
-        const frame = document.getElementById('embedVideo');
-        frame.src = `https://www.terabox1024.com/share/extstreaming.m3u8?uk=${uk}&shareid=${sid}&type=M3U8_AUTO_360&fid=${fid}&sign=1&timestamp=1&clienttype=1&channel=1`;
-        frame.style.display = 'block';
-        thumbnailContainer.style.display='none';
-    } else {
-        document.getElementById('vid').value = lineText;
-        document.getElementById('button-play').click();
-        thumbnailContainer.style.display='none';
-    }
+    const linkID = lineText.split('/').slice(-1)[0];
+    if (!localStorage.getItem('Cloudflare-Access-Token')) {
+      const cfToken = prompt("Enter The 'Cloudflare-Access-Token' :");
+      localStorage.setItem('Cloudflare-Access-Token', cfToken)
+    };
+    const cfToken = localStorage.getItem('Cloudflare-Access-Token');
+    document.getElementById('vid').value = lineText;
+    document.getElementById('player').style.maxHeight='85dvh';
+    document.getElementById('player').src = "https://tbox.1nrp.workers.dev?URL=" + linkID + "&CacheOption=Yes&AccessToken=" + cfToken;
+    document.getElementById('thumbnailContainer').style.display='none';
 }
-/*
+
 // Function to load posts from the 9000 JSON items with 3rd party "Imagekit" thumbnail service.
  async function returnRandomPosts() {
     const localStorageKey = 'jsonTBLinks';
-    const url = 'https://1nrp.github.io/vid/Mdisk_Links_Min.json';
+    const url = 'https://1nrp.github.io/vid/9000_Links_Min.json';
     const count = 2; // Number of items to fetch at once.
     let jsonData = localStorage.getItem(localStorageKey);
     if (jsonData) {
@@ -1228,35 +1134,34 @@ function textBoxLink(lineText) {
             randomItems.push(data.items[randomIndex]);
         }
     }
-    return randomItems;   //*** return { items: randomItems }; // Return the items in an object with key "items" in json format.
+    return randomItems;
 }
-function fetchPosts() {
+async function fetchPosts() {
   const postsContainer = document.getElementById('post-container');
   postsContainer.innerHTML = ''; // Clear previous posts.
-    returnRandomPosts()
-        .then(items => {  //*** .then(result) => { if (!result) return; const items = result.items; items.forEach(item => {......
-            if (!items) return;
-            items.forEach(item => {
-                    const key = item.key;
-                    const link = item.link;
-                    const durationInMinutes = Math.round(item.duration / 60);
-                    const sizeInMB = (item.size / (1024 * 1024 * 3)).toFixed(0); // Divide by 1024 twice for MB and divide by 3 because 360p streaming consumes 3 times less data.
-                    const postElement = document.createElement('div');
-                    postElement.classList.add('post');
-                    postElement.innerHTML = `
-                        <div>
-                          <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
-                            <div class="post-details">
-                            <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
-                            <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
-                          </div>
-                        </div>
-                         `;
-                       postsContainer.appendChild(postElement);
-                    });
-          });
+  const items = await returnRandomPosts();
+  if (!items) return;
+  for ( const item of items ) {
+        const key = item.key;
+        const link = item.link;
+        const durationInMinutes = Math.round(item.duration / 60);
+        const sizeInMB = (item.size / (1024 * 1024 * 3)).toFixed(0); // Divide by 1024 twice for MB and divide by 3 because 360p streaming consumes 3 times less data.
+        const postElement = document.createElement('div');
+        postElement.classList.add('post');
+        postElement.innerHTML = `
+        <div>
+            <img src="https://ik.imagekit.io/media91/image/${key}.jpg" alt="Poster" class="poster-image" onclick="handlePosterClick('${link}')">
+            <div class="post-details">
+            <p class="duration">${durationInMinutes}<span style="color: #666;">&nbspMin</span></p>          
+            <p class="size">${sizeInMB}<span style="color: #666;">&nbspMB</span></p>
+        </div>
+        </div>
+        `;
+        postsContainer.appendChild(postElement);
+  }
 }
-*/
+
+/*
 // Function to load posts from the 9000 JSON items with my own "Imagekit" thumbnail service.
  async function returnRandomPosts() {
     const localStorageKey = 'tbJsonLinks';
@@ -1316,6 +1221,7 @@ function fetchPosts() {
                     });8
           });
 }
+*/
 
 // Function to handle clicking on the Poster.
 function handlePosterClick(link) {
