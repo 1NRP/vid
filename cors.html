@@ -820,18 +820,18 @@ async function Vercel_Play() {
     if (/(teraboxapp|terasharelink|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
         // Extract the video ID from the URL
         var videoId = query.split('/').slice(-1)[0];
-        try {
-            const response = await fetch(`https://1nrp.vercel.app/getM3U8?shortURL=${videoId}`);
-            if (!response.ok) { throw new Error('Failed to fetch M3U8 URL') };
-            //const responseData = await response.json();
-            const playUrl = "https://srbo3gia676hprqy.public.blob.vercel-storage.com/M3U8-HTML/" + videoId + ".m3u8";
-	    document.getElementById('player').style.maxHeight='85dvh';
+        if (!localStorage.getItem('Vercel-Access-Token')) {
+            const token = prompt("Enter The 'Vercel-Access-Token' :");
+            localStorage.setItem('Vercel-Access-Token', token)
+        };
+        const token = localStorage.getItem('Vercel-Access-Token');
+            const playUrl = `https://1nrp.vercel.app/getM3U8?URL=${videoId}&AccessToken=${token}`;
+            document.getElementById('player').style.maxHeight='85dvh';
             document.getElementById("player").src = playUrl;
             //adjustStyles();
-        } catch (error) {
             console.error('Error fetching or processing:', error);
             alert('Failed to fetch M3U8 File. Please try again later.');
-        }
+        
     } else {
         // Not a terabox URL, play as usual
         document.getElementById("player").src = query;
