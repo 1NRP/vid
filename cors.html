@@ -1053,28 +1053,21 @@ async function showThumbnail(lineText, linkNumber) {
     const shortURL = lineText.substring(lineText.lastIndexOf('/') + 1);
     const thumbnailContainer = document.getElementById('thumbnailContainer');
     document.getElementById('vid').value = lineText;
-    if ( textBoxArray.includes(shortURL)) {
-        const index = textBoxArray.indexOf(shortURL);
-        const { img } = textBoxJsonData[index];
-        thumbnailContainer.innerHTML = `<img src="${img}" class="thumbnail" onclick="textBoxLink('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
-        thumbnailContainer.style.display='block';
-    } else {
-      const jsonData = await getTboxAPI(shortURL);
-      const imageUrl = jsonData.list[0].thumbs.url2;
-      thumbnailContainer.innerHTML = `<img src="${imageUrl}" class="thumbnail" onclick="textBoxLink('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
-      thumbnailContainer.style.display='block';
-  }
-  // Hide the Thumbnail container when clicking outside of it.
-  document.addEventListener('click', function handleClickOutside(event) {
-        if (!thumbnailContainer.contains(event.target)) {
-            document.getElementById('thumbnailContainer').style.display='none';
-            document.removeEventListener('click', handleClickOutside);
-        }
-    });
+    const index = textBoxArray.indexOf(shortURL);
+    const img = index !== -1 ? textBoxJsonData[index].img : (await getTboxAPI(shortURL)).list[0].thumbs.url2;
+    thumbnailContainer.innerHTML = `<img src="${img}" class="thumbnail" onclick="textBoxLink('${lineText}')" alt="Thumbnail Image"><span class="linkNumber">${linkNumber}</span>`;
+    thumbnailContainer.style.display='block';
+    // Hide the Thumbnail container when clicking outside of it.
+    document.addEventListener('click', function handleClickOutside(event) {
+    if (!thumbnailContainer.contains(event.target)) {
+        document.getElementById('thumbnailContainer').style.display='none';
+        document.removeEventListener('click', handleClickOutside);
+    }
+  })
 }
 
- let clickTimeout; // ,highlightedDiv;
- const clickDelay = 0;
+let clickTimeout; // ,highlightedDiv;
+const clickDelay = 0;
 document.getElementById('textBox').addEventListener('click', function (event) {
     const targetDiv = event.target.closest('.txtDiv');
     //if (highlightedDiv) { highlightedDiv.style.backgroundColor = null };
