@@ -772,11 +772,10 @@ async function IFrame_Play() {
     }
 }
 */
- 
-// Cloudflare Workers Play Method.
+
 async function CloudFlare_Play() {
   const query = await checkClipboard();
-  if (/(teraboxapp|terasharelink|teraboxlink|terafileshare|1024terabox|teraboxshare|freeterabox)/.test(query.toLowerCase())) {
+  if ( query.toLowerCase().includes('.com/s/1') ) {
       const shortURL = query.split('/').slice(-1)[0];
   if (!localStorage.getItem('Cloudflare-Access-Token')) {
       const cfToken = prompt("Enter The 'Cloudflare-Access-Token' :");
