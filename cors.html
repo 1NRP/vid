@@ -209,7 +209,7 @@
       overflow-y: scroll;
       margin: 2px 0px;
     }
-	.linkRangeButtons: {
+	.linkRangeButtons {
 		border: 2px solid #8e9eee;
 		padding: 0px 10px;
 		border-radius: 30px;
@@ -715,8 +715,7 @@ async function getLink(start = null, end = null) {
             // Fetch the already saved data json.
             const blob = await fetch('https://srbo3gia676hprqy.public.blob.vercel-storage.com/Others/KV-Store-Saved-TB-Link-Thumbnails.json');
             const blobdata = await blob.json();
-		    const [ starting, ending ] = document.getElementById('linksRangeDiv').textContent.split(' - ');
-	        textBoxJsonData = blobdata.slice(starting, ending);
+	        textBoxJsonData = blobdata.slice(start ?? 0, end ?? 200);
             for (let item of blobdata) { const shortURL = item.url; textBoxArray.push(shortURL); }
         } catch(error) {
             console.error('Error fetching or parsing data:', error);
