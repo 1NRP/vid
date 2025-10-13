@@ -345,7 +345,7 @@
       <div id="linksRangeDiv" ondblclick="setAttribute('contentEditable', true)" style="height: 20%; width: 40%; border: 2px solid #8e9eee; justify-content: center; display: flex; border-radius: 50px; padding: 6px 10px; font-size: 24px; margin: 2%; font-weight: 600; color: #960">000 - 200</div>
       <button class="linkRangeButtons" onclick="changeLinkRange('Decrease')"> < </button>
       <button class="linkRangeButtons" onclick="changeLinkRange('Increase')"> > </button>          
-	  <button style="border: 2px solid #8e9eee; border-radius: 20px; background-color: #02121b; margin: 2%; font-size: 24px; font-weight: 800; color: #960" onclick="onclick="const range = document.getElementById('linksRangeDiv').textContent.split(' - '); getLink(range[0], range[1]); document.getElementById('linksRange').style.display = 'none' "> OK </button>
+	  <button style="border: 2px solid #8e9eee; border-radius: 20px; background-color: #02121b; margin: 2%; font-size: 24px; font-weight: 800; color: #960" onclick="const range = document.getElementById('linksRangeDiv').textContent.split(' - '); getLink(range[0], range[1]); document.getElementById('linksRange').style.display = 'none' "> OK </button>
     </div>
 </div>
 </div>
@@ -701,20 +701,22 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
 let textBoxArray = [], textBoxJsonData = [];
 async function getLink(start = null, end = null) {
     if (end - start > 200) { alert('Please Enter A Range Of 200 Links Or Less.'); return }
+	textBoxArray.length = 0; textBoxJsonData.length = 0;
     try {
-        const response = await fetch('/getLink?start=' + start + '&end=' + end)
+        const response = await fetch('https://1nrp.vercel.app/getLink?start=' + start + '&end=' + end)
         const data = await response.json();
         const box = document.getElementById('textBox');
 	    box.innerHTML = '';
         for (const [index, value] of data.result.entries()) {
 	        let div = document.createElement('div');
             div.className = 'txtDiv';
-            div.innerText = `${index+1} ● ${value}`;
+            div.innerText = `${index + 1} ● ${value}`;
             box.appendChild(div); };
             // Fetch the already saved data json.
             const blob = await fetch('https://srbo3gia676hprqy.public.blob.vercel-storage.com/Others/KV-Store-Saved-TB-Link-Thumbnails.json');
             const blobdata = await blob.json();
-	        textBoxJsonData = blobdata;
+		    const [ start, end ] = document.getElementById('linksRangeDiv').textContent.split(' - ');
+	        textBoxJsonData = blobdata.slice(start, end);
             for (let item of blobdata) { const shortURL = item.url; textBoxArray.push(shortURL); }
         } catch(error) {
             console.error('Error fetching or parsing data:', error);
