@@ -209,6 +209,16 @@
       overflow-y: scroll;
       margin: 2px 0px;
     }
+	.linkRangeButtons: {
+		border: 2px solid #8e9eee;
+		padding: 0px 10px;
+		border-radius: 30px;
+		background-color: #02121b;
+		margin: 2%;
+		font-size: 28px;
+		font-weight: 800;
+		color: #940
+	}
     .txtDiv {
 	 color: #b4b4b4;
 	 overflow-x: hidden;
@@ -330,8 +340,14 @@
 <button id="btn-next" class="secondRow" onclick="loadNextPosts()">NEXT</button>
 <button id="reload" class="secondRow" onclick="fetchPosts()">♻️</button>
 <div>
-  <div id="textBox" readonly data-long-press-delay="2000"></div>
-  <!--b<div id="textBoxHighlighter"></div> -->
+<div id="textBox" readonly data-long-press-delay="1000">
+    <div id= 'linksRange' style="display: none">
+      <div id="linksRangeDiv" ondblclick="setAttribute('contentEditable', true)" style="height: 20%; width: 40%; border: 2px solid #8e9eee; justify-content: center; display: flex; border-radius: 50px; padding: 6px 10px; font-size: 24px; margin: 2%; font-weight: 600; color: #960">000 - 200</div>
+      <button class="linkRangeButtons" onclick="changeLinkRange('Decrease')"> < </button>
+      <button class="linkRangeButtons" onclick="changeLinkRange('Increase')"> > </button>          
+	  <button style="border: 2px solid #8e9eee; border-radius: 20px; background-color: #02121b; margin: 2%; font-size: 24px; font-weight: 800; color: #960" onclick="onclick="const range = document.getElementById('linksRangeDiv').textContent.split(' - '); getLink(range[0], range[1]); document.getElementById('linksRange').style.display = 'none' "> OK </button>
+    </div>
+</div>
 </div>
 <input id="brightnessSlider" type="range" value="100" min="50" max="150" class="slider">
 </div>
@@ -391,12 +407,26 @@ function changePlayFunction() {
     document.getElementById('button-play').onclick = PlayFunctions[currentIndex];
     showAlert({ BgColor: '#2894c7', Text: `${PlayFunctions[currentIndex].name} ✔ Activated`});
 }
-  
+
+function changeLinkRange(direction) {
+    const rangeDiv = document.getElementById('linksRangeDiv')
+    const range = rangeDiv.textContent.split(' - ')
+    if (direction === 'Increase') {
+        range[0] = +( range[0] ) + 200
+        range[1] = parseInt(range[1]) + 200
+    } else {
+        range[0] = parseInt(range[0]) - 200
+        range[1] = parseInt(range[1]) - 200
+    }
+    if (range[0] < 0 || range[1] < 0) { alert('Start & End Ranges Cannot Be Negative.'); return }
+    rangeDiv.textContent = range[0] + ' - ' + range[1]
+}
+
 // Long Press Events.
 var el = document.getElementById('textBox');
-el.addEventListener('long-press', function(e) {
-  e.preventDefault();
-  getLink();
+el.addEventListener('long-press', function(evt) {
+  evt.preventDefault()
+  document.getElementById('linksRange').style.display = 'flex'
 });
 
 var el = document.getElementById('button-play');
@@ -669,21 +699,22 @@ function showAlert({ BgColor = '#fff', Text = 'Alert' } = {}) {
 
 // Retrive the Links from KV Cloud storage.
 let textBoxArray = [], textBoxJsonData = [];
-async function getLink() {
+async function getLink(start = null, end = null) {
+    if (end - start > 200) { alert('Please Enter A Range Of 200 Links Or Less.'); return }
     try {
-	const response = await fetch('https://1nrp.vercel.app/getLink');
+        const response = await fetch('/getLink?start=' + start + '&end=' + end)
         const data = await response.json();
         const box = document.getElementById('textBox');
-	box.innerHTML = '';
+	    box.innerHTML = '';
         for (const [index, value] of data.result.entries()) {
-	    let div = document.createElement('div');
+	        let div = document.createElement('div');
             div.className = 'txtDiv';
             div.innerText = `${index+1} ● ${value}`;
             box.appendChild(div); };
             // Fetch the already saved data json.
             const blob = await fetch('https://srbo3gia676hprqy.public.blob.vercel-storage.com/Others/KV-Store-Saved-TB-Link-Thumbnails.json');
             const blobdata = await blob.json();
-	    textBoxJsonData = blobdata;
+	        textBoxJsonData = blobdata;
             for (let item of blobdata) { const shortURL = item.url; textBoxArray.push(shortURL); }
         } catch(error) {
             console.error('Error fetching or parsing data:', error);
