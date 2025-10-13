@@ -715,8 +715,8 @@ async function getLink(start = null, end = null) {
             // Fetch the already saved data json.
             const blob = await fetch('https://srbo3gia676hprqy.public.blob.vercel-storage.com/Others/KV-Store-Saved-TB-Link-Thumbnails.json');
             const blobdata = await blob.json();
-		    const [ start, end ] = document.getElementById('linksRangeDiv').textContent.split(' - ');
-	        textBoxJsonData = blobdata.slice(start, end);
+		    const [ starting, ending ] = document.getElementById('linksRangeDiv').textContent.split(' - ');
+	        textBoxJsonData = blobdata.slice(starting, ending);
             for (let item of blobdata) { const shortURL = item.url; textBoxArray.push(shortURL); }
         } catch(error) {
             console.error('Error fetching or parsing data:', error);
