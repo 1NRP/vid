@@ -399,7 +399,7 @@ try {
 }
 
 // Cycle through the different "PLAY" functions.
-const PlayFunctions = [CloudFlare_Play, Vercel_Play, Mdisk_Play];
+const PlayFunctions = [CloudFlare_Play, Vercel_Play, Blob_Play, Mdisk_Play];
 let currentIndex = 0;
 function changePlayFunction() {
     // Update the index to the next "PLAY" function.
@@ -805,6 +805,22 @@ async function IFrame_Play() {
     }
 }
 */
+
+async function Blob_Play() {
+    const query = await checkClipboard();
+    if ( query.toLowerCase().includes('.com/s/1') ) {
+        const shortURL = query.split('/').slice(-1)[0];
+        const jsonData = await getTboxAPI(shortURL);
+        const { shareid, uk, list: [{ fs_id }] } = jsonData;
+        const playUrl = `https://dm.1024tera.com/share/streaming?uk=${uk}&shareid=${shareid}&type=M3U8_FLV_264_480&fid=${fs_id}&sign=e079e32543e8a8e08d13776fc9e6c3fdaec67489&timestamp=1746887076&jsToken=1F1DA1DCB0EDBEBF4D4026783231FF6C9B4DB9B51B9760AA7BDD646E468831907207153BCE380C6E022CF085CFB889982CF47DC211FCCFBE69AE839F30F263E0CEBA873FED7A8A6AE0102FEF4265151A7491413528A981953B8CCE16C5FD12EE&esl=1&isplayer=1&ehps=1&clienttype=0&app_id=250528&web=1&channel=dubox&short_link=5`;
+	    const m3u8Response = await ( await fetch(playUrl) ).text();
+        const modifiedM3U8Text = m3u8Response.replaceAll('https://v4.freeterabox.com', 'https://v2-dm.1024tera.com');
+        const  blob = new Blob([modifiedM3U8Text], { type: 'application/x-mpegURL' });
+        document.getElementById('player').src = URL.createObjectURL(blob);
+    } else {
+        document.getElementById("player").src = query;
+    }
+}
 
 async function CloudFlare_Play() {
   const query = await checkClipboard();
